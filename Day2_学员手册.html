@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>加5磅 · Day2 学员手册 — 微量营养素补剂咨询与减脂方案</title>
+<style>
+:root{
+  --paper:#fffdf8;--bg:#faf8f3;--ink:#2a2925;--ink-soft:#605e57;
+  --brand:#3f6a63;--accent:#9a6a3d;--line:#dcd5c6;
+}
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;background:var(--bg);color:var(--ink);
+  font-family:"Songti SC","STSong","SimSun","Noto Serif CJK SC",serif;
+  font-size:12pt;line-height:1.75;}
+h1,h2,h3,h4,h5,.sans,th,.tag,.rh,.ftitle,.lab,.chip{
+  font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans CJK SC",sans-serif;}
+
+.page{width:210mm;min-height:296mm;margin:8mm auto;background:var(--paper);
+  padding:15mm 14mm 16mm;box-shadow:0 2px 16px rgba(60,50,30,.14);position:relative;
+  border-top:3px solid var(--brand);}
+.page h2{font-size:19pt;color:var(--brand);margin:0 0 2mm;letter-spacing:1px;}
+.page .sub{color:var(--ink-soft);font-size:10.5pt;margin:0 0 5mm;
+  font-family:"PingFang SC","Microsoft YaHei",sans-serif;}
+.runhead{position:absolute;top:6mm;right:14mm;font-size:8.5pt;color:var(--ink-soft);
+  font-family:"PingFang SC","Microsoft YaHei",sans-serif;letter-spacing:.5px;}
+
+p{margin:4px 0 8px;}
+.small{font-size:9.5pt;color:var(--ink-soft);}
+.note{background:#f4f0e4;border-left:4px solid var(--accent);padding:7px 12px;
+  margin:8px 0;font-size:10.5pt;line-height:1.7;}
+.block{margin:7mm 0 5mm;}
+.block h3{font-size:13pt;color:var(--brand);margin:6mm 0 2.5mm;
+  border-left:5px solid var(--brand);padding-left:8px;line-height:1.35;}
+.rh{font-size:10.5pt;color:var(--ink);font-weight:600;margin:3.5mm 0 1.5mm;}
+.rh::before{content:"▸ ";color:var(--accent);}
+ol,ul{margin:3px 0 8px;padding-left:1.6em;}
+li{margin:2px 0;}
+
+.fill{border:none;border-bottom:1px solid var(--ink-soft);background:transparent;
+  font-family:inherit;font-size:inherit;color:var(--brand);padding:0 4px;
+  min-width:6em;}
+input.fill{height:1.7em;vertical-align:bottom;}
+textarea.write{width:100%;display:block;border:1.4px dashed var(--line);border-radius:5px;
+  background-color:#fffefa;
+  background-image:repeating-linear-gradient(to bottom,transparent 0,transparent 26px,
+    rgba(220,213,198,.85) 26px,rgba(220,213,198,.85) 27px);
+  line-height:27px;padding:2px 9px;font-family:inherit;font-size:11.5pt;
+  color:var(--ink);resize:vertical;overflow:hidden;}
+textarea.write:focus{outline:1.5px solid var(--brand);border-color:var(--brand);}
+textarea.write::placeholder{color:#b3ac9c;}
+
+.frame{border:1.6px dashed var(--line);border-radius:6px;padding:7px 10px 9px;
+  margin:3mm 0;background:rgba(255,255,255,.55);}
+.frame .ftitle{font-size:10pt;color:var(--brand);font-weight:700;margin-bottom:2mm;
+  letter-spacing:.5px;}
+.frame .ftitle .hint{float:right;font-weight:normal;color:var(--ink-soft);font-size:9pt;}
+.box-row{display:flex;gap:8px;margin:2mm 0;}
+.box-row .box{flex:1;border:1.2px solid var(--line);border-radius:5px;padding:5px 8px;
+  min-height:15mm;background:#fffdf8;}
+.box .bt{font-family:"PingFang SC","Microsoft YaHei",sans-serif;font-size:10pt;
+  font-weight:700;color:var(--ink);margin-bottom:1mm;}
+.box .bt small{color:var(--ink-soft);font-weight:normal;}
+
+table.grid{width:100%;border-collapse:collapse;margin:2.5mm 0;font-size:10.5pt;}
+table.grid th,table.grid td{border:1px solid var(--line);padding:4px 7px;vertical-align:middle;}
+table.grid th{background:#f1ede2;font-weight:600;text-align:left;line-height:1.45;}
+table.grid td.lab{background:#f7f4ea;font-family:"PingFang SC","Microsoft YaHei",sans-serif;
+  font-weight:600;white-space:nowrap;color:var(--ink);}
+table.grid td input.fill{width:100%;border-bottom:1px dotted var(--ink-soft);min-width:3em;}
+
+.six{display:grid;grid-template-columns:1fr 1fr;gap:4mm;}
+.six .cell{border:1.4px solid var(--line);border-radius:6px;padding:4px 8px 6px;
+  background:#fffdf8;}
+.six .cell h4{margin:1mm 0 2mm;color:var(--brand);font-size:11pt;border-bottom:1px dashed var(--line);
+  padding-bottom:1mm;}
+.six .cell textarea.write{min-height:34mm;}
+
+.pyr{margin:2mm auto;width:88%;}
+.pyr .lvl{margin:0 auto 1.5mm;border:1.2px solid var(--line);border-radius:4px;
+  padding:3px 8px;display:flex;align-items:center;gap:8px;min-height:11mm;background:#fffdf8;}
+.pyr .lvl .lv{font-family:"PingFang SC","Microsoft YaHei",sans-serif;font-weight:700;
+  color:var(--brand);font-size:10.5pt;min-width:5.5em;}
+.pyr .lvl input.fill{flex:1;}
+
+/* 封面 */
+.cover{min-height:268mm;display:flex;flex-direction:column;}
+.cover .band{margin:14mm 0 6mm;border-top:2px solid var(--brand);border-bottom:2px solid var(--brand);
+  padding:5mm 0;text-align:center;}
+.cover .kicker{font-family:"PingFang SC","Microsoft YaHei",sans-serif;color:var(--accent);
+  letter-spacing:4px;font-size:11pt;}
+.cover h1{font-size:30pt;color:var(--brand);margin:4mm 0 2mm;letter-spacing:2px;}
+.cover .day{font-size:15pt;color:var(--ink);margin-bottom:2mm;}
+.cover .theme{font-size:12.5pt;color:var(--ink-soft);}
+.cover .meta{margin:8mm auto;width:86%;}
+.cover .meta .line{display:flex;gap:8px;margin:4mm 0;align-items:baseline;
+  font-family:"PingFang SC","Microsoft YaHei",sans-serif;font-size:12pt;}
+.cover .meta .line span{white-space:nowrap;color:var(--ink);}
+.cover .meta input.fill{flex:1;border-bottom:1.5px solid var(--ink-soft);height:1.9em;}
+.cover .scope{margin:6px 0;}
+.cover .scope .chip{display:inline-block;border:1px solid var(--line);border-radius:20px;
+  padding:2px 12px;margin:1.5px 3px;font-size:10pt;color:var(--brand);background:#f7f4ea;}
+.cover .foot{margin-top:auto;font-size:9.5pt;color:var(--ink-soft);
+  border-top:1px solid var(--line);padding-top:3mm;}
+
+/* 工具栏 */
+#toolbar{position:sticky;top:0;z-index:9999;background:#fffdf8;border-bottom:1px solid #dcd5c6;
+  box-shadow:0 1px 6px rgba(60,50,30,.12);
+  font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;}
+#toolbar .inner{max-width:210mm;margin:0 auto;display:flex;align-items:center;gap:10px;
+  flex-wrap:wrap;padding:6px 12px;}
+#toolbar .brand{font-weight:700;color:#3f6a63;font-size:12.5px;letter-spacing:.5px;white-space:nowrap;}
+#toolbar .prog{font-size:12px;color:#605e57;white-space:nowrap;}
+#toolbar .prog b{color:#3f6a63;font-size:13px;}
+#toolbar .bar{flex:1;min-width:80px;height:7px;background:#efe9dc;border-radius:4px;overflow:hidden;}
+#toolbar .bar>div{height:100%;width:0;background:#3f6a63;border-radius:4px;transition:width .3s ease;}
+#toolbar button{font-family:inherit;font-size:11.5px;padding:4px 12px;border-radius:4px;cursor:pointer;
+  border:1px solid #3f6a63;background:#fffdf8;color:#3f6a63;line-height:1.6;white-space:nowrap;}
+#toolbar button:hover{background:#3f6a63;color:#fffdf8;}
+
+.summary-box{background:#f7f4ea;border:1px solid var(--line);border-radius:6px;
+  padding:8px 12px;margin:3mm 0;}
+.summary-box h4{margin:0 0 2mm;color:var(--brand);font-size:11pt;}
+
+@media print{
+  html,body{background:#fff;font-size:11pt;}
+  .page{width:auto;min-height:auto;margin:0;padding:0;box-shadow:none;
+    page-break-after:always;border-top:none;}
+  .page:last-child{page-break-after:auto;}
+  .runhead{top:4mm;right:12mm;}
+  textarea.write{border:1.1pt dashed #b9b1a0;color:#000;
+    -webkit-print-color-adjust:exact;print-color-adjust:exact;}
+  input.fill{border-bottom:0.8pt solid #444;color:#000;}
+  table.grid th,.note,.frame .ftitle,.pyr .lvl,.box,.six .cell,
+  table.grid td.lab,.cover .chip{-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+  .block,.frame,table.grid,.six .cell{break-inside:avoid-page;}
+  a{color:inherit;text-decoration:none;}
+  #toolbar{display:none!important;}
+}
+@media screen and (max-width:800px){
+  .page{width:auto;min-height:auto;margin:0;padding:10mm 8mm;box-shadow:none;border-top:none;}
+  .six{grid-template-columns:1fr;}
+  .box-row{flex-direction:column;}
+}
+</style>
+</head>
+<body>
+
+<div id="toolbar">
+<div class="inner">
+  <span class="brand">加5磅 · Day2 手册</span>
+  <span class="prog">填写进度：<b id="progPct">0%</b></span>
+  <div class="bar"><div id="progBar"></div></div>
+  <button onclick="window.print()">打印 / 导出PDF</button>
+</div>
+</div>
+
+<!-- ===== 封面 ===== -->
+<div class="page cover">
+  <span class="runhead">加5磅 · 运动营养咨询师培训</span>
+  <div class="band">
+    <div class="kicker">加 5 磅 · 运 动 营 养 咨 询 师 培 训</div>
+    <h1>Day 2 学员手册</h1>
+    <div class="theme">微量营养素补剂咨询与减脂方案</div>
+  </div>
+  <div class="meta">
+    <div class="line"><span>姓名</span><input class="fill" data-k="name" placeholder="请填写"></div>
+    <div class="line"><span>期数</span><input class="fill" data-k="cohort" placeholder="第几期"></div>
+    <div class="line"><span>日期</span><input class="fill" data-k="date" placeholder="YYYY-MM-DD"></div>
+  </div>
+  <div class="scope">
+    <span class="chip">M5 维生素矿物质与水</span>
+    <span class="chip">M6 补剂决策框架</span>
+    <span class="chip">M7 首次咨询SOP与行为改变</span>
+    <span class="chip">M8 减脂方案专题</span>
+  </div>
+  <div class="foot">
+    课前预习使用 · 课堂中补充完善 · 所有填写区自动保存于浏览器本地
+  </div>
+</div>
+
+<!-- ===== M5 维生素矿物质与水 ===== -->
+<div class="page">
+  <span class="runhead">M5 · 维生素矿物质与水</span>
+  <h2>M5 维生素、矿物质与水</h2>
+  <p class="sub">微量营养素的分子机制、高风险人群筛查、水合管理与铁代谢</p>
+
+  <div class="block">
+    <h3>引导问题</h3>
+    <p>带着以下问题进入学习，在阅读和听讲过程中寻找答案：</p>
+    <ol>
+      <li>为什么"微量营养素参与能量代谢"不能等同于"微量营养素提供能量"？</li>
+      <li>维生素D的充足阈值为什么存在争议？两个标准分别是多少？</li>
+      <li>铁缺乏三阶段中，哪个阶段对训练者威胁最大且最易被忽视？</li>
+      <li>hepcidin在训练后如何影响铁吸收？临床意义是什么？</li>
+      <li>脱水超过2%体重会损害哪些功能？对力量训练有什么实际影响？</li>
+    </ol>
+  </div>
+
+  <div class="block">
+    <h3>核心知识点留白</h3>
+
+    <div class="rh">微量营养素 vs 宏量营养素的根本区分</div>
+    <p>宏量营养素提供 <input class="fill" data-k="m5_macro_energy" placeholder="___"> （底物）和组织构建原料；微量营养素在mg/μg级发挥 <input class="fill" data-k="m5_micro_role" placeholder="___"> 功能，不提供能量。</p>
+
+    <div class="rh">维生素分类</div>
+    <p>脂溶性维生素包括 <input class="fill" data-k="m5_fat_sol" placeholder="___"> 四种，排泄速率低，存在 <input class="fill" data-k="m5_fat_tox" placeholder="___"> 风险。水溶性维生素包括 <input class="fill" data-k="m5_water_sol" placeholder="___"> 共9种，不在体内大量储存，需每日补充。</p>
+
+    <div class="rh">维生素D阈值争议</div>
+    <table class="grid">
+      <tr><th>标准来源</th><th>充足阈值</th><th>缺乏阈值</th></tr>
+      <tr><td>Holick (2007)</td><td><input class="fill" data-k="m5_vd_holick" placeholder="___nmol/L"></td><td><input class="fill" data-k="m5_vd_holick_def" placeholder="___nmol/L"></td></tr>
+      <tr><td>Endocrine Society</td><td><input class="fill" data-k="m5_vd_es" placeholder="___nmol/L"></td><td>同上</td></tr>
+      <tr><td>IOM (2011)</td><td><input class="fill" data-k="m5_vd_iom" placeholder="___nmol/L"></td><td>低于此值</td></tr>
+    </table>
+
+    <div class="rh">铁缺乏三阶段模型</div>
+    <div class="box-row">
+      <div class="box">
+        <div class="bt">第一阶段<small> 储铁耗竭</small></div>
+        <p>SF &lt; <input class="fill" data-k="m5_fe_s1" placeholder="___"> μg/L</p>
+        <p>Hb：<input class="fill" data-k="m5_fe_s1_hb" placeholder="正常/降低"></p>
+      </div>
+      <div class="box">
+        <div class="bt">第二阶段<small> 功能性铁缺乏</small></div>
+        <p>TSAT &lt; <input class="fill" data-k="m5_fe_s2" placeholder="___">%</p>
+        <p>sTfR &gt; <input class="fill" data-k="m5_fe_s2_stfr" placeholder="___"> mg/L</p>
+      </div>
+      <div class="box">
+        <div class="bt">第三阶段<small> 缺铁性贫血</small></div>
+        <p>男Hb &lt; <input class="fill" data-k="m5_fe_s3_m" placeholder="___"> g/L</p>
+        <p>女Hb &lt; <input class="fill" data-k="m5_fe_s3_f" placeholder="___"> g/L</p>
+      </div>
+    </div>
+
+    <div class="rh">hepcidin核心机制</div>
+    <p>运动后 <input class="fill" data-k="m5_hep_time" placeholder="___"> 小时内，hepcidin可升高至安静时的 <input class="fill" data-k="m5_hep_fold" placeholder="___"> 倍，抑制 <input class="fill" data-k="m5_hep_target" placeholder="___"> 吸收。</p>
+
+    <div class="rh">脱水对运动表现的定量影响（ACSM 2007）</div>
+    <table class="grid">
+      <tr><th>脱水程度</th><th>影响</th><th>证据等级</th></tr>
+      <tr><td>&gt; <input class="fill" data-k="m5_dehy1" placeholder="___">% BW</td><td>降低有氧表现（热环境中）</td><td><input class="fill" data-k="m5_dehy1_ev" placeholder="___"></td></tr>
+      <tr><td>&gt;2% BW</td><td>降低心理/认知表现</td><td><input class="fill" data-k="m5_dehy2_ev" placeholder="___"></td></tr>
+      <tr><td>3%-5% BW</td><td><input class="fill" data-k="m5_dehy3" placeholder="对无氧力量影响"></td><td>A和B</td></tr>
+    </table>
+
+    <div class="rh">补液方案三阶段</div>
+    <div class="box-row">
+      <div class="box">
+        <div class="bt">训练前<small> 预水合</small></div>
+        <p>训练前2-4h：<input class="fill" data-k="m5_pre_vol" placeholder="___"> mL/kg</p>
+      </div>
+      <div class="box">
+        <div class="bt">训练中</div>
+        <p>目标：预防超过 <input class="fill" data-k="m5_during" placeholder="___">% BW损失</p>
+      </div>
+      <div class="box">
+        <div class="bt">训练后</div>
+        <p>每丢失1kg补 <input class="fill" data-k="m5_post" placeholder="___"> L液体</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="block">
+    <h3>关键概念框架图</h3>
+    <div class="frame">
+      <div class="ftitle">微量营养素风险筛查信号 <span class="hint">填写每类人群的核心风险</span></div>
+      <div class="six">
+        <div class="cell"><h4>减脂期训练者</h4>
+          <textarea class="write" data-k="m5_rf1" placeholder="能量摄入受限时哪些微量营养素最易不足？"></textarea></div>
+        <div class="cell"><h4>女性训练者</h4>
+          <textarea class="write" data-k="m5_rf2" placeholder="铁缺乏的最高危人群——驱动因素有哪些？"></textarea></div>
+        <div class="cell"><h4>高频训练者</h4>
+          <textarea class="write" data-k="m5_rf3" placeholder="hepcidin与汗液丢失如何叠加？"></textarea></div>
+        <div class="cell"><h4>室内训练者</h4>
+          <textarea class="write" data-k="m5_rf4" placeholder="维生素D不足的流行病学数据？"></textarea></div>
+      </div>
+    </div>
+    <div class="frame">
+      <div class="ftitle">铁缺乏筛查实验室最低组合 <span class="hint">填写各项指标与临床意义</span></div>
+      <table class="grid">
+        <tr><th>指标</th><th>临床意义</th><th>训练者阈值</th></tr>
+        <tr><td>CBC</td><td><input class="fill" data-k="m5_lab1" placeholder="___"></td><td>—</td></tr>
+        <tr><td>Hb</td><td><input class="fill" data-k="m5_lab2" placeholder="___"></td><td>男&lt;130/女&lt;120 g/L</td></tr>
+        <tr><td>SF</td><td><input class="fill" data-k="m5_lab3" placeholder="___"></td><td>警惕&lt;30/转介&lt;15 μg/L</td></tr>
+        <tr><td>TSAT</td><td><input class="fill" data-k="m5_lab4" placeholder="___"></td><td>&lt;16%</td></tr>
+        <tr><td>CRP</td><td><input class="fill" data-k="m5_lab5" placeholder="___"></td><td>—</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="block">
+    <h3>模块小结</h3>
+    <div class="summary-box">
+      <h4>M5核心判断</h4>
+      <p>用一段话总结M5的三个核心要点：</p>
+      <textarea class="write" data-k="m5_summary" placeholder="1. 微量营养素的核心认知...&#10;2. 铁代谢的核心枢纽...&#10;3. 水合管理的核心逻辑..." style="min-height:80mm"></textarea>
+    </div>
+  </div>
+</div>
+
+<!-- ===== M6 补剂决策框架 ===== -->
+<div class="page">
+  <span class="runhead">M6 · 补剂决策框架</span>
+  <h2>M6 补剂决策框架</h2>
+  <p class="sub">AIS ABCD分级、A级补剂深度解析、争议品项审视与安全红线</p>
+
+  <div class="block">
+    <h3>引导问题</h3>
+    <ol>
+      <li>IOC 2018共识声明对膳食补剂的核心判断是什么？</li>
+      <li>AIS ABCD四级分类的实务价值是什么？Group A为什么不等于"无条件推荐"？</li>
+      <li>五种Group A性能补剂的剂量协议分别是什么？</li>
+      <li>BCAA在什么条件下对训练有素人群"冗余"？</li>
+      <li>补剂污染率数据（Geyer 2004 / Martínez-Sanz 2017）说明了什么结构性问题？</li>
+    </ol>
+  </div>
+
+  <div class="block">
+    <h3>核心知识点留白</h3>
+
+    <div class="rh">营养金字塔层级</div>
+    <div class="pyr">
+      <div class="lvl"><span class="lv">第四层</span><input class="fill" data-k="m6_pyr4" placeholder="___"></div>
+      <div class="lvl"><span class="lv">第三层</span><input class="fill" data-k="m6_pyr3" placeholder="___"></div>
+      <div class="lvl"><span class="lv">第二层</span><input class="fill" data-k="m6_pyr2" placeholder="___"></div>
+      <div class="lvl"><span class="lv">基座</span><input class="fill" data-k="m6_pyr1" placeholder="___"></div>
+    </div>
+
+    <div class="rh">AIS ABCD分类</div>
+    <table class="grid">
+      <tr><th>等级</th><th>定义标准</th><th>处置建议</th></tr>
+      <tr><td>Group A</td><td><input class="fill" data-k="m6_a_def" placeholder="___" style="width:100%"></td><td><input class="fill" data-k="m6_a_act" placeholder="___" style="width:100%"></td></tr>
+      <tr><td>Group B</td><td><input class="fill" data-k="m6_b_def" placeholder="___" style="width:100%"></td><td><input class="fill" data-k="m6_b_act" placeholder="___" style="width:100%"></td></tr>
+      <tr><td>Group C</td><td><input class="fill" data-k="m6_c_def" placeholder="___" style="width:100%"></td><td><input class="fill" data-k="m6_c_act" placeholder="___" style="width:100%"></td></tr>
+      <tr><td>Group D</td><td><input class="fill" data-k="m6_d_def" placeholder="___" style="width:100%"></td><td><input class="fill" data-k="m6_d_act" placeholder="___" style="width:100%"></td></tr>
+    </table>
+
+    <div class="rh">五种A级性能补剂剂量速记</div>
+    <table class="grid">
+      <tr><th>补剂</th><th>剂量</th><th>时机</th><th>关键安全事项</th></tr>
+      <tr><td>肌酸</td><td>加载<input class="fill" data-k="m6_cr_load" placeholder="___">g/d×5-7d<br>维持<input class="fill" data-k="m6_cr_maint" placeholder="___">g/d</td><td>—</td><td><input class="fill" data-k="m6_cr_safe" placeholder="___" style="width:100%"></td></tr>
+      <tr><td>咖啡因</td><td><input class="fill" data-k="m6_caf_dose" placeholder="___">mg/kg</td><td>运动前<input class="fill" data-k="m6_caf_time" placeholder="___">min</td><td><input class="fill" data-k="m6_caf_safe" placeholder="___" style="width:100%"></td></tr>
+      <tr><td>β-丙氨酸</td><td><input class="fill" data-k="m6_ba_dose" placeholder="___">g/d，分次</td><td>需持续<input class="fill" data-k="m6_ba_weeks" placeholder="___">周</td><td><input class="fill" data-k="m6_ba_safe" placeholder="___" style="width:100%"></td></tr>
+      <tr><td>硝酸盐</td><td><input class="fill" data-k="m6_no3_dose" placeholder="___">mmol NO₃⁻</td><td>运动前<input class="fill" data-k="m6_no3_time" placeholder="___">h</td><td><input class="fill" data-k="m6_no3_safe" placeholder="___" style="width:100%"></td></tr>
+      <tr><td>碳酸氢钠</td><td colspan="3"><input class="fill" data-k="m6_nahco3" placeholder="填写剂量与时机" style="width:100%"></td></tr>
+    </table>
+
+    <div class="rh">证据链三要素审视争议品项</div>
+    <table class="grid">
+      <tr><th>品项</th><th>机制层面</th><th>人体RCT层面</th><th>AIS分级</th></tr>
+      <tr><td>BCAA</td><td><input class="fill" data-k="m6_bcaa_mech" placeholder="___" style="width:100%"></td><td><input class="fill" data-k="m6_bcaa_rct" placeholder="___" style="width:100%"></td><td><input class="fill" data-k="m6_bcaa_ais" placeholder="___"></td></tr>
+      <tr><td>HMB</td><td><input class="fill" data-k="m6_hmb_mech" placeholder="___" style="width:100%"></td><td><input class="fill" data-k="m6_hmb_rct" placeholder="___" style="width:100%"></td><td><input class="fill" data-k="m6_hmb_ais" placeholder="___"></td></tr>
+      <tr><td>左旋肉碱</td><td><input class="fill" data-k="m6_lcar_mech" placeholder="___" style="width:100%"></td><td><input class="fill" data-k="m6_lcar_rct" placeholder="___" style="width:100%"></td><td><input class="fill" data-k="m6_lcar_ais" placeholder="___"></td></tr>
+      <tr><td>谷氨酰胺</td><td><input class="fill" data-k="m6_gln_mech" placeholder="___" style="width:100%"></td><td><input class="fill" data-k="m6_gln_rct" placeholder="___" style="width:100%"></td><td><input class="fill" data-k="m6_gln_ais" placeholder="___"></td></tr>
+    </table>
+
+    <div class="rh">补剂污染数据</div>
+    <p>Geyer et al. (2004)：634个样品中 <input class="fill" data-k="m6_cont1" placeholder="___"> 个（<input class="fill" data-k="m6_cont1_pct" placeholder="___">%）含未声明合成代谢类固醇前体。</p>
+    <p>Martínez-Sanz et al. (2017)：3132个样品中 <input class="fill" data-k="m6_cont2" placeholder="___"> 个（<input class="fill" data-k="m6_cont2_pct" placeholder="___">%）含未声明物质。</p>
+  </div>
+
+  <div class="block">
+    <h3>关键概念框架图</h3>
+    <div class="frame">
+      <div class="ftitle">CYP1A2基因多态性与咖啡因个体化 <span class="hint">填写三类代谢者特征</span></div>
+      <div class="box-row">
+        <div class="box"><div class="bt">快代谢 AA</div>
+          <p>半衰期：<input class="fill" data-k="m6_cyp_aa" placeholder="___">h</p>
+          <p>效应：<input class="fill" data-k="m6_cyp_aa_eff" placeholder="___"></p></div>
+        <div class="box"><div class="bt">中等 AC</div>
+          <p>效应：<input class="fill" data-k="m6_cyp_ac_eff" placeholder="___"></p></div>
+        <div class="box"><div class="bt">慢代谢 CC</div>
+          <p>占人群 <input class="fill" data-k="m6_cyp_cc_pct" placeholder="___">%</p>
+          <p>半衰期延长至 <input class="fill" data-k="m6_cyp_cc_half" placeholder="___">h</p>
+          <p>风险：<input class="fill" data-k="m6_cyp_cc_risk" placeholder="___"></p></div>
+      </div>
+    </div>
+    <div class="note">
+      <strong>教练执业红线：</strong>教练在补剂问题上的角色是评估、告知、转介，不开具。不得推荐未经第三方检测认证的补剂。D组品项一律建议停用。
+    </div>
+  </div>
+
+  <div class="block">
+    <h3>模块小结</h3>
+    <div class="summary-box">
+      <h4>M6核心判断</h4>
+      <textarea class="write" data-k="m6_summary" placeholder="用一段话总结补剂决策的核心框架...&#10;1. 补剂决策的核心矛盾...&#10;2. ABCD分级的实务价值...&#10;3. 教练的角色边界..." style="min-height:60mm"></textarea>
+    </div>
+  </div>
+</div>
+
+<!-- ===== M7 首次咨询SOP与行为改变 ===== -->
+<div class="page">
+  <span class="runhead">M7 · 首次咨询SOP与行为改变</span>
+  <h2>M7 首次咨询SOP与行为改变干预框架</h2>
+  <p class="sub">60分钟标准流程、COM-B诊断、BCT技术选择与执业边界</p>
+
+  <div class="block">
+    <h3>引导问题</h3>
+    <ol>
+      <li>首次咨询同时完成的三件事是什么？</li>
+      <li>红线7类判据中，哪些必须触发转介？</li>
+      <li>COM-B三格模型如何诊断"知道但做不到"的卡点？</li>
+      <li>BCTTv1将干预拆解为多少项技术单元？健身场景高频使用约多少项？</li>
+      <li>运动营养咨询师不可做的三类事项是什么？</li>
+    </ol>
+  </div>
+
+  <div class="block">
+    <h3>核心知识点留白</h3>
+
+    <div class="rh">60分钟咨询六段式流程</div>
+    <table class="grid">
+      <tr><th>阶段</th><th>时间</th><th>核心任务</th></tr>
+      <tr><td>破冰与知情同意</td><td><input class="fill" data-k="m7_t1" placeholder="___min"></td><td><input class="fill" data-k="m7_t1_task" placeholder="___" style="width:100%"></td></tr>
+      <tr><td>目标设定与红线筛查</td><td><input class="fill" data-k="m7_t2" placeholder="___min"></td><td><input class="fill" data-k="m7_t2_task" placeholder="___" style="width:100%"></td></tr>
+      <tr><td>评估数据采集</td><td><input class="fill" data-k="m7_t3" placeholder="___min"></td><td><input class="fill" data-k="m7_t3_task" placeholder="___" style="width:100%"></td></tr>
+      <tr><td>方案框架讲解</td><td><input class="fill" data-k="m7_t4" placeholder="___min"></td><td><input class="fill" data-k="m7_t4_task" placeholder="___" style="width:100%"></td></tr>
+      <tr><td>答疑与签约</td><td><input class="fill" data-k="m7_t5" placeholder="___min"></td><td><input class="fill" data-k="m7_t5_task" placeholder="___" style="width:100%"></td></tr>
+      <tr><td>后续安排</td><td><input class="fill" data-k="m7_t6" placeholder="___min"></td><td><input class="fill" data-k="m7_t6_task" placeholder="___" style="width:100%"></td></tr>
+    </table>
+
+    <div class="rh">红线7类判据</div>
+    <table class="grid">
+      <tr><th>#</th><th>类别</th><th>快速识别要点</th></tr>
+      <tr><td>1</td><td>饮食障碍倾向</td><td>BMI&lt;<input class="fill" data-k="m7_r1" placeholder="___">；SCOFF≥<input class="fill" data-k="m7_r1s" placeholder="___"></td></tr>
+      <tr><td>2</td><td><input class="fill" data-k="m7_r2" placeholder="___"></td><td>透析/化疗在程；肝硬化失代偿</td></tr>
+      <tr><td>3</td><td>孕产期高危</td><td><input class="fill" data-k="m7_r3" placeholder="___"></td></tr>
+      <tr><td>4</td><td>儿童年龄红线</td><td>&lt;<input class="fill" data-k="m7_r4" placeholder="___">岁不主导食谱</td></tr>
+      <tr><td>5</td><td>单一复杂用药</td><td><input class="fill" data-k="m7_r5" placeholder="___"></td></tr>
+      <tr><td>6</td><td>心理障碍并发</td><td>PHQ-9≥<input class="fill" data-k="m7_r6" placeholder="___">或GAD-7≥<input class="fill" data-k="m7_r6b" placeholder="___"></td></tr>
+      <tr><td>7</td><td><input class="fill" data-k="m7_r7" placeholder="___"></td><td>≥65岁+用药≥5种</td></tr>
+    </table>
+
+    <div class="rh">COM-B三格轻量模型</div>
+    <div class="box-row">
+      <div class="box"><div class="bt">C 能力<small> Capability</small></div>
+        <p>典型表现：<input class="fill" data-k="m7_com_c" placeholder="___" style="width:100%"></p>
+        <p>干预策略：<input class="fill" data-k="m7_com_c_int" placeholder="___" style="width:100%"></p></div>
+      <div class="box"><div class="bt">O 机会<small> Opportunity</small></div>
+        <p>典型表现：<input class="fill" data-k="m7_com_o" placeholder="___" style="width:100%"></p>
+        <p>干预策略：<input class="fill" data-k="m7_com_o_int" placeholder="___" style="width:100%"></p></div>
+      <div class="box"><div class="bt">M 动机<small> Motivation</small></div>
+        <p>典型表现：<input class="fill" data-k="m7_com_m" placeholder="___" style="width:100%"></p>
+        <p>干预策略：<input class="fill" data-k="m7_com_m_int" placeholder="___" style="width:100%"></p></div>
+    </div>
+
+    <div class="rh">行为改变三阶段干预总表</div>
+    <table class="grid">
+      <tr><th>阶段</th><th>核心卡点</th><th>推荐BCT</th><th>禁忌</th></tr>
+      <tr><td>知道</td><td><input class="fill" data-k="m7_bct1" placeholder="___"></td><td><input class="fill" data-k="m7_bct1_bct" placeholder="___" style="width:100%"></td><td><input class="fill" data-k="m7_bct1_no" placeholder="___" style="width:100%"></td></tr>
+      <tr><td>做到</td><td><input class="fill" data-k="m7_bct2" placeholder="___"></td><td><input class="fill" data-k="m7_bct2_bct" placeholder="___" style="width:100%"></td><td><input class="fill" data-k="m7_bct2_no" placeholder="___" style="width:100%"></td></tr>
+      <tr><td>坚持</td><td><input class="fill" data-k="m7_bct3" placeholder="___"></td><td><input class="fill" data-k="m7_bct3_bct" placeholder="___" style="width:100%"></td><td><input class="fill" data-k="m7_bct3_no" placeholder="___" style="width:100%"></td></tr>
+    </table>
+  </div>
+
+  <div class="block">
+    <h3>模块小结</h3>
+    <div class="summary-box">
+      <h4>M7核心判断</h4>
+      <textarea class="write" data-k="m7_summary" placeholder="用一段话总结首次咨询的核心逻辑..." style="min-height:50mm"></textarea>
+    </div>
+  </div>
+</div>
+
+<!-- ===== M8 减脂方案专题 ===== -->
+<div class="page">
+  <span class="runhead">M8 · 减脂方案专题</span>
+  <h2>M8 减脂方案专题</h2>
+  <p class="sub">赤字分层、蛋白保底、代谢适应、Diet Break与Peak Week</p>
+
+  <div class="block">
+    <h3>引导问题</h3>
+    <ol>
+      <li>为什么减脂赤字按TEE百分比设定优于固定kcal数？</li>
+      <li>蛋白保底策略的三层循证依据是什么？靶值如何按体脂率分层？</li>
+      <li>代谢适应的四个机制层面是什么？"代谢损伤"说法的问题在哪里？</li>
+      <li>Diet Break的直接代谢益处有多大？核心价值应定位在哪里？</li>
+      <li>Peak Week方案的适用边界和安全红线是什么？</li>
+    </ol>
+  </div>
+
+  <div class="block">
+    <h3>核心知识点留白</h3>
+
+    <div class="rh">减脂三层赤字决策</div>
+    <table class="grid">
+      <tr><th>层级</th><th>TEE%</th><th>适用体脂率</th><th>预期减重速度</th></tr>
+      <tr><td>保守</td><td><input class="fill" data-k="m8_d1" placeholder="___"></td><td>男&lt;15%/女&lt;22%</td><td><input class="fill" data-k="m8_d1_rate" placeholder="___">/wk</td></tr>
+      <tr><td>标准</td><td><input class="fill" data-k="m8_d2" placeholder="___"></td><td><input class="fill" data-k="m8_d2_bf" placeholder="___"></td><td><input class="fill" data-k="m8_d2_rate" placeholder="___">/wk</td></tr>
+      <tr><td>激进</td><td><input class="fill" data-k="m8_d3" placeholder="___"></td><td>男≥25%/女≥32%</td><td><input class="fill" data-k="m8_d3_rate" placeholder="___">/wk</td></tr>
+    </table>
+
+    <div class="rh">蛋白靶值分层</div>
+    <table class="grid">
+      <tr><th>训练状态</th><th>体脂率/阶段</th><th>蛋白靶值 g/kgBM/d</th></tr>
+      <tr><td>无规律抗阻训练</td><td>任意</td><td><input class="fill" data-k="m8_p1" placeholder="___"></td></tr>
+      <tr><td>规律抗阻≥2次/wk</td><td>男BF≥20%/女≥28%</td><td><input class="fill" data-k="m8_p2" placeholder="___"></td></tr>
+      <tr><td>规律抗阻</td><td>男12%-20%/女22%-28%</td><td><input class="fill" data-k="m8_p3" placeholder="___"></td></tr>
+      <tr><td>系统抗阻≥4次/wk</td><td>男&lt;12%/女&lt;22%</td><td><input class="fill" data-k="m8_p4" placeholder="___"></td></tr>
+    </table>
+
+    <div class="rh">代谢适应四层面</div>
+    <div class="six">
+      <div class="cell"><h4>适应性产热下降</h4>
+        <textarea class="write" data-k="m8_ma1" placeholder="T4→T3转化___，rT3___&#10;瘦素48-72h内下降___%"></textarea></div>
+      <div class="cell"><h4>NEAT下降</h4>
+        <textarea class="write" data-k="m8_ma2" placeholder="可下降___kcal/d&#10;个体差异___kcal/d"></textarea></div>
+      <div class="cell"><h4>激素适应</h4>
+        <textarea class="write" data-k="m8_ma3" placeholder="ghrelin___&#10;GLP-1/PYY___"></textarea></div>
+      <div class="cell"><h4>RMR下调</h4>
+        <textarea class="write" data-k="m8_ma4" placeholder="每损失1kg FFM，RMR下降___kcal/d"></textarea></div>
+    </div>
+
+    <div class="rh">Diet Break vs Refeed</div>
+    <table class="grid">
+      <tr><th>维度</th><th>Diet Break</th><th>Refeed</th></tr>
+      <tr><td>持续时间</td><td><input class="fill" data-k="m8_db_dur" placeholder="___"></td><td><input class="fill" data-k="m8_rf_dur" placeholder="___"></td></tr>
+      <tr><td>热量目标</td><td><input class="fill" data-k="m8_db_cal" placeholder="___"></td><td><input class="fill" data-k="m8_rf_cal" placeholder="___"></td></tr>
+      <tr><td>宏量策略</td><td><input class="fill" data-k="m8_db_macro" placeholder="___"></td><td>高碳<input class="fill" data-k="m8_rf_carb" placeholder="___">g/kg<br>低脂≤<input class="fill" data-k="m8_rf_fat" placeholder="___">%</td></tr>
+      <tr><td>核心价值</td><td><input class="fill" data-k="m8_db_val" placeholder="___"></td><td><input class="fill" data-k="m8_rf_val" placeholder="___"></td></tr>
+    </table>
+    <p class="small">Poon et al. 2025系统综述：Diet Break直接代谢益处约 <input class="fill" data-k="m8_db_kcal" placeholder="___"> kcal/d</p>
+
+    <div class="rh">TEE校准公式</div>
+    <div class="frame">
+      <div class="ftitle">用7700 kcal/kg反推真实TEE</div>
+      <p>实测日均赤字 = 实际减重(kg) × 7700 ÷ 天数</p>
+      <p>真实TEE ≈ 实际摄入(kcal/d) + 实测日均赤字</p>
+      <p>练习：摄入2200 kcal/d，4周减重2kg → 实测赤字 = <input class="fill" data-k="m8_calc1" placeholder="___"> kcal/d → 真实TEE = <input class="fill" data-k="m8_calc2" placeholder="___"> kcal/d</p>
+    </div>
+  </div>
+
+  <div class="block">
+    <h3>关键概念框架图</h3>
+    <div class="frame">
+      <div class="ftitle">12周标准减脂模板（模板A）<span class="hint">填写每阶段策略</span></div>
+      <table class="grid">
+        <tr><th>阶段</th><th>周次</th><th>热量策略</th><th>蛋白靶值</th><th>核心复评节点</th></tr>
+        <tr><td>启动期</td><td>W1-W2</td><td><input class="fill" data-k="m8_a1_cal" placeholder="___"></td><td><input class="fill" data-k="m8_a1_pro" placeholder="___"></td><td>W2简短随访</td></tr>
+        <tr><td>主减期</td><td>W3-W8</td><td><input class="fill" data-k="m8_a2_cal" placeholder="___"></td><td><input class="fill" data-k="m8_a2_pro" placeholder="___"></td><td><input class="fill" data-k="m8_a2_rev" placeholder="___"></td></tr>
+        <tr><td>冲刺期</td><td>W9-W11</td><td><input class="fill" data-k="m8_a3_cal" placeholder="___"></td><td><input class="fill" data-k="m8_a3_pro" placeholder="___"></td><td>W10复评</td></tr>
+        <tr><td>恢复期</td><td>W12</td><td><input class="fill" data-k="m8_a4_cal" placeholder="___"></td><td><input class="fill" data-k="m8_a4_pro" placeholder="___"></td><td>W12终评</td></tr>
+      </table>
+    </div>
+
+    <div class="note">
+      <strong>Peak Week安全红线：</strong>仅适用于竞技场景（男&lt;8%/女&lt;14%已完成16-24周系统减脂者）。利尿剂绝对禁止，教练建议客户使用利尿剂构成违法行为。限水不超16小时。大众健身教练不得将Peak Week方案用于普通减脂客户。
+    </div>
+  </div>
+
+  <div class="block">
+    <h3>模块小结</h3>
+    <div class="summary-box">
+      <h4>M8核心判断</h4>
+      <textarea class="write" data-k="m8_summary" placeholder="用一段话总结减脂方案的核心决策链条...&#10;1. 赤字幅度选择逻辑...&#10;2. 蛋白保底的循证基础...&#10;3. 代谢适应的管理策略..." style="min-height:60mm"></textarea>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  var KEY='day2_handbook_';
+  var fields=document.querySelectorAll('[data-k]');
+  // load
+  fields.forEach(function(el){
+    var v=localStorage.getItem(KEY+el.getAttribute('data-k'));
+    if(v)el.value=v;
+    el.addEventListener('input',function(){
+      localStorage.setItem(KEY+el.getAttribute('data-k'),el.value);
+      updateProg();
+    });
+  });
+  function updateProg(){
+    var total=fields.length,filled=0;
+    fields.forEach(function(el){if(el.value.trim())filled++;});
+    var pct=Math.round(filled/total*100);
+    document.getElementById('progPct').textContent=pct+'%';
+    document.getElementById('progBar').style.width=pct+'%';
+  }
+  updateProg();
+})();
+</script>
+</body>
+</html>

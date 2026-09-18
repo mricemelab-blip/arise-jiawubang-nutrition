@@ -1,0 +1,898 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>加五磅 Day3 学员工具包 · 增肌平台期RED-S与特殊人群</title>
+<style>
+:root{
+  --paper:#ffffff;--bg:#f5f5f0;--ink:#1a1a1a;--ink-soft:#5a5a5a;
+  --brand:#1a2332;--accent:#c9a84c;--line:#e8e4dc;
+  --ok:#1a3a2a;--warn:#8a6d1b;--bad:#8a2a2a;
+  --gold-soft:#f7f1e3;--brand-soft:#e8ecf0;
+}
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font-family:"Songti SC","STSong","SimSun","Noto Serif CJK SC",serif;
+  font-size:15.5px;line-height:1.75;}
+h1,h2,h3,h4,.sans,nav,button,label,.tag,.chip,.q-opt,.sop-note{
+  font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans CJK SC",system-ui,sans-serif;}
+header{background:var(--paper);border-bottom:3px solid var(--accent);padding:26px 20px 18px;text-align:center;}
+header h1{margin:0 0 6px;font-size:24px;color:var(--brand);letter-spacing:2px;font-weight:700;}
+header .sub{color:var(--ink-soft);font-size:13.5px;line-height:1.7;}
+.wrap{max-width:1100px;margin:0 auto;padding:0 18px 60px;}
+nav.tabs{position:sticky;top:0;z-index:20;background:var(--bg);display:flex;flex-wrap:wrap;gap:6px;padding:14px 0 10px;border-bottom:1px solid var(--line);}
+nav.tabs button{border:1px solid var(--line);background:var(--paper);color:var(--ink-soft);padding:8px 18px;border-radius:999px;font-size:15px;cursor:pointer;transition:all .2s ease;}
+nav.tabs button:hover{border-color:var(--accent);color:var(--brand);background:#faf8f3;}
+nav.tabs button.active{background:linear-gradient(135deg,var(--brand) 0%,#243044 100%);border-color:var(--brand);color:#fff;box-shadow:0 2px 6px rgba(26,35,50,.18);}
+.chip-row{display:flex;flex-wrap:wrap;gap:8px;padding:12px 0 4px;}
+.chip{border:1px solid var(--line);background:transparent;color:var(--ink-soft);padding:4px 14px;border-radius:999px;font-size:13px;cursor:pointer;}
+.chip.active{background:var(--accent);border-color:var(--accent);color:#fff;}
+section.tab-panel{display:none;padding-top:18px;}
+section.tab-panel.active{display:block;}
+.sec-intro{color:var(--ink-soft);font-size:14px;margin:6px 0 14px;}
+.tag{display:inline-block;font-size:12px;padding:1px 9px;border-radius:4px;background:var(--brand-soft);color:var(--brand);border:1px solid #cdd5de;margin-right:6px;}
+.tag.gold{background:var(--gold-soft);color:#7a5c10;border-color:#e4d9b8;}
+.tag.redtag{background:#fbeaea;color:var(--bad);border-color:#e3c6c6;}
+
+/* 翻卡 */
+.card-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(285px,1fr));gap:16px;}
+.flip{perspective:1200px;height:230px;cursor:pointer;}
+.flip-inner{position:relative;width:100%;height:100%;transition:transform .55s;transform-style:preserve-3d;}
+.flip.on .flip-inner{transform:rotateY(180deg);}
+.face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border:1px solid var(--line);border-radius:10px;background:var(--paper);padding:16px 16px 14px;overflow:auto;box-shadow:0 1px 3px rgba(0,0,0,.04),0 4px 12px rgba(0,0,0,.06);}
+.face.back{transform:rotateY(180deg);background:#eee9dd;border-color:#d8d0be;}
+.face .fhead{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;}
+.face .fch{font-size:12px;color:var(--brand);font-family:"PingFang SC",sans-serif;}
+.face .hint{font-size:11.5px;color:var(--ink-soft);font-family:"PingFang SC",sans-serif;}
+.face .ftext{font-size:15px;}
+.face.back .ftext{font-size:13.8px;color:#2a2820;}
+.flip-tip{font-size:13px;color:var(--ink-soft);margin:0 0 12px;}
+
+/* 自测 */
+.q-card{background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin-bottom:14px;}
+.q-card.right{border-color:#a8c5b8;background:#f2f7f4;}
+.q-card.wrong{border-color:#dfb9b9;background:#fbf3f3;}
+.q-title{font-weight:bold;margin-bottom:10px;font-family:"PingFang SC",sans-serif;font-size:15px;}
+.q-title .qno{color:var(--brand);margin-right:6px;}
+.q-opt{display:block;padding:5px 10px;margin:4px 0;border-radius:6px;cursor:pointer;font-size:14.5px;}
+.q-opt:hover{background:#f5f0e3;}
+.q-opt input{margin-right:8px;}
+.q-opt.ok-opt{background:#e2ede7;color:#1a3a2a;font-weight:bold;}
+.q-opt.bad-opt{background:#f3e0e0;color:#8a3333;}
+.q-ex{display:none;margin-top:10px;padding:10px 12px;border-left:3px solid var(--accent);background:#faf6ec;font-size:13.5px;color:#3a362c;border-radius:0 6px 6px 0;}
+.q-card.graded .q-ex{display:block;}
+.q-verdict{font-family:"PingFang SC",sans-serif;font-size:13px;font-weight:bold;margin-left:8px;}
+.q-verdict.ok{color:var(--ok);} .q-verdict.no{color:var(--bad);}
+.btn{font-family:"PingFang SC",sans-serif;font-size:15px;cursor:pointer;border:1px solid var(--brand);background:linear-gradient(135deg,var(--brand) 0%,#243044 100%);color:#fff;padding:9px 26px;border-radius:8px;margin:6px 8px 6px 0;transition:all .2s ease;box-shadow:0 1px 3px rgba(26,35,50,.10);}
+.btn:hover{box-shadow:0 3px 10px rgba(26,35,50,.18);transform:translateY(-1px);}
+.btn.ghost{background:transparent;color:var(--brand);border-color:var(--brand);}
+.btn.ghost:hover{background:var(--brand-soft);}
+.score-banner{display:none;background:var(--paper);border:2px solid var(--accent);border-radius:10px;padding:18px 22px;margin:16px 0;text-align:center;}
+.score-banner h3{margin:0 0 6px;color:var(--brand);}
+
+/* 计算器 */
+.subtabs{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0 18px;}
+.subtabs button{font-family:"PingFang SC",sans-serif;font-size:14px;cursor:pointer;border:1px solid var(--line);background:var(--paper);color:var(--ink-soft);padding:7px 16px;border-radius:8px;}
+.subtabs button.active{background:linear-gradient(135deg,var(--accent) 0%,#b89530 100%);border-color:var(--accent);color:#fff;box-shadow:0 2px 6px rgba(201,168,76,.22);}
+.tool-panel{display:none;}
+.tool-panel.active{display:block;}
+.tool-card{background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:20px 22px;max-width:860px;margin:0 auto;box-shadow:0 1px 3px rgba(0,0,0,.04),0 4px 12px rgba(0,0,0,.06);}
+.tool-card h3{margin:0 0 4px;color:var(--brand);font-size:18px;}
+.tool-card .formula{font-size:13.5px;color:var(--ink-soft);background:var(--gold-soft);border-radius:6px;padding:8px 12px;margin:10px 0;font-family:"PingFang SC",sans-serif;}
+.form-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px 18px;margin:14px 0;}
+.field{display:flex;flex-direction:column;font-family:"PingFang SC",sans-serif;font-size:13.5px;}
+.field label{color:var(--ink-soft);margin-bottom:3px;}
+.field input,.field select{padding:8px 10px;border:1px solid var(--line);border-radius:6px;font-size:15px;background:#fff;color:var(--ink);font-family:inherit;}
+.result{display:none;margin-top:16px;border-top:1px dashed var(--line);padding-top:14px;}
+.result.show{display:block;}
+.result .big{font-family:"PingFang SC",sans-serif;font-size:26px;font-weight:bold;color:var(--brand);}
+.verdict-box{border-radius:8px;padding:12px 16px;margin:12px 0;font-size:14.5px;font-family:"PingFang SC",sans-serif;}
+.verdict-box.green{background:#e6f0ea;border:1px solid #a8c5b8;color:#1a3a2a;}
+.verdict-box.yellow{background:var(--gold-soft);border:1px solid #ddd0a8;color:#6a4e10;}
+.verdict-box.red{background:#f8e8e8;border:1px solid #dfb9b9;color:#8a3333;}
+.verdict-box h4{margin:0 0 6px;font-size:16px;}
+.result table{width:100%;border-collapse:collapse;font-size:13.5px;margin:10px 0;}
+.result th,.result td{border:1px solid var(--line);padding:6px 9px;text-align:left;}
+.result th{background:var(--brand);color:#fff;font-family:"PingFang SC",sans-serif;font-weight:600;}
+.disclaimer{margin-top:18px;font-size:12.8px;color:var(--ink-soft);background:#faf8f2;border:1px solid var(--line);border-radius:8px;padding:10px 14px;font-family:"PingFang SC",sans-serif;}
+
+/* SOP决策卡 */
+.sop-card{background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:20px 22px;margin-bottom:18px;box-shadow:0 1px 3px rgba(0,0,0,.04),0 4px 12px rgba(0,0,0,.06);}
+.sop-card h3{color:var(--brand);font-size:17px;margin:0 0 8px;border-bottom:2px solid var(--accent);padding-bottom:6px;}
+.sop-card h4{font-size:14px;color:var(--accent);margin:12px 0 6px;}
+.sop-card table{width:100%;border-collapse:collapse;font-size:13px;margin:8px 0;}
+.sop-card th,.sop-card td{border:1px solid var(--line);padding:6px 8px;text-align:left;vertical-align:top;}
+.sop-card th{background:var(--brand);color:#fff;font-family:"PingFang SC",sans-serif;font-weight:600;}
+.flow-box{border:1px dashed var(--accent);border-radius:8px;padding:10px 14px;margin:8px 0;background:#faf8f2;font-size:13.5px;}
+.flow-step{font-family:"PingFang SC",sans-serif;font-weight:bold;color:var(--brand);}
+.sop-note{font-size:12.5px;color:var(--ink-soft);background:#faf6ec;border-left:3px solid var(--accent);padding:8px 12px;border-radius:0 6px 6px 0;margin-top:10px;}
+.script-box{background:var(--gold-soft);border-radius:8px;padding:12px 16px;font-size:14px;margin-top:10px;border:1px dashed var(--accent);}
+.redline{color:var(--bad);font-weight:bold;}
+
+footer{text-align:center;color:var(--ink-soft);font-size:12.5px;padding:24px 0 10px;border-top:1px solid var(--line);margin-top:30px;font-family:"PingFang SC",sans-serif;}
+@media print{
+  header,nav.tabs,.chip-row,footer,.no-print{display:none!important;}
+  body{background:#fff;}
+  section.tab-panel{display:none!important;}
+  #tab-sop{display:block!important;}
+  .sop-card{box-shadow:none;border:1px solid #999;page-break-after:always;}
+}
+</style>
+</head>
+<body>
+<header>
+  <h1>加五磅 · Day3 学员互动工具包</h1>
+  <div class="sub">增肌平台期 RED-S 与特殊人群 ｜ 覆盖 M9–M14 六大模块<br>配套实操工具 ｜ 全部公式与阈值取自教材原文，无外部数据</div>
+</header>
+<div class="wrap">
+
+<nav class="tabs" id="mainNav">
+  <button class="active" onclick="showTab('flip')">知识点翻卡</button>
+  <button onclick="showTab('quiz')">章节自测</button>
+  <button onclick="showTab('calc')">即用计算器</button>
+  <button onclick="showTab('sop')">SOP 决策卡</button>
+</nav>
+
+<!-- ===================== TAB1: 翻卡 ===================== -->
+<section id="tab-flip" class="tab-panel active">
+  <p class="sec-intro">点击卡片翻转查看核心知识点。共 48 张，覆盖 M9–M14 全部模块。</p>
+  <div class="chip-row" id="flipChips"></div>
+  <p class="flip-tip">💡 点击卡片翻转 ｜ 点击 chip 筛选模块</p>
+  <div class="card-grid" id="flipGrid"></div>
+</section>
+
+<!-- ===================== TAB2: 自测 ===================== -->
+<section id="tab-quiz" class="tab-panel">
+  <p class="sec-intro">每模块 8 道客观题，即时判分+解析。总计 48 题。</p>
+  <div class="chip-row" id="quizChips"></div>
+  <div style="margin:10px 0;"><button class="btn" onclick="gradeQuiz()">提交评分</button><button class="btn ghost" onclick="resetQuiz()">重置</button></div>
+  <div class="score-banner" id="scoreBanner"><h3 id="scoreText"></h3><div class="review-list" id="reviewList"></div></div>
+  <div id="quizContainer"></div>
+</section>
+
+<!-- ===================== TAB3: 计算器 ===================== -->
+<section id="tab-calc" class="tab-panel">
+  <p class="sec-intro">覆盖 M9–M14 核心计算工具，共 12 个。所有阈值与公式取自教材。</p>
+  <div class="subtabs" id="calcTabs"></div>
+  <div id="calcContainer"></div>
+</section>
+
+<!-- ===================== TAB4: SOP决策卡 ===================== -->
+<section id="tab-sop" class="tab-panel">
+  <p class="sec-intro">增肌/平台期/RED-S/BR/特殊人群/循证判断速查决策卡，可直接打印随身携带。</p>
+  <div id="sopContainer"></div>
+</section>
+
+</div>
+<footer>加五磅 Day3 学员工具包 ｜ 增肌平台期RED-S与特殊人群 ｜ 全部数据取自教材原文</footer>
+
+<script>
+/* ==================== DATA ==================== */
+const MODULES = ['M9','M10','M11','M12','M13','M14'];
+const MODULE_NAMES = {M9:'增肌方案',M10:'平台期诊断',M11:'RED-S识别',M12:'Body Recomposition',M13:'循证判断',M14:'特殊人群'};
+
+/* --- 翻卡数据 48张 --- */
+const FLIPS = [
+// M9 (8张)
+{m:'M9',q:'干净增肌的热量盈余幅度',a:'+200 至 +300 kcal/d（约 +10%–+15% TEE）。食物结构以完整食物为主体，三大供能素按循证靶值分配。'},
+{m:'M9',q:'脏增肌12周 vs 干净增肌12周，LBM差异？',a:'无显著差异。Garthe 2013 RCT：NCG组LBM +2.0% vs ALG组 +1.7%，P>0.05。但脂肪量增长差异达5倍（15% vs 3%）。'},
+{m:'M9',q:'全天蛋白锚点与单餐分配锚点',a:'全天：1.6–2.2 g/kg BM/d（Morton 2018平台1.62）。单餐：0.4–0.55 g/kg BM跨过亮氨酸阈值（~2.5–3.0 g）。4–6餐，餐间3–5 h。'},
+{m:'M9',q:'训练后"30分钟蛋白窗口"是否成立？',a:'不成立。Schoenfeld 2013荟萃分析：总蛋白量解释几乎全部效应，时序变量不显著。实际窗口≥4 h。仅在训前空腹>4–5 h时训练后尽早摄入有明确价值。'},
+{m:'M9',q:'训练日 vs 非训练日碳水差异',a:'训练日 5–6 g/kg BM，非训练日 3–4 g/kg BM。差异来自碳水±30–50 g（±120–200 kcal），蛋白与脂肪不变。简化方案：全周固定 4.5–5 g/kg。'},
+{m:'M9',q:'增肌期体脂暂停阈值',a:'男性≥18%、女性≥28%。超过此阈值时芳香化酶活性升高、瘦素抵抗加重、胰岛素敏感性下降，构成不利于合成的激素环境。'},
+{m:'M9',q:'增肌训练最低有效标准',a:'每周≥3次抗阻训练、每肌群≥10 sets/周、每肌群≥2次/周、渐进超负荷持续执行。营养策略在训练刺激不足时无法独立产生LBM增益。'},
+{m:'M9',q:'新手 vs 中阶 vs 高阶增肌速率预期',a:'新手 <1年：0.5–1.0 kg LBM/月，周增重0.4–0.5% BM；中阶1–3年：0.25–0.5 kg/月，0.25–0.4%/周；高阶>3年：0.1–0.25 kg/月，0.15–0.25%/周。'},
+// M10 (8张)
+{m:'M10',q:'平台期的操作定义（三个限定条件）',a:'①方案执行≥4周；②依从率≥80%；③体重连续2周以上变化<0.5%基线体重，且体脂率趋势同步停滞。'},
+{m:'M10',q:'假平台的三类来源',a:'①测量误差（体重采集条件不标准化，单次波动0.5–1.5 kg）；②水钠波动（高盐+碳水可使体重24–48 h内回升1.0–2.5 kg）；③饮食精度不足（自报偏差可达47%，Lichtman 1992）。'},
+{m:'M10',q:'NEAT下降的量化范围',a:'Levine 1999 (JAMA)：个体差异150–900 kcal/d。长期能量限制后可下降200–800 kcal/d，发生在潜意识层面。日均步数下降>2000步/d是显著信号。'},
+{m:'M10',q:'Refeed vs Diet Break适用条件',a:'Refeed：减脂4–8周内轻度停滞（2–3周），单日高碳低脂（8–12 g/kg BM碳水，脂肪≤20%）。Diet Break：减脂≥8周明显平台（>3周），维持热量3–7天。'},
+{m:'M10',q:'Diet Break的代谢保护效应（Poon 2025）',a:'12项RCT、n=881荟萃分析：Diet Break直接代谢益处约47 kcal/d，远低于Trexler 2014数学模型预测。两组最终体重和瘦体重差异均无统计学意义。核心价值在心理恢复与依从性维持。'},
+{m:'M10',q:'五路径排查优先级',a:'前置：假平台排除 → 路径一：饮食精度核查 → 路径二：训练变量调整 → 路径三：NEAT优化 → 路径四：Refeed → 路径五：Diet Break。四条排查全部完成后才考虑热量处方调整。'},
+{m:'M10',q:'六类隐藏热量来源',a:'①酱料与调味汁（200–400 kcal/d）；②饮品热量（全糖拿铁250–300 kcal）；③零食与加餐（300–600 kcal/d）；④烹饪用油（135–270 kcal/菜）；⑤"健康食物"热量密度（30 g坚果170–200 kcal）；⑥周末外食系统性偏差。'},
+{m:'M10',q:'减脂期训练变量首要保护目标',a:'保护训练强度（RIR 2–3），而非增加训练容量。Refalo 2025 (Sports Med)：减脂期极度接近失败(RIR≤1)频繁使用会显著增加CNS疲劳。力量不掉即为瘦体重保护信号。'},
+// M11 (8张)
+{m:'M11',q:'EA计算公式与三档阈值',a:'EA = (EI − ExEE) / FFM (kg)。最优区≥45；次优/适应性LEA 30–45；临床LEA <30 kcal·kg FFM⁻¹·d⁻¹。30为LH脉冲抑制阈值（Loucks 2003）。'},
+{m:'M11',q:'LEA三轴同向抑制',a:'HPG轴：GnRH脉冲频率↓→LH脉冲↓→雌二醇/睾酮↓；HPT轴：T4→T3转化↓，T3下降15%–25%；HPA轴：晨起皮质醇↑。三轴同向应答构成RED-S神经内分泌核心。'},
+{m:'M11',q:'IOC 2023 REDs框架 vs 旧三联征',a:'①覆盖人群：三联征仅限女性→REDs涵盖所有性别；②受影响系统：3维→10+系统；③因果结构：三轴连续谱→LEA为统一致因；④临床工具：CRA评分卡→REDs CAT2。'},
+{m:'M11',q:'男性REDs的EA切点',a:'男性在EA<25 kcal·kg FFM⁻¹·d⁻¹时出现明确生化异常（睾酮下降、晨勃减少、骨形成抑制）。IOC 2023沿用<30为男女统一标准，但男性25–30区间证据存在争议。'},
+{m:'M11',q:'红色信号清单（≥1项48 h内转介）',a:'BMI<17.5 ｜ 闭经>3个月 ｜ 反复呕吐/清泻 ｜ 新发应力性骨折 ｜ 静息心率<40次/分 ｜ 晕厥/接近晕厥 ｜ 疑似进食障碍。'},
+{m:'M11',q:'教练四步职责',a:'①识别：观察偏离基线的信号；②记录：客观、时间戳明确的记录；③停止自行干预：暂停减脂方案/体重目标/训练量递增；④转介：48 h内将信息包转介运动医学医生或RD。'},
+{m:'M11',q:'骨密度损失的不可逆性',a:'Drinkwater 1984 (NEJM)：闭经女性训练者骨密度下降可达绝经后女性程度，月经恢复后部分骨量丢失不可逆。恢复期至少12个月。骨累积期(11–25岁)损失影响终身骨折风险。'},
+{m:'M11',q:'"代谢损伤"概念的证据状态',a:'无对照实验证据支持。Trexler 2014综述确认代谢适应是可逆的生理现象（RMR下调10%–15%、NEAT下降200–800 kcal/d），管理手段为系统排查和分层干预。"修复代谢"补剂无循证基础。'},
+// M12 (8张)
+{m:'M12',q:'BR的双重生理机制',a:'①脂肪氧化供能弥补能量缺口（1 kg脂肪组织≈7700 kcal储备）；②新训练刺激触发MPS上调（渐进超负荷信号+充足氨基酸）。两条件缺一不可。AMPK-mTORC1轴是关键调控节点。'},
+{m:'M12',q:'BR三类适合人群及12周预期',a:'①训练新手(<1年)：LBM +1.5–3 kg, BF −2%–4%；②回归训练者(停训≥6月)：LBM +1–2 kg, BF −1%–3%；③高体脂(男≥25%/女≥32%)：LBM +0.5–1.5 kg, BF −3%–5%。'},
+{m:'M12',q:'BR热量策略优先级',a:'等热量(TEE×1.0) > 微赤字(TEE×0.90–0.95) > 波动模式。等热量为一线起点，微赤字适用于高体脂或等热量进展慢者。波动模式循证支持最弱，不应作为一线推荐。'},
+{m:'M12',q:'BR蛋白靶值',a:'训练新手 1.8–2.2 g/kg/d；回归训练者 2.0–2.4；高体脂人群 2.2–2.7。体脂偏高者按LBM折算更准确（2.4–3.0 g/kg LBM）。向减脂期上限靠拢。'},
+{m:'M12',q:'BR训练最低要求',a:'每肌群≥2次/周、10–20 sets/周、RPE 7–9、渐进超负荷每2–4周递增。渐进超负荷在BR中的重要性高于增肌期（无热量盈余"保底"）。'},
+{m:'M12',q:'W4复评决策树',a:'LBM≥+0.5 kg且BF −1%+ → 维持；LBM无变化且BF −1%+ → 切换微赤字+核查训练容量；LBM +0.5 kg+且BF无变化 → 维持+核查隐性盈余；LBM和BF均无变化 → 核查依从性→考虑双相路径。'},
+{m:'M12',q:'BR不适用人群',a:'①中阶以上正常体脂训练者（LBM增益落在DEXA测量噪声±0.5 kg内）；②高阶训练者(>3年)；③连续训练>6个月无中断者（缺乏"新刺激"条件）。'},
+{m:'M12',q:'BR蛋白的三重功能',a:'①MPS合成底物（氨基酸供给）；②亮氨酸信号激活mTORC1通路；③微赤字条件下抗分解保护LBM + 食物热效应(TEF 20%–30%)辅助脂肪动员。'},
+// M13 (8张)
+{m:'M13',q:'Popper可证伪性原则',a:'一个理论的科学地位取决于其可证伪性——存在某种可观察事件能与之矛盾。无法被证伪的声称不在科学框架内运作。100个用户好评 ≠ 一项设计良好的RCT。'},
+{m:'M13',q:'举证责任原则',a:'提出非常规声称的一方承担证明责任（ei incumbit probatio qui dicit, non qui negat）。教练不需要证伪客户引用的声称，而是要求信息源方提供充分证据。'},
+{m:'M13',q:'六级信息源层级',a:'L1 系统综述/Meta分析 → L2 RCT → L3 队列研究 → L4 专家共识/立场声明 → L5 教科书 → L6 自媒体/商业宣传。层级位置≠绝对可靠性，GRADE可降级/升级。'},
+{m:'M13',q:'五问快速评估清单',a:'①信息源层级？②研究设计是否匹配问题类型？③样本量和效应量是否支撑结论？④是否存在利益冲突（产业资助偏倚3.6×）？⑤可推广性如何？'},
+{m:'M13',q:'产业资助偏倚（Ioannidis 2008）',a:'产业资助的研究得出有利于资助方产品的概率是非产业资助的3.6倍。教练需检查：独立第三方执行？同行评审期刊？还是品牌白皮书/预印本？'},
+{m:'M13',q:'四层分析法框架',a:'①整体图谱（现有证据全貌）→ ②方法学批判（设计缺陷和局限）→ ③适用边界（结论在何条件下成立/不成立）→ ④全量结论（综合所有证据的整体判断）。禁单篇定性。'},
+{m:'M13',q:'AIS补剂分级框架',a:'A级（强证据）：肌酸、咖啡因、β-丙氨酸、碳酸氢钠等；B级：值得考虑但证据不够充分；C级：缺乏有意义证据（BCAA当蛋白达标时、左旋肉碱等）；D级：禁止使用或高污染风险。'},
+{m:'M13',q:'剂量-反应关系的判断价值',a:'如果声称成立，应观察到"量越大效果越强"或存在明确阈值/平台的梯度关系。真正的剂量-反应证据需至少三个剂量水平（含安慰剂对照）的比较，反应变量需呈现显著线性/非线性趋势。'},
+// M14 (8张)
+{m:'M14',q:'特殊人群蛋白需求偏移',a:'三高：贴近1.6–2.2 g/kg/d上限；50+：1.0–1.6 g/kg/d（PROT-AGE）；绝经后减脂：1.6–2.0 g/kg/d。共性：更保守热量限制+更严格蛋白下限+更频繁监测。'},
+{m:'M14',q:'DASH饮食降压幅度',a:'Filippou 2020 meta分析（30项RCT、n=5545）：DASH整体降低SBP 3.2 mmHg、DBP 2.5 mmHg；高血压亚组SBP −4.4 mmHg。结构：富水果蔬菜全谷物低脂乳制品，限饱和脂肪钠和含糖饮料。'},
+{m:'M14',q:'限钠的剂量-反应证据',a:'He 2013 BMJ Cochrane meta分析（34项RCT、n=3230）：减盐4.4 g/d（钠减少1760 mg/d）后，高血压亚组SBP降低4.18 mmHg、DBP 2.06 mmHg。中国指南2024推荐盐<5 g/d（钠<2 g/d）。'},
+{m:'M14',q:'Omega-3降TG的剂量-反应',a:'Wang 2023 JAHA meta分析（86项RCT、n=67359）：每摄入1 g/d EPA+DHA，TG降低约5%–8%；高剂量2–4 g/d可降低15%–30%。对LDL-C和HDL-C影响较小或不一致。'},
+{m:'M14',q:'合成代谢抵抗的核心数据',a:'Moore 2015：老年人触发MPS最大响应需0.40 g/kg/餐乳清蛋白（年轻人0.24 g/kg），阈值比年轻人高约1.67倍。同等蛋白质量触发MPS增量比年轻人低30%–40%。'},
+{m:'M14',q:'50+骨骼三联',a:'钙1000–1200 mg/d + 维生素D 800–2000 IU/d + 维生素K2(MK-7) 90–180 μg/d。维生素D促钙吸收，钙提供骨矿化底物，K2确保骨钙素活化。三者缺一不可。'},
+{m:'M14',q:'绝经后热量底线',a:'≥1200 kcal/d。<1200 kcal/d可加速骨丢失（钙/蛋白/微量营养素绝对摄入严重不足+皮质醇升高分解代谢）。温和赤字300–500 kcal/d，减脂速度比年轻女性慢20%–30%。'},
+{m:'M14',q:'教练四条执业红线',a:'①不诊断（高血压/T2DM/肌少症属临床诊断）；②不调药（降血压/降糖/降脂药/HRT由医生决定）；③在医疗团队框架内提供营养支持；④无近期体检报告(3个月内)不开方案。'},
+];
+
+/* --- 自测题 48道 --- */
+const QUIZ = [
+// M9
+{m:'M9',type:'single',q:'Garthe 2013 RCT中，高能量摄入组与自由摄食组LBM增益差异为',opts:['高摄入组显著更高','无统计学差异','自由摄食组显著更高','数据未报告'],ans:1,exp:'NCG组LBM +2.0% vs ALG组 +1.7%，P>0.05。但脂肪量增长差异达5倍（15% vs 3%）。'},
+{m:'M9',type:'single',q:'Morton 2018荟萃分析的蛋白剂量-反应平台为',opts:['1.2 g/kg/d','1.62 g/kg/d','2.2 g/kg/d','2.6 g/kg/d'],ans:1,exp:'Morton 2018 (BJSM) 剂量-反应平台为1.62 g/kg/d。ISSN 2017将区间扩展至1.6–2.2 g/kg/d。'},
+{m:'M9',type:'judge',q:'训练后"30分钟蛋白窗口"在总量充足条件下已被多项研究证伪，实际窗口至少4小时。',opts:['正确','错误'],ans:0,exp:'Schoenfeld 2013荟萃分析确认：总蛋白量解释几乎全部效应，时序变量不显著。实际窗口≥4 h。'},
+{m:'M9',type:'calc',q:'78 kg中阶男性训练者，单餐蛋白下限（0.4 g/kg BM）为多少克？',opts:['28.2 g','31.2 g','34.2 g','36.2 g'],ans:1,exp:'78 × 0.4 = 31.2 g/餐。此剂量需跨过亮氨酸阈值（~2.5–3.0 g亮氨酸）。'},
+{m:'M9',type:'single',q:'增肌期体脂暂停阈值（ISSN/Iraki 2019）为',opts:['男≥15%/女≥25%','男≥18%/女≥28%','男≥20%/女≥30%','男≥22%/女≥32%'],ans:1,exp:'男≥18%、女≥28%。超过此阈值时芳香化酶活性升高、瘦素抵抗加重，不利于肌肉合成。'},
+{m:'M9',type:'single',q:'Areta 2013 RCT确认的最优蛋白分配模式为',opts:['8×10 g（每1.5 h）','4×20 g（每3 h）','2×40 g（每6 h）','6×13 g（每2 h）'],ans:1,exp:'4×20 g（每3 h）FSR增幅25%（最优）。8×10 g仅11%，2×40 g为19%。'},
+{m:'M9',type:'judge',q:'干净增肌12周的脂肪增长（FM）约为0.5–1.5 kg，脏增肌12周约为3.0–6.0 kg。',opts:['正确','错误'],ans:0,exp:'教材表9.1数据：干净增肌FM +0.5–1.5 kg，脏增肌FM +3.0–6.0 kg。脂肪代价高出3–5倍。'},
+{m:'M9',type:'single',q:'增肌期每肌群每周训练量的实务平台为',opts:['5–10 sets','10–20 sets','20–30 sets','30–40 sets'],ans:1,exp:'Schoenfeld 2017荟萃分析给出每肌群每周10–20 sets为中阶以上训练者的实务平台。'},
+// M10
+{m:'M10',type:'single',q:'平台期操作定义中，依从率需≥多少才构成诊断前提？',opts:['60%','70%','80%','90%'],ans:2,exp:'依从率≥80%进入真平台排查。<70%优先处理行为依从性问题。'},
+{m:'M10',type:'single',q:'Lichtman 1992研究发现自报饮食与实际摄入的偏差可达',opts:['20%','35%','47%','60%'],ans:2,exp:'Lichtman 1992 (NEJM) DLW验证研究：自报偏差平均47%，肥胖受试者低估更大。'},
+{m:'M10',type:'calc',q:'设计赤字500 kcal/d的来访者，若NEAT下降300 kcal/d，有效赤字为',opts:['100 kcal/d','200 kcal/d','300 kcal/d','500 kcal/d'],ans:1,exp:'500 − 300 = 200 kcal/d。NEAT下降200–800 kcal/d是代谢适应的主要行为贡献者。'},
+{m:'M10',type:'single',q:'Refeed的碳水摄入推荐为',opts:['3–5 g/kg BM','5–8 g/kg BM','8–12 g/kg BM','12–15 g/kg BM'],ans:2,exp:'Refeed单日碳水8–12 g/kg BM（或5–8 g/kg按训练强度），脂肪≤20%总热量。'},
+{m:'M10',type:'judge',q:'Poon 2025荟萃分析发现Diet Break的直接代谢益处约为200 kcal/d。',opts:['正确','错误'],ans:1,exp:'Poon 2025荟萃分析发现Diet Break直接代谢益处约47 kcal/d，远低于Trexler 2014数学模型预测。'},
+{m:'M10',type:'single',q:'平台期处理中最常见的方向性错误是',opts:['增加NEAT','直接砍热量','安排Refeed','增加训练频率'],ans:1,exp:'直接砍热量是最常见方向性错误。四条排查路径全部完成后才考虑热量处方调整。'},
+{m:'M10',type:'single',q:'Diet Break标准持续时间为',opts:['1天','3–7天','10–14天','21–28天'],ans:1,exp:'3–7天为标准区间，最长不超过14天。'},
+{m:'M10',type:'judge',q:'减脂期训练的首要目标是增加训练容量以提升能量消耗。',opts:['正确','错误'],ans:1,exp:'减脂期首要目标是保护训练强度(RIR 2–3)。容量"越减越多"导致CNS疲劳累积和NEAT进一步抑制。'},
+// M11
+{m:'M11',type:'calc',q:'FFM 70 kg女性训练者，EI 1800 kcal/d，ExEE 600 kcal/d，EA为',opts:['17.1','20.3','25.7','30.0'],ans:1,exp:'EA = (1800−600)/70 = 17.14 kcal·kg FFM⁻¹·d⁻¹。低于30，属临床LEA，需转介。'},
+{m:'M11',type:'single',q:'Loucks实验确认LH脉冲抑制的EA阈值为',opts:['10 kcal·kg FFM⁻¹·d⁻¹','20','30','45'],ans:2,exp:'EA降至30以下时LH脉冲频率下降、T3降低、IGF-1降低、骨形成标志物受抑制。'},
+{m:'M11',type:'single',q:'IOC 2023 REDs共识的评估工具为',opts:['CRA评分卡','REDs CAT2','SARC-F','EDE-Q'],ans:1,exp:'IOC 2023发布REDs CAT2（Clinical Assessment Tool v2）。三联征使用CRA评分卡。'},
+{m:'M11',type:'judge',q:'男性REDs的EA切点存在争议：IOC 2023沿用<30，但部分研究提示<25为男性明确生化异常阈值。',opts:['正确','错误'],ans:0,exp:'教材确认：男性在EA 25–30区间可能不出现显著功能损害，<25为较一致阈值。'},
+{m:'M11',type:'single',q:'以下哪项不是红色信号？',opts:['BMI<17.5','闭经>3个月','静息心率55次/分','新发应力性骨折'],ans:2,exp:'红色信号阈值为静息心率<40次/分。55次/分在训练者中属正常范围。'},
+{m:'M11',type:'single',q:'教练在REDs管理中的第一步是',opts:['做出REDs诊断','计算EA精确值','识别偏离基线的信号','制定能量恢复方案'],ans:2,exp:'教练职责四步：识别→记录→停止自行干预→转介。不得诊断、判读生化或制定能量恢复方案。'},
+{m:'M11',type:'judge',q:'月经恢复后闭经期间损失的骨密度可以完全回补。',opts:['正确','错误'],ans:1,exp:'Drinkwater 1984：月经恢复后部分骨量丢失不可逆，恢复期至少12个月。骨累积期损失影响终身骨折风险。'},
+{m:'M11',type:'single',q:'"代谢损伤"概念的证据状态为',opts:['已被RCT证实','存在间接证据支持','无对照实验证据支持','仅适用于女性'],ans:2,exp:'Trexler 2014综述确认代谢适应是可逆的生理现象。"修复代谢"补剂无循证基础。'},
+// M12
+{m:'M12',type:'single',q:'BR的三类适合人群中，12周LBM增益预期最高的是',opts:['训练新手','回归训练者','高体脂人群','三者相同'],ans:0,exp:'训练新手LBM +1.5–3 kg/12周，为三类人群中最高。回归者+1–2 kg，高体脂+0.5–1.5 kg。'},
+{m:'M12',type:'single',q:'BR一线热量策略为',opts:['等热量(TEE×1.0)','微赤字(TEE×0.90–0.95)','波动模式','高碳循环'],ans:0,exp:'等热量为一线起点。微赤字适用于高体脂或等热量进展慢者。波动模式循证最弱。'},
+{m:'M12',type:'calc',q:'65 kg高体脂女性BR，蛋白靶值2.4 g/kg/d，全天蛋白为',opts:['130 g','146 g','156 g','168 g'],ans:2,exp:'65 × 2.4 = 156 g/d。高体脂人群蛋白靶值2.2–2.7 g/kg/d。'},
+{m:'M12',type:'judge',q:'BR期间渐进超负荷的重要性低于增肌期，因为等热量条件下训练刺激可以适度降低。',opts:['正确','错误'],ans:1,exp:'BR期间渐进超负荷的重要性高于增肌期。增肌期有热量盈余"保底"，BR没有，训练刺激递增是MPS持续上调的唯一驱动力。'},
+{m:'M12',type:'single',q:'W4复评时LBM无变化且体脂无变化，最优先的处理是',opts:['切换双相路径','核查依从性','增加热量赤字','增加有氧训练'],ans:1,exp:'优先核查依从性（蛋白达标率、训练容量执行率）。若依从性良好则考虑切换双相路径。'},
+{m:'M12',type:'single',q:'Murphy 2022荟萃回归发现能量缺口使肌肉增长效应量降低约',opts:['SMD 0.10','SMD 0.30','SMD 0.50','SMD 0.70'],ans:1,exp:'Murphy & Koehler 2022：能量缺口使抗阻训练后肌肉增长效应量降低约SMD 0.30(95%CI 0.10–0.50)。'},
+{m:'M12',type:'single',q:'BR不适用人群包括',opts:['训练新手','停训>6个月的回归者','训练龄>3年的高阶训练者','BMI≥30的高体脂者'],ans:2,exp:'高阶训练者(>3年)无论体脂率如何，BR路径下LBM增益接近零。'},
+// M13
+{m:'M13',type:'single',q:'Popper可证伪性原则的核心含义是',opts:['所有科学理论都已被证实','不可证伪性是理论的优点','存在可观察事件能与之矛盾是科学地位的标志','100个用户好评等于一项RCT'],ans:2,exp:'一个理论的科学地位取决于其可证伪性。无法被证伪的声称不在科学框架内运作。'},
+{m:'M13',type:'single',q:'Ioannidis 2008元研究显示产业资助研究得出有利结论的概率是非产业资助的',opts:['1.5倍','2.2倍','3.6倍','5.0倍'],ans:2,exp:'产业资助的研究得出有利于资助方产品的概率是非产业资助的3.6倍。'},
+{m:'M13',type:'judge',q:'教练面对客户引用声称时，应主动承担证伪该声称的责任。',opts:['正确','错误'],ans:1,exp:'举证责任在声称方。教练应将举证责任交还："这个声称的证据来源是什么？证据等级如何？"'},
+{m:'M13',type:'single',q:'五问清单的设计目标是',opts:['30分钟内完成深度文献综述','5分钟内完成初步评估','1分钟内做出最终判断','替代同行评审'],ans:1,exp:'五问清单设计目标：5分钟内完成初步判断，决定是否需要深入查阅原始文献。'},
+{m:'M13',type:'single',q:'AIS补剂分级中，肌酸和咖啡因属于',opts:['A级','B级','C级','D级'],ans:0,exp:'肌酸、咖啡因、β-丙氨酸、碳酸氢钠等为AIS A级（强证据支持）。'},
+{m:'M13',type:'single',q:'四层分析法的第一层是',opts:['方法学批判','整体图谱','适用边界','全量结论'],ans:1,exp:'四层分析：①整体图谱→②方法学批判→③适用边界→④全量结论。'},
+{m:'M13',type:'judge',q:'观察性研究发现的"相关"可以直接翻译为"因果"。',opts:['正确','错误'],ans:1,exp:'观察性研究只能建立相关，无法证明因果。残余混杂无法完全排除。需RCT或孟德尔随机化才能建立因果推断。'},
+// M14
+{m:'M14',type:'single',q:'PROT-AGE Study Group推荐健康老年人(>65岁)蛋白摄入为',opts:['0.8 g/kg/d','1.0–1.2 g/kg/d','1.6–2.2 g/kg/d','2.4–3.0 g/kg/d'],ans:1,exp:'PROT-AGE (Bauer 2013)：健康老年人1.0–1.2 g/kg/d，身体功能良好者1.2–1.5 g/kg/d。'},
+{m:'M14',type:'calc',q:'DASH饮食整体降低高血压人群SBP幅度（Filippou 2020）为',opts:['1.0 mmHg','2.5 mmHg','4.4 mmHg','8.0 mmHg'],ans:2,exp:'Filippou 2020：DASH整体SBP −3.2 mmHg；高血压亚组SBP −4.4 mmHg、DBP −2.5 mmHg。'},
+{m:'M14',type:'single',q:'合成代谢抵抗使老年人触发MPS的亮氨酸阈值比年轻人高约',opts:['1.2倍','1.67倍','2.0倍','2.5倍'],ans:1,exp:'Moore 2015：老年人需0.40 g/kg/餐（年轻人0.24 g/kg），阈值比年轻人高约1.67倍。'},
+{m:'M14',type:'single',q:'绝经后女性热量下限为',opts:['800 kcal/d','1000 kcal/d','1200 kcal/d','1500 kcal/d'],ans:2,exp:'≥1200 kcal/d。<1200可加速骨丢失（钙/蛋白/微量营养素不足+皮质醇升高）。'},
+{m:'M14',type:'judge',q:'51岁以上推荐钙摄入为1000–1200 mg/d，维生素D 800–2000 IU/d，维生素K2(MK-7) 90–180 μg/d。',opts:['正确','错误'],ans:0,exp:'骨骼三联：钙1000–1200 mg/d + VD 800–2000 IU/d + VK2(MK-7) 90–180 μg/d。三者协同构成完整骨矿化链条。'},
+{m:'M14',type:'single',q:'Omega-3降TG的剂量-反应（Wang 2023）：每摄入1 g/d EPA+DHA，TG降低约',opts:['1%–3%','5%–8%','10%–15%','15%–30%'],ans:1,exp:'Wang 2023 JAHA：每1 g/d EPA+DHA降低TG约5%–8%。高剂量2–4 g/d可降低15%–30%。'},
+{m:'M14',type:'single',q:'教练执业四条核心原则中，首诊开方案的必要条件是',opts:['客户口头主诉','可穿戴设备数据','近期体检报告(3个月内)','客户自述饮食习惯'],ans:2,exp:'必须持有近期体检报告(3个月内)。无客观证据不开方案。'},
+];
+
+/* --- 计算器定义 12个 --- */
+const CALCS = [
+{id:'c1',name:'增肌热量盈余',mod:'M9',fn:'calcBulk'},
+{id:'c2',name:'蛋白分配验证',mod:'M9',fn:'calcProtein'},
+{id:'c3',name:'干净vs脏增肌对比',mod:'M9',fn:'calcBulkCompare'},
+{id:'c4',name:'体脂暂停阈值判断',mod:'M9',fn:'calcBFpause'},
+{id:'c5',name:'平台期诊断计算器',mod:'M10',fn:'calcPlateau'},
+{id:'c6',name:'NEAT代偿估算',mod:'M10',fn:'calcNEAT'},
+{id:'c7',name:'RED-S风险评分',mod:'M11',fn:'calcREDS'},
+{id:'c8',name:'EA计算',mod:'M11',fn:'calcEA'},
+{id:'c9',name:'BR可行性评估',mod:'M12',fn:'calcBR'},
+{id:'c10',name:'BR蛋白靶值',mod:'M12',fn:'calcBRprotein'},
+{id:'c11',name:'50+蛋白需求',mod:'M14',fn:'calc50plus'},
+{id:'c12',name:'特殊人群营养调整',mod:'M14',fn:'calcSpecial'},
+];
+
+/* --- SOP决策卡 6张 --- */
+const SOP_CARDS = [
+{title:'增肌方案制定SOP',mod:'M9',content:`
+<h4>Step 1：训练龄分层 → 选择盈余幅度</h4>
+<table><tr><th>训练龄</th><th>盈余幅度</th><th>周增重目标</th><th>蛋白靶值</th><th>12周LBM预期</th></tr>
+<tr><td>新手(<1年)</td><td>+15%–+20% TEE</td><td>0.4–0.5% BM</td><td>1.6–1.8 g/kg</td><td>+1.5–3.0 kg</td></tr>
+<tr><td>中阶(1–3年)</td><td>+10%–+15% TEE</td><td>0.25–0.4% BM</td><td>1.8–2.0 g/kg</td><td>+1.0–2.5 kg</td></tr>
+<tr><td>高阶(>3年)</td><td>+5%–+10% TEE</td><td>0.15–0.25% BM</td><td>2.0–2.2 g/kg</td><td>+0.5–1.5 kg</td></tr></table>
+<h4>Step 2：蛋白分次落地</h4>
+<div class="flow-box"><span class="flow-step">4–5餐 × 每餐≥0.4 g/kg BM × 餐间3–5 h × 单餐亮氨酸≥2.5 g</span></div>
+<h4>Step 3：体脂监控</h4>
+<table><tr><th>触发条件</th><th>决策</th></tr>
+<tr><td>体脂达暂停阈值(男≥18%/女≥28%)+连续2周无进步</td><td>暂停增肌→mini-cut 4–6周</td></tr>
+<tr><td>体脂达阈值但仍在进步</td><td>维持+密切观察2周</td></tr>
+<tr><td>周增重持续>0.5% BM</td><td>下调盈余5%，观察2周</td></tr></table>
+<div class="sop-note">训练量不足(<10 sets/周/肌群)时，第一步调训练而非调营养。</div>`},
+{title:'平台期诊断决策树SOP',mod:'M10',content:`
+<h4>前置：假平台排除</h4>
+<div class="flow-box"><span class="flow-step">Step1 测量标准化</span> → 晨起空腹/排尿后/同衣物/同秤/同时间<br>
+<span class="flow-step">Step2 水钠排除</span> → 回顾2周饮食钠波动+女性月经周期<br>
+<span class="flow-step">Step3 依从率初筛</span> → ≥80%进真平台排查 / 70–79%进路径一 / <70%先处理行为依从</div>
+<h4>五路径干预</h4>
+<table><tr><th>优先级</th><th>路径</th><th>触发条件</th><th>核心操作</th></tr>
+<tr><td>1</td><td>饮食精度核查</td><td>依从率<80%</td><td>六类隐藏热量识别+重新采集</td></tr>
+<tr><td>2</td><td>训练变量调整</td><td>频率<75%</td><td>恢复频率→审视容量→校准强度</td></tr>
+<tr><td>3</td><td>NEAT优化</td><td>步数降>2000步/d</td><td>结构化步行+站立替代+LISS</td></tr>
+<tr><td>4</td><td>Refeed</td><td>轻度停滞2–3周</td><td>单日高碳低脂8–12 g/kg</td></tr>
+<tr><td>5</td><td>Diet Break</td><td>明显停滞>3周</td><td>维持热量3–7天</td></tr></table>
+<div class="sop-note"><span class="redline">红线：四条排查全部完成前，禁止直接砍热量。</span></div>`},
+{title:'RED-S识别与转介SOP',mod:'M11',content:`
+<h4>Step 1：信号识别</h4>
+<table><tr><th>信号类别</th><th>观察要点</th></tr>
+<tr><td>表现信号</td><td>训练表现持续下降/恢复延长/反复应力性损伤</td></tr>
+<tr><td>体重信号</td><td>减脂期体重持续下降超出方案范围/称重频率异常</td></tr>
+<tr><td>月经信号(女)</td><td>周期>35天或<21天或停经</td></tr>
+<tr><td>性功能信号(男)</td><td>晨勃频率下降/性欲减退</td></tr>
+<tr><td>心理信号</td><td>强迫性食物关注/社交进食回避/身体形象焦虑加重</td></tr>
+<tr><td>免疫信号</td><td>反复URTI/口腔溃疡/伤口愈合缓慢</td></tr></table>
+<h4>Step 2：红色信号清单 → 48h内转介</h4>
+<table><tr><th>红色信号</th><th>标准</th><th>转介去向</th></tr>
+<tr><td>极低BMI</td><td><17.5</td><td>运动医学+进食障碍专科</td></tr>
+<tr><td>长期闭经</td><td>>3个月</td><td>妇科/内分泌+运动医学</td></tr>
+<tr><td>清泻行为</td><td>反复催吐/滥用泻药</td><td>精神科+运动医学</td></tr>
+<tr><td>应力性骨折</td><td>影像学确诊</td><td>运动医学</td></tr>
+<tr><td>严重心动过缓</td><td><40次/分</td><td>心内科+运动医学</td></tr></table>
+<h4>Step 3：转介话术</h4>
+<div class="script-box">①陈述观察→②表达关切+建议运动医学评估→③明确教练角色边界→④提供具体支持（整理训练记录/饮食日志带给医生）</div>
+<div class="sop-note"><span class="redline">教练四步：识别→记录→停止自行干预→转介。不得诊断、判读生化、制定能量恢复方案。</span></div>`},
+{title:'Body Recomposition策略SOP',mod:'M12',content:`
+<h4>Step 1：三维评估→路径决策</h4>
+<table><tr><th>维度</th><th>BR适合</th><th>需判断</th><th>BR不适合</th></tr>
+<tr><td>训练龄</td><td><1年</td><td>1–3年(结合体脂)</td><td>>3年</td></tr>
+<tr><td>体脂率</td><td>男≥25%/女≥32%</td><td>男18–25%/女28–32%</td><td>男<18%/女<28%</td></tr>
+<tr><td>方案史</td><td>停训>6月</td><td>停训3–6月</td><td>持续训练无中断</td></tr></table>
+<p>≥2项"BR适合"或1项"BR适合"+1项"需判断"且意愿强烈→启动BR。≥2项"不适合"→推荐双相路径。</p>
+<h4>Step 2：方案参数</h4>
+<table><tr><th>参数</th><th>设定</th></tr>
+<tr><td>热量</td><td>等热量TEE×1.0（一线）或微赤字TEE×0.90–0.95（高体脂）</td></tr>
+<tr><td>蛋白</td><td>新手1.8–2.2 / 回归者2.0–2.4 / 高体脂2.2–2.7 g/kg/d</td></tr>
+<tr><td>训练</td><td>每肌群≥10 sets/周、≥2次/周、RPE 7–9、渐进超负荷不可妥协</td></tr></table>
+<h4>Step 3：W4决策树</h4>
+<div class="flow-box">LBM≥+0.5kg且BF−1%+ → 维持 ｜ LBM无变化且BF−1%+ → 切换微赤字 ｜ LBM+0.5kg+且BF无变化 → 核查隐性盈余 ｜ 均无变化 → 核查依从性→考虑双相</div>
+<div class="sop-note">BR成功标准(W12)：LBM+1 kg以上且体脂−1%以上。</div>`},
+{title:'特殊人群营养调整SOP',mod:'M14',content:`
+<h4>三高/代谢综合征</h4>
+<table><tr><th>维度</th><th>方案</th></tr>
+<tr><td>饮食模式</td><td>DASH（富水果蔬菜全谷物低脂乳制品，限饱和脂肪/钠/含糖饮料）</td></tr>
+<tr><td>钠</td><td><2 g/d（盐<5 g/d），个体化，运动出汗多者需补偿</td></tr>
+<tr><td>碳水</td><td>每餐30–60 g + 低GI/GL，均匀分配至三餐</td></tr>
+<tr><td>Omega-3</td><td>EPA+DHA 2–4 g/d（高TG者），每1 g/d降TG 5%–8%</td></tr>
+<tr><td>减脂目标</td><td>5%–10%体重即可显著改善全部代谢指标</td></tr>
+<tr><td class="redline">转介红线</td><td class="redline">SBP≥180/DBP≥110 ｜ HbA1c>9.0% ｜ 急性心血管事件<3月</td></tr></table>
+<h4>50+训练者</h4>
+<table><tr><th>维度</th><th>方案</th></tr>
+<tr><td>蛋白</td><td>1.0–1.6 g/kg/d，每餐25–40 g高质量蛋白（克服亮氨酸阈值上调1.67×）</td></tr>
+<tr><td>骨骼三联</td><td>钙1000–1200 mg/d + VD 800–2000 IU/d + VK2(MK-7) 90–180 μg/d</td></tr>
+<tr><td>SARC-F</td><td>≥4分标注"肌少症风险"→建议DXA/BIA</td></tr></table>
+<h4>绝经后女性</h4>
+<table><tr><th>维度</th><th>方案</th></tr>
+<tr><td>蛋白</td><td>1.6–2.0 g/kg/d（减脂期），均匀分配至三餐</td></tr>
+<tr><td>热量底线</td><td>≥1200 kcal/d，温和赤字300–500 kcal/d</td></tr>
+<tr><td>策略</td><td>BR优先于单纯减重</td></tr></table>
+<div class="sop-note"><span class="redline">执业红线：不诊断、不调药、无近期体检报告不开方案。</span></div>`},
+{title:'循证判断SOP',mod:'M13',content:`
+<h4>五问快速评估（5分钟内）</h4>
+<div class="flow-box"><span class="flow-step">Q1 信息源层级？</span> L1–2继续评估 / L6默认不采信<br>
+<span class="flow-step">Q2 研究设计是否匹配问题类型？</span> 疗效→RCT / 风险→队列 / 机制→基础+人体交叉验证<br>
+<span class="flow-step">Q3 样本量和效应量是否支撑结论？</span> n<30效应量估计不稳定 / p值≠临床意义<br>
+<span class="flow-step">Q4 是否存在利益冲突？</span> 产业资助偏倚3.6× / 品牌白皮书≠同行评审<br>
+<span class="flow-step">Q5 可推广性如何？</span> 受试人群/干预剂量/结局指标是否匹配客户</div>
+<h4>争议话题四层分析</h4>
+<table><tr><th>层级</th><th>内容</th><th>要求</th></tr>
+<tr><td>① 整体图谱</td><td>现有证据全貌</td><td>多源交叉验证，禁单篇定性</td></tr>
+<tr><td>② 方法学批判</td><td>设计缺陷和局限</td><td>识别偏倚来源、样本量、测量工具异质性</td></tr>
+<tr><td>③ 适用边界</td><td>结论在何条件下成立/不成立</td><td>受试人群匹配度、剂量可行性、调节变量</td></tr>
+<tr><td>④ 全量结论</td><td>综合所有证据的整体判断</td><td>"目前证据表明…但存在以下局限…"</td></tr></table>
+<h4>常见证据操纵手法识别</h4>
+<table><tr><th>手法</th><th>识别要点</th></tr>
+<tr><td>产业资助偏倚</td><td>品牌方资助+执行 → 有利结论概率3.6×</td></tr>
+<tr><td>Proprietary blend</td><td>成分/剂量不公开 → 规避循证核查</td></tr>
+<tr><td>预印本冒充同行评审</td><td>未经独立学术审查 → 方法学质量无保障</td></tr>
+<tr><td>观察性研究→因果声称</td><td>队列研究≠RCT → 残余混杂无法排除</td></tr>
+<tr><td>"200名用户验证"</td><td>轶事证据→无法控制安慰剂/选择偏差/回归均值</td></tr></table>
+<div class="sop-note">当证据不足时，诚实告知"目前证据不充分"，而非给出不负责任的建议。</div>`},
+];
+
+/* ==================== TAB SWITCH ==================== */
+function showTab(id){
+  document.querySelectorAll('section.tab-panel').forEach(s=>s.classList.remove('active'));
+  document.getElementById('tab-'+id).classList.add('active');
+  document.querySelectorAll('#mainNav button').forEach((b,i)=>{
+    b.classList.toggle('active',['flip','quiz','calc','sop'][i]===id);
+  });
+}
+
+/* ==================== FLIP CARDS ==================== */
+(function initFlips(){
+  const chips = document.getElementById('flipChips');
+  const grid = document.getElementById('flipGrid');
+  let allChip = '<button class="chip active" data-m="all" onclick="filterFlip(this)">全部</button>';
+  MODULES.forEach(m=>{allChip+=`<button class="chip" data-m="${m}" onclick="filterFlip(this)">${m} ${MODULE_NAMES[m]}</button>`;});
+  chips.innerHTML = allChip;
+  renderFlips('all');
+})();
+function filterFlip(el){
+  document.querySelectorAll('#flipChips .chip').forEach(c=>c.classList.remove('active'));
+  el.classList.add('active');
+  renderFlips(el.dataset.m);
+}
+function renderFlips(mod){
+  const grid = document.getElementById('flipGrid');
+  const data = mod==='all'?FLIPS:FLIPS.filter(f=>f.m===mod);
+  grid.innerHTML = data.map((f,i)=>`
+    <div class="flip" onclick="this.classList.toggle('on')">
+      <div class="flip-inner">
+        <div class="face front">
+          <div class="fhead"><span class="fch">${f.m}</span><span class="hint">点击翻转</span></div>
+          <div class="ftext">${f.q}</div>
+        </div>
+        <div class="face back">
+          <div class="fhead"><span class="fch">${f.m}</span><span class="hint">答案</span></div>
+          <div class="ftext">${f.a}</div>
+        </div>
+      </div>
+    </div>`).join('');
+}
+
+/* ==================== QUIZ ==================== */
+let currentQuizMod = 'all';
+(function initQuiz(){
+  const chips = document.getElementById('quizChips');
+  let html = '<button class="chip active" data-m="all" onclick="filterQuiz(this)">全部(48)</button>';
+  MODULES.forEach(m=>{html+=`<button class="chip" data-m="${m}" onclick="filterQuiz(this)">${m}(8)</button>`;});
+  chips.innerHTML = html;
+  renderQuiz('all');
+})();
+function filterQuiz(el){
+  document.querySelectorAll('#quizChips .chip').forEach(c=>c.classList.remove('active'));
+  el.classList.add('active');
+  currentQuizMod = el.dataset.m;
+  renderQuiz(currentQuizMod);
+  document.getElementById('scoreBanner').style.display='none';
+}
+function renderQuiz(mod){
+  const data = mod==='all'?QUIZ:QUIZ.filter(q=>q.m===mod);
+  const c = document.getElementById('quizContainer');
+  c.innerHTML = data.map((q,i)=>{
+    const qi = QUIZ.indexOf(q);
+    const typeLabel = {single:'单选',judge:'判断',calc:'计算'}[q.type]||'单选';
+    return `<div class="q-card" id="qc-${qi}">
+      <div class="q-title"><span class="qno">${qi+1}.</span><span class="tag gold">${typeLabel}</span><span class="tag">${q.m}</span> ${q.q}</div>
+      ${q.opts.map((o,j)=>`<label class="q-opt" id="qo-${qi}-${j}"><input type="radio" name="q${qi}" value="${j}"> ${String.fromCharCode(65+j)}. ${o}</label>`).join('')}
+      <div class="q-ex" id="qe-${qi}">${q.ans>=0?'<b>正确答案：'+String.fromCharCode(65+q.ans)+'</b> ｜ ':''} ${q.exp}</div>
+    </div>`;
+  }).join('');
+}
+function gradeQuiz(){
+  const data = currentQuizMod==='all'?QUIZ:QUIZ.filter(q=>q.m===currentQuizMod);
+  let correct=0, total=data.length;
+  data.forEach(q=>{
+    const qi = QUIZ.indexOf(q);
+    const sel = document.querySelector(`input[name="q${qi}"]:checked`);
+    const card = document.getElementById('qc-'+qi);
+    card.classList.add('graded');
+    if(sel){
+      const v = parseInt(sel.value);
+      if(v===q.ans){correct++;card.classList.add('right');card.classList.remove('wrong');document.getElementById('qo-'+qi+'-'+v).classList.add('ok-opt');}
+      else{card.classList.add('wrong');card.classList.remove('right');document.getElementById('qo-'+qi+'-'+v).classList.add('bad-opt');document.getElementById('qo-'+qi+'-'+q.ans).classList.add('ok-opt');}
+    }else{card.classList.add('wrong');document.getElementById('qo-'+qi+'-'+q.ans).classList.add('ok-opt');}
+  });
+  const banner = document.getElementById('scoreBanner');
+  banner.style.display='block';
+  const pct = Math.round(correct/total*100);
+  document.getElementById('scoreText').textContent = `得分：${correct}/${total}（${pct}%）${pct>=80?' 🎯 达标':pct>=60?' 基本达标':' 需复习'}`;
+}
+function resetQuiz(){
+  document.querySelectorAll('.q-card').forEach(c=>{c.classList.remove('right','wrong','graded');});
+  document.querySelectorAll('.q-opt').forEach(o=>{o.classList.remove('ok-opt','bad-opt');});
+  document.querySelectorAll('input[type=radio]').forEach(r=>{r.checked=false;});
+  document.getElementById('scoreBanner').style.display='none';
+}
+
+/* ==================== CALCULATORS ==================== */
+(function initCalcs(){
+  const tabs = document.getElementById('calcTabs');
+  const c = document.getElementById('calcContainer');
+  tabs.innerHTML = CALCS.map((cl,i)=>`<button class="${i===0?'active':''}" onclick="showCalc(${i},this)">${cl.name}</button>`).join('');
+  c.innerHTML = CALCS.map((cl,i)=>`<div class="tool-panel${i===0?' active':''}" id="tp-${cl.id}">${getCalcHTML(cl.id)}</div>`).join('');
+})();
+function showCalc(i,el){
+  document.querySelectorAll('#calcTabs button').forEach(b=>b.classList.remove('active'));
+  el.classList.add('active');
+  document.querySelectorAll('#calcContainer .tool-panel').forEach(p=>p.classList.remove('active'));
+  document.getElementById('tp-'+CALCS[i].id).classList.add('active');
+}
+function getCalcHTML(id){
+  const h = {
+c1:`<div class="tool-card"><h3>增肌热量盈余计算器</h3>
+<div class="formula">TEE = RMR × PAL ｜ 总热量 = TEE × (1 + 盈余%)</div>
+<div class="form-grid">
+<div class="field"><label>性别</label><select id="c1_sex"><option value="m">男</option><option value="f">女</option></select></div>
+<div class="field"><label>年龄</label><input type="number" id="c1_age" value="28"></div>
+<div class="field"><label>体重(kg)</label><input type="number" id="c1_wt" value="78"></div>
+<div class="field"><label>身高(cm)</label><input type="number" id="c1_ht" value="175"></div>
+<div class="field"><label>PAL</label><select id="c1_pal"><option>1.55</option><option selected>1.70</option><option>1.85</option><option>2.00</option></select></div>
+<div class="field"><label>训练龄</label><select id="c1_lv"><option value="15">新手(+15–20%)</option><option value="12" selected>中阶(+10–15%)</option><option value="7">高阶(+5–10%)</option></select></div>
+</div>
+<button class="btn" onclick="calcBulk()">计算</button>
+<div class="result" id="r_c1"></div></div>`,
+c2:`<div class="tool-card"><h3>蛋白分配验证器</h3>
+<div class="formula">单餐下限 = 0.4 g/kg ｜ 单餐上限 = 0.55 g/kg ｜ 亮氨酸阈值 ~2.5 g</div>
+<div class="form-grid">
+<div class="field"><label>体重(kg)</label><input type="number" id="c2_wt" value="78"></div>
+<div class="field"><label>全天蛋白(g/d)</label><input type="number" id="c2_pro" value="156"></div>
+<div class="field"><label>餐数</label><select id="c2_meals"><option>3</option><option selected>4</option><option>5</option><option>6</option></select></div>
+</div>
+<button class="btn" onclick="calcProtein()">计算</button>
+<div class="result" id="r_c2"></div></div>`,
+c3:`<div class="tool-card"><h3>干净增肌 vs 脏增肌对比器</h3>
+<div class="formula">12周累积热量差 = 日盈余差 × 84天 ｜ FM差 = 累积差 ÷ 7700 kcal/kg</div>
+<div class="form-grid">
+<div class="field"><label>TEE(kcal/d)</label><input type="number" id="c3_tee" value="2800"></div>
+<div class="field"><label>干净增肌盈余(kcal/d)</label><input type="number" id="c3_lean" value="250"></div>
+<div class="field"><label>脏增肌盈余(kcal/d)</label><input type="number" id="c3_dirty" value="750"></div>
+</div>
+<button class="btn" onclick="calcBulkCompare()">计算</button>
+<div class="result" id="r_c3"></div></div>`,
+c4:`<div class="tool-card"><h3>体脂暂停阈值判断器</h3>
+<div class="formula">暂停阈值：男≥18% / 女≥28% ｜ 超阈值3pp以上(男>21%/女>31%)→立即mini-cut</div>
+<div class="form-grid">
+<div class="field"><label>性别</label><select id="c4_sex"><option value="m">男</option><option value="f">女</option></select></div>
+<div class="field"><label>当前体脂率(%)</label><input type="number" id="c4_bf" value="16" step="0.1"></div>
+<div class="field"><label>训练是否仍在进步？</label><select id="c4_prog"><option value="y">是</option><option value="n">否</option></select></div>
+<div class="field"><label>连续停滞周数</label><input type="number" id="c4_weeks" value="0"></div>
+</div>
+<button class="btn" onclick="calcBFpause()">判断</button>
+<div class="result" id="r_c4"></div></div>`,
+c5:`<div class="tool-card"><h3>平台期诊断计算器</h3>
+<div class="formula">平台期定义：方案≥4周 + 依从率≥80% + 体重连续2周<0.5%基线体重</div>
+<div class="form-grid">
+<div class="field"><label>方案执行周数</label><input type="number" id="c5_weeks" value="6"></div>
+<div class="field"><label>饮食依从率(%)</label><input type="number" id="c5_adh" value="85"></div>
+<div class="field"><label>基线体重(kg)</label><input type="number" id="c5_bwt" value="80"></div>
+<div class="field"><label>2周体重变化(kg，负为降)</label><input type="number" id="c5_chg" value="-0.1" step="0.1"></div>
+<div class="field"><label>日均步数较基线下降(步)</label><input type="number" id="c5_steps" value="2500"></div>
+<div class="field"><label>训练频率达标率(%)</label><input type="number" id="c5_freq" value="75"></div>
+</div>
+<button class="btn" onclick="calcPlateau()">诊断</button>
+<div class="result" id="r_c5"></div></div>`,
+c6:`<div class="tool-card"><h3>NEAT代偿估算器</h3>
+<div class="formula">有效赤字 = 设计赤字 − NEAT下降量 ｜ NEAT下降200–800 kcal/d（Trexler 2014）</div>
+<div class="form-grid">
+<div class="field"><label>设计赤字(kcal/d)</label><input type="number" id="c6_def" value="500"></div>
+<div class="field"><label>基线日均步数</label><input type="number" id="c6_base" value="8000"></div>
+<div class="field"><label>当前日均步数</label><input type="number" id="c6_curr" value="5500"></div>
+<div class="field"><label>久坐时间较基线增加(min/d)</label><input type="number" id="c6_sit" value="60"></div>
+</div>
+<button class="btn" onclick="calcNEAT()">估算</button>
+<div class="result" id="r_c6"></div></div>`,
+c7:`<div class="tool-card"><h3>RED-S风险评分器</h3>
+<div class="formula">6维度信号累积评分 ｜ ≥2项信号同时出现→建议EA评估 ｜ 任何红色信号→48h转介</div>
+<div class="form-grid">
+<div class="field"><label>训练表现持续下降？</label><select id="c7_perf"><option value="0">否</option><option value="1">是</option></select></div>
+<div class="field"><label>反复应力性损伤？</label><select id="c7_inj"><option value="0">否</option><option value="1">是</option></select></div>
+<div class="field"><label>月经异常/闭经（女）或晨勃减少（男）？</label><select id="c7_repr"><option value="0">否</option><option value="1">是</option></select></div>
+<div class="field"><label>反复URTI/免疫下降？</label><select id="c7_imm"><option value="0">否</option><option value="1">是</option></select></div>
+<div class="field"><label>强迫性食物关注/社交进食回避？</label><select id="c7_psy"><option value="0">否</option><option value="1">是</option></select></div>
+<div class="field"><label>称重频率异常/体重情绪反应过度？</label><select id="c7_weigh"><option value="0">否</option><option value="1">是</option></select></div>
+</div>
+<button class="btn" onclick="calcREDS()">评估</button>
+<div class="result" id="r_c7"></div></div>`,
+c8:`<div class="tool-card"><h3>EA（能量可用性）计算器</h3>
+<div class="formula">EA = (EI − ExEE) / FFM ｜ 最优≥45 ｜ 次优30–45 ｜ 临床<30 kcal·kg FFM⁻¹·d⁻¹</div>
+<div class="form-grid">
+<div class="field"><label>膳食能量摄入EI(kcal/d)</label><input type="number" id="c8_ei" value="1800"></div>
+<div class="field"><label>运动额外消耗ExEE(kcal/d)</label><input type="number" id="c8_ex" value="600"></div>
+<div class="field"><label>体重(kg)</label><input type="number" id="c8_wt" value="60"></div>
+<div class="field"><label>体脂率(%)</label><input type="number" id="c8_bf" value="22" step="0.1"></div>
+</div>
+<button class="btn" onclick="calcEA()">计算</button>
+<div class="result" id="r_c8"></div></div>`,
+c9:`<div class="tool-card"><h3>Body Recomposition可行性评估器</h3>
+<div class="formula">三维评估：训练龄 + 体脂率 + 方案史 ｜ ≥2项"适合"→启动BR</div>
+<div class="form-grid">
+<div class="field"><label>抗阻训练龄(年)</label><input type="number" id="c9_yrs" value="0.5" step="0.1"></div>
+<div class="field"><label>性别</label><select id="c9_sex"><option value="m">男</option><option value="f">女</option></select></div>
+<div class="field"><label>体脂率(%)</label><input type="number" id="c9_bf" value="24" step="0.1"></div>
+<div class="field"><label>停训时长(月)</label><input type="number" id="c9_off" value="0"></div>
+</div>
+<button class="btn" onclick="calcBR()">评估</button>
+<div class="result" id="r_c9"></div></div>`,
+c10:`<div class="tool-card"><h3>BR蛋白靶值计算器</h3>
+<div class="formula">体脂偏高者按LBM折算：蛋白(g/d) = LBM × 靶值系数</div>
+<div class="form-grid">
+<div class="field"><label>人群类型</label><select id="c10_type"><option value="nov">训练新手(1.8–2.2)</option><option value="ret">回归训练者(2.0–2.4)</option><option value="hbf">高体脂人群(2.2–2.7)</option></select></div>
+<div class="field"><label>体重(kg)</label><input type="number" id="c10_wt" value="85"></div>
+<div class="field"><label>体脂率(%)</label><input type="number" id="c10_bf" value="25" step="0.1"></div>
+<div class="field"><label>折算方式</label><select id="c10_method"><option value="bm">按体重(BM)</option><option value="lbm">按LBM（体脂偏高推荐）</option></select></div>
+</div>
+<button class="btn" onclick="calcBRprotein()">计算</button>
+<div class="result" id="r_c10"></div></div>`,
+c11:`<div class="tool-card"><h3>50+蛋白需求计算器</h3>
+<div class="formula">PROT-AGE：健康老年1.0–1.2 ｜ 功能良好1.2–1.5 ｜ 训练者1.2–1.6 g/kg/d ｜ 每餐25–40 g高质量蛋白</div>
+<div class="form-grid">
+<div class="field"><label>年龄</label><input type="number" id="c11_age" value="55"></div>
+<div class="field"><label>体重(kg)</label><input type="number" id="c11_wt" value="68"></div>
+<div class="field"><label>训练状态</label><select id="c11_stat"><option value="low">低活动量(1.0–1.2)</option><option value="mid">中等活动(1.2–1.5)</option><option value="high" selected>规律抗阻训练(1.2–1.6)</option></select></div>
+<div class="field"><label>餐数</label><select id="c11_meals"><option>3</option><option selected>4</option></select></div>
+</div>
+<button class="btn" onclick="calc50plus()">计算</button>
+<div class="result" id="r_c11"></div></div>`,
+c12:`<div class="tool-card"><h3>特殊人群营养需求调整器</h3>
+<div class="formula">根据人群类型调整蛋白/热量/微量营养素参数</div>
+<div class="form-grid">
+<div class="field"><label>人群类型</label><select id="c12_pop"><option value="hyper">高血压</option><option value="lipid">血脂异常</option><option value="t2dm">T2DM/高血糖</option><option value="meta">代谢综合征</option><option value="old50">50+训练者</option><option value="meno">绝经后女性</option></select></div>
+<div class="field"><label>体重(kg)</label><input type="number" id="c12_wt" value="70"></div>
+<div class="field"><label>TEE(kcal/d)</label><input type="number" id="c12_tee" value="2200"></div>
+<div class="field"><label>SBP(mmHg)（高血压/代谢综合征适用）</label><input type="number" id="c12_sbp" value="138"></div>
+<div class="field"><label>HbA1c(%)（T2DM适用）</label><input type="number" id="c12_hba1c" value="6.8" step="0.1"></div>
+</div>
+<button class="btn" onclick="calcSpecial()">计算</button>
+<div class="result" id="r_c12"></div></div>`,
+  };
+  return h[id]||'<div class="tool-card"><h3>建设中</h3></div>';
+}
+
+/* ==================== CALC FUNCTIONS ==================== */
+function calcBulk(){
+  const sex=document.getElementById('c1_sex').value,age=+document.getElementById('c1_age').value,wt=+document.getElementById('c1_wt').value,ht=+document.getElementById('c1_ht').value,pal=+document.getElementById('c1_pal').value,lv=+document.getElementById('c1_lv').value;
+  const rmr = sex==='m'?10*wt+6.25*ht-5*age+5:10*wt+6.25*ht-5*age-161;
+  const tee=rmr*pal, surLow=tee*(lv/100*0.8), surHigh=tee*(lv/100*1.2);
+  const calLow=tee+surLow,calHigh=tee+surHigh;
+  const proLow=wt*1.6,proHigh=wt*2.2;
+  const wkLow=wt*0.0025,wkHigh=wt*0.005;
+  const r=document.getElementById('r_c1');
+  r.innerHTML=`<table><tr><th>指标</th><th>数值</th></tr>
+<tr><td>RMR (Mifflin-St Jeor)</td><td>${Math.round(rmr)} kcal/d</td></tr>
+<tr><td>TEE</td><td>${Math.round(tee)} kcal/d</td></tr>
+<tr><td>推荐盈余范围</td><td>+${Math.round(surLow)} 至 +${Math.round(surHigh)} kcal/d</td></tr>
+<tr><td>总热量范围</td><td class="big">${Math.round(calLow)}–${Math.round(calHigh)} kcal/d</td></tr>
+<tr><td>蛋白靶值</td><td>${Math.round(proLow)}–${Math.round(proHigh)} g/d (${(1.6).toFixed(1)}–${(2.2).toFixed(1)} g/kg)</td></tr>
+<tr><td>周增重目标</td><td>${(wkLow*100).toFixed(2)}%–${(wkHigh*100).toFixed(2)}% BM</td></tr></table>
+<div class="verdict-box green"><h4>推荐干净增肌</h4>LBM增益与脏增肌无显著差异，脂肪代价低3–5倍（Garthe 2013）。W1–W2不动方案级参数。</div>`;
+  r.classList.add('show');
+}
+function calcProtein(){
+  const wt=+document.getElementById('c2_wt').value,pro=+document.getElementById('c2_pro').value,meals=+document.getElementById('c2_meals').value;
+  const perMeal=pro/meals, lower=wt*0.4, upper=wt*0.55, gkg=pro/wt;
+  const pass = perMeal>=lower;
+  const totalPass = gkg>=1.6&&gkg<=2.2;
+  const r=document.getElementById('r_c2');
+  r.innerHTML=`<table><tr><th>指标</th><th>数值</th><th>阈值</th><th>状态</th></tr>
+<tr><td>全天蛋白密度</td><td>${gkg.toFixed(2)} g/kg/d</td><td>1.6–2.2</td><td>${totalPass?'✅ 达标':'❌ 不足'}</td></tr>
+<tr><td>单餐蛋白均值</td><td>${perMeal.toFixed(1)} g</td><td>≥${lower.toFixed(1)} g</td><td>${pass?'✅ 跨过亮氨酸阈值':'❌ 低于阈值'}</td></tr>
+<tr><td>单餐g/kg</td><td>${(perMeal/wt).toFixed(2)} g/kg</td><td>0.40–0.55</td><td>${(perMeal/wt)>=0.4?'✅':'❌'}</td></tr></table>
+<div class="verdict-box ${pass&&totalPass?'green':'yellow'}"><h4>${pass&&totalPass?'分配结构合理':'需调整'}</h4>${pass?'':'单餐蛋白不足'+lower.toFixed(0)+' g，无法触发MPS。'}${totalPass?'':'全天蛋白总量未达1.6 g/kg下限。'} 4–5餐 × 餐间3–5 h。</div>`;
+  r.classList.add('show');
+}
+function calcBulkCompare(){
+  const tee=+document.getElementById('c3_tee').value,lean=+document.getElementById('c3_lean').value,dirty=+document.getElementById('c3_dirty').value;
+  const diff=dirty-lean, cumDiff=diff*84, fmDiff=(cumDiff/7700).toFixed(1);
+  const r=document.getElementById('r_c3');
+  r.innerHTML=`<table><tr><th>维度</th><th>干净增肌</th><th>脏增肌</th><th>差异</th></tr>
+<tr><td>日盈余</td><td>+${lean} kcal</td><td>+${dirty} kcal</td><td>${diff} kcal/d</td></tr>
+<tr><td>12周总盈余</td><td>${(lean*84/1000).toFixed(0)}k kcal</td><td>${(dirty*84/1000).toFixed(0)}k kcal</td><td>${(cumDiff/1000).toFixed(0)}k kcal</td></tr>
+<tr><td>12周FM差异(估算)</td><td colspan="2" style="text-align:center">${fmDiff} kg 脂肪组织</td><td>脏增肌多${fmDiff} kg</td></tr></table>
+<div class="verdict-box red"><h4>脏增肌的脂肪代价</h4>12周多积累约${fmDiff} kg脂肪组织。LBM增益无显著差异（Garthe 2013），后续需额外8–12周减脂清除。总周期拉长至20–24周。</div>`;
+  r.classList.add('show');
+}
+function calcBFpause(){
+  const sex=document.getElementById('c4_sex').value,bf=+document.getElementById('c4_bf').value,prog=document.getElementById('c4_prog').value,wks=+document.getElementById('c4_weeks').value;
+  const thresh=sex==='m'?18:28, thresh3=sex==='m'?21:31;
+  let verdict='', cls='green';
+  if(bf>thresh3){verdict='立即暂停增肌→进入mini-cut 4–6周';cls='red';}
+  else if(bf>=thresh){
+    if(prog==='n'&&wks>=2){verdict='暂停增肌→mini-cut 4–6周（达阈值+停滞≥2周）';cls='red';}
+    else{verdict='维持方案+密切观察2周。若体脂继续上升>0.5 pp→转mini-cut';cls='yellow';}
+  }else{verdict='体脂在安全区间，继续增肌。';cls='green';}
+  const r=document.getElementById('r_c4');
+  r.innerHTML=`<div class="verdict-box ${cls}"><h4>${verdict}</h4>
+阈值：${sex==='m'?'男':'女'}性 ≥${thresh}% ｜ 当前${bf}% ${bf>=thresh?'已超过阈值':'未达阈值'}${bf>thresh3?' (超过3pp以上)':''}</div>
+<p>mini-cut方案：赤字−15%至−20% TEE ｜ 蛋白上调至2.2–2.4 g/kg ｜ 训练量不减 ｜ 结束后体脂回到${sex==='m'?'12–15%':'22–25%'}再切回增肌。</p>`;
+  r.classList.add('show');
+}
+function calcPlateau(){
+  const wks=+document.getElementById('c5_weeks').value,adh=+document.getElementById('c5_adh').value,bwt=+document.getElementById('c5_bwt').value,chg=+document.getElementById('c5_chg').value,steps=+document.getElementById('c5_steps').value,freq=+document.getElementById('c5_freq').value;
+  const thresh=bwt*0.005;
+  let diag='', paths=[];
+  if(wks<4){diag='方案执行不足4周，不构成平台期诊断。继续执行至W4再评估。';paths=['继续执行','W4复评'];}
+  else if(adh<70){diag=`依从率${adh}%<70%，优先处理行为依从性问题，暂不进入平台期诊断流程。`;paths=['TTM行为评估','重建饮食记录习惯'];}
+  else if(Math.abs(chg)>=thresh){diag=`2周体重变化${chg} kg（阈值±${thresh.toFixed(2)} kg），未达平台期标准。`;paths=['继续当前方案','关注4周趋势均值'];}
+  else{
+    diag='已确认平台期。按以下优先级排查：';
+    if(adh<80)paths.push('路径一：饮食精度核查（依从率<80%）');
+    if(freq<75)paths.push('路径二：训练变量调整（频率<75%）');
+    if(steps>2000)paths.push('路径三：NEAT优化（步数下降>'+steps+'步/d）');
+    if(paths.length===0)paths.push('路径一至三均排除→考虑路径四(Refeed)或路径五(Diet Break)');
+  }
+  const r=document.getElementById('r_c5');
+  r.innerHTML=`<div class="verdict-box ${wks<4||Math.abs(chg)>=thresh?'green':'yellow'}"><h4>${diag}</h4></div>
+${paths.length?`<h4 style="font-family:PingFang SC;color:#1a2332">干预路径：</h4><ul>${paths.map(p=>'<li>'+p+'</li>').join('')}</ul>`:''}
+<div class="sop-note"><span class="redline">禁止在排查完成前直接砍热量。</span></div>`;
+  r.classList.add('show');
+}
+function calcNEAT(){
+  const def=+document.getElementById('c6_def').value,base=+document.getElementById('c6_base').value,curr=+document.getElementById('c6_curr').value,sit=+document.getElementById('c6_sit').value;
+  const stepDrop=base-curr;
+  const neatEst=Math.min(Math.max(stepDrop*0.15,100),600); // rough estimate
+  const effDef=def-neatEst;
+  let verdict='',cls='green';
+  if(stepDrop>2000){verdict=`步数下降${stepDrop}步(>2000)→NEAT显著下降信号`;cls='yellow';}
+  if(effDef<=0){verdict+=' ｜ 有效赤字≈0，体重停滞的直接原因';cls='red';}
+  const r=document.getElementById('r_c6');
+  r.innerHTML=`<table><tr><th>指标</th><th>数值</th></tr>
+<tr><td>步数下降</td><td>${stepDrop}步/d ${stepDrop>2000?'(>2000 ⚠️ 显著信号)':''}</td></tr>
+<tr><td>久坐增加</td><td>${sit} min/d ${sit>60?'(>60 ⚠️)':''}</td></tr>
+<tr><td>估算NEAT下降</td><td>~${Math.round(neatEst)} kcal/d</td></tr>
+<tr><td>设计赤字</td><td>${def} kcal/d</td></tr>
+<tr><td>有效赤字</td><td class="big">${Math.round(effDef)} kcal/d</td></tr></table>
+<div class="verdict-box ${cls}"><h4>${verdict||'NEAT下降在可控范围'}</h4>
+干预：结构化步行(+2000–4000步) + 每小时起身活动3–5 min + LISS 2–3次/周×20–30 min。NEAT提升幅度控制在日均100–300 kcal。</div>`;
+  r.classList.add('show');
+}
+function calcREDS(){
+  const items=['c7_perf','c7_inj','c7_repr','c7_imm','c7_psy','c7_weigh'];
+  const labels=['训练表现下降','反复应力性损伤','月经/性功能异常','免疫下降','心理/行为信号','称重异常'];
+  let score=0, flagged=[];
+  items.forEach((id,i)=>{const v=+document.getElementById(id).value;if(v){score++;flagged.push(labels[i]);}});
+  let verdict='',cls='green';
+  if(score===0){verdict='当前未识别到RED-S信号。继续常规监测。';cls='green';}
+  else if(score===1){verdict='识别到1项信号。加强监测，4周后重新评估。';cls='yellow';}
+  else{verdict=`识别到${score}项信号（${flagged.join('、')}）。多项信号同时出现→建议启动EA评估和转介流程。`;cls='red';}
+  const r=document.getElementById('r_c7');
+  r.innerHTML=`<div class="verdict-box ${cls}"><h4>风险评分：${score}/6</h4>${verdict}</div>
+${score>=2?`<p>信号清单：${flagged.map(f=>'✅ '+f).join('<br>')}</p>
+<div class="script-box"><b>转介话术：</b>①陈述观察："我注意到你最近${flagged.slice(0,2).join('和')}出现了变化"→②表达关切→③建议运动医学评估→④提供训练记录/饮食日志</div>`:''}
+<div class="sop-note">红色信号（BMI<17.5/闭经>3月/清泻/应力性骨折/心率<40/晕厥/疑似ED）任何一项→48h内强制转介。</div>`;
+  r.classList.add('show');
+}
+function calcEA(){
+  const ei=+document.getElementById('c8_ei').value,ex=+document.getElementById('c8_ex').value,wt=+document.getElementById('c8_wt').value,bf=+document.getElementById('c8_bf').value;
+  const ffm=wt*(1-bf/100), ea=(ei-ex)/ffm;
+  let zone='',cls='green';
+  if(ea>=45){zone='最优区(Optimal EA)';cls='green';}
+  else if(ea>=30){zone='次优/适应性LEA (30–45)';cls='yellow';}
+  else{zone='临床LEA (<30) → 高风险，建议转介医学评估';cls='red';}
+  const r=document.getElementById('r_c8');
+  r.innerHTML=`<table><tr><th>指标</th><th>数值</th></tr>
+<tr><td>FFM</td><td>${ffm.toFixed(1)} kg</td></tr>
+<tr><td>EA</td><td class="big">${ea.toFixed(1)} kcal·kg FFM⁻¹·d⁻¹</td></tr>
+<tr><td>分档</td><td>${zone}</td></tr></table>
+<div class="verdict-box ${cls}"><h4>${zone}</h4>
+${ea<30?'EA低于30，即使暂无明显症状，仍应视为高风险并转介医学评估。':ea<45?'短期可耐受，但需监测功能终点（月经状态、训练表现、骨标志物）。':''}
+公式：EA = (${ei} − ${ex}) / ${ffm.toFixed(1)} = ${ea.toFixed(1)}</div>
+<div class="disclaimer">注意：BIA/皮褶法FFM误差±5%–10%，对应EA偏差2–5。正式评估应使用DXA或多组分模型。</div>`;
+  r.classList.add('show');
+}
+function calcBR(){
+  const yrs=+document.getElementById('c9_yrs').value,sex=document.getElementById('c9_sex').value,bf=+document.getElementById('c9_bf').value,off=+document.getElementById('c9_off').value;
+  const bfThresh=sex==='m'?25:32, bfMid=sex==='m'?18:28;
+  let score=0, dims=[];
+  // 训练龄
+  if(yrs<1){score++;dims.push('训练龄<1年 ✅');}else if(yrs<=3){dims.push('训练龄1–3年 ⚠️ 需结合体脂');}else{dims.push('训练龄>3年 ❌ 不适合');}
+  // 体脂
+  if(bf>=bfThresh){score++;dims.push(`体脂${bf}%≥${bfThresh}% ✅`);}else if(bf>=bfMid){dims.push(`体脂${bf}%在中位区间 ⚠️`);}else{dims.push(`体脂${bf}%<${bfMid}% ❌ 不适合`);}
+  // 方案史
+  if(off>=6){score++;dims.push(`停训${off}月≥6月 ✅`);}else if(off>=3){dims.push(`停训${off}月 ⚠️`);}else{dims.push('持续训练无中断 ❌');}
+  let verdict='',cls='green',expect='';
+  if(score>=2){verdict='适合BR路径（≥2项达标）';cls='green';
+    if(yrs<1)expect='12周预期：LBM +1.5–3 kg, BF −2%–4%';
+    else if(off>=6)expect='12周预期：LBM +1–2 kg, BF −1%–3%';
+    else expect='12周预期：LBM +0.5–1.5 kg, BF −3%–5%';}
+  else if(score>=1){verdict='边界情况，需综合判断。如来访者意愿强烈可尝试BR，但预期降低。';cls='yellow';expect='可能落在DEXA测量噪声(±0.5 kg)内';}
+  else{verdict='不适合BR。推荐双相路径：mini-cut 4–6周→增肌期8–16周。';cls='red';expect='双相路径LBM净增益约为单相BR的1.5–2倍';}
+  const r=document.getElementById('r_c9');
+  r.innerHTML=`<div class="verdict-box ${cls}"><h4>${verdict}</h4>${expect}</div>
+<table><tr><th>维度</th><th>评估</th></tr>${dims.map(d=>'<tr><td>'+d+'</td></tr>').join('')}</table>
+<div class="sop-note">BR一线起点：等热量TEE×1.0 ｜ 蛋白1.8–2.7 g/kg/d ｜ 训练每肌群≥10 sets/周。</div>`;
+  r.classList.add('show');
+}
+function calcBRprotein(){
+  const type=document.getElementById('c10_type').value,wt=+document.getElementById('c10_wt').value,bf=+document.getElementById('c10_bf').value,method=document.getElementById('c10_method').value;
+  const ranges={nov:[1.8,2.2],ret:[2.0,2.4],hbf:[2.2,2.7]};
+  const lbmRanges={nov:[2.0,2.4],ret:[2.2,2.6],hbf:[2.4,3.0]};
+  const r0=ranges[type], lbm0=lbmRanges[type];
+  const lbm=wt*(1-bf/100);
+  let proLow,proHigh,unit;
+  if(method==='lbm'){proLow=lbm*lbm0[0];proHigh=lbm*lbm0[1];unit=`${lbm0[0]}–${lbm0[1]} g/kg LBM`;}
+  else{proLow=wt*r0[0];proHigh=wt*r0[1];unit=`${r0[0]}–${r0[1]} g/kg BM`;}
+  const names={nov:'训练新手',ret:'回归训练者',hbf:'高体脂人群'};
+  const perMeal=proLow/4;
+  const r=document.getElementById('r_c10');
+  r.innerHTML=`<table><tr><th>指标</th><th>数值</th></tr>
+<tr><td>人群</td><td>${names[type]}</td></tr>
+<tr><td>LBM</td><td>${lbm.toFixed(1)} kg</td></tr>
+<tr><td>蛋白靶值范围</td><td>${unit}</td></tr>
+<tr><td>全天蛋白</td><td class="big">${Math.round(proLow)}–${Math.round(proHigh)} g/d</td></tr>
+<tr><td>单餐最低(÷4餐)</td><td>≥${Math.round(perMeal)} g/餐</td></tr></table>
+<div class="verdict-box ${bf>=25?'green':'yellow'}"><h4>${bf>=25?'按LBM折算更准确':'按BM计算可用'}</h4>${bf>=25?'体脂偏高时按体重×系数会高估蛋白需求（脂肪组织非合成靶点），推荐LBM折算。':'体脂正常时按BM和LBM差异不大。'}单餐分配：4–5餐 × 每餐≥0.4 g/kg。</div>`;
+  r.classList.add('show');
+}
+function calc50plus(){
+  const age=+document.getElementById('c11_age').value,wt=+document.getElementById('c11_wt').value,stat=document.getElementById('c11_stat').value,meals=+document.getElementById('c11_meals').value;
+  const ranges={low:[1.0,1.2],mid:[1.2,1.5],high:[1.2,1.6]};
+  const r0=ranges[stat];
+  const proLow=wt*r0[0],proHigh=wt*r0[1];
+  const perMealLow=proLow/meals,perMealHigh=proHigh/meals;
+  const leucThresh = age>=50?2.5:2.5; // 2.5-4.0g for elderly
+  const r=document.getElementById('r_c11');
+  r.innerHTML=`<table><tr><th>指标</th><th>数值</th></tr>
+<tr><td>推荐区间</td><td>${r0[0]}–${r0[1]} g/kg/d</td></tr>
+<tr><td>全天蛋白</td><td class="big">${Math.round(proLow)}–${Math.round(proHigh)} g/d</td></tr>
+<tr><td>单餐蛋白</td><td>${Math.round(perMealLow)}–${Math.round(perMealHigh)} g/餐 (${meals}餐)</td></tr>
+<tr><td>亮氨酸阈值(老年)</td><td>~2.5–4.0 g/餐 (比年轻人高1.67×)</td></tr></table>
+<div class="verdict-box ${age>=65?'yellow':'green'}"><h4>合成代谢抵抗注意事项</h4>
+${age>=65?'≥65岁：PROT-AGE推荐1.0–1.2 g/kg/d为基础，规律训练者可上调至1.2–1.6。每餐须选高生物价蛋白(乳清/鸡蛋/鱼类)，训练后靠近上限(30–40 g)。':'50–65岁：合成代谢抵抗已启动但程度较轻。1.2–1.6 g/kg/d合理。'}
+<br>骨骼三联：钙1000–1200 mg/d + VD 800–2000 IU/d + VK2(MK-7) 90–180 μg/d。</div>`;
+  r.classList.add('show');
+}
+function calcSpecial(){
+  const pop=document.getElementById('c12_pop').value,wt=+document.getElementById('c12_wt').value,tee=+document.getElementById('c12_tee').value,sbp=+document.getElementById('c12_sbp').value,hba1c=+document.getElementById('c12_hba1c').value;
+  let recs=[],alerts=[];
+  const popNames={hyper:'高血压',lipid:'血脂异常',t2dm:'T2DM/高血糖',meta:'代谢综合征',old50:'50+训练者',meno:'绝经后女性'};
+  if(pop==='hyper'||pop==='meta'){
+    recs.push('DASH饮食模式（富水果蔬菜全谷物低脂乳制品）');
+    recs.push('限钠<2 g/d（盐<5 g/d），运动出汗多者个体化补偿');
+    recs.push('DASH降压幅度：SBP −4.4 mmHg（高血压亚组，Filippou 2020）');
+    if(sbp>=180)alerts.push('SBP≥180 → 禁止训练，立即转诊');
+    else if(sbp>=140)alerts.push('SBP≥140 → 训练前需评估，避免Valsalva');
+  }
+  if(pop==='lipid'||pop==='meta'){
+    recs.push('饱和脂肪<10%总能量，反式脂肪趋零');
+    recs.push('Omega-3 EPA+DHA 2–4 g/d（降TG 15%–30%）');
+    recs.push('低GI/GL碳水替代精制碳水');
+    recs.push('深海鱼每周≥2次×120–150 g，坚果25–30 g/d');
+  }
+  if(pop==='t2dm'||pop==='meta'){
+    recs.push('碳水均匀分配至三餐，每餐30–60 g');
+    recs.push('低GI/GL（GI≤55），每餐搭配蛋白20–30 g+纤维≥5 g');
+    recs.push('减重≥5%可同时改善HbA1c、血压、血脂');
+    if(hba1c>9)alerts.push('HbA1c>9.0% → 必须转介内分泌科');
+    if(pop==='t2dm')recs.push('长期二甲双胍(≥4年)→监测VitB12');
+  }
+  if(pop==='old50'){
+    recs.push('蛋白1.0–1.6 g/kg/d（规律训练者靠近上限）');
+    recs.push('每餐25–40 g高质量蛋白（克服合成代谢抵抗）');
+    recs.push('骨骼三联：钙1000–1200 mg + VD 800–2000 IU + VK2(MK-7) 90–180 μg');
+    recs.push('咖啡因<400 mg/d，训练日钙补充避开训练前后2 h');
+  }
+  if(pop==='meno'){
+    recs.push('蛋白1.6–2.0 g/kg/d（减脂期），均匀分配至三餐');
+    recs.push('热量底线≥1200 kcal/d，温和赤字300–500 kcal/d');
+    recs.push('BR优先于单纯减重');
+    recs.push('钙+VD+VK2三联（骨保护）');
+    recs.push('植物异黄酮可推荐（安全性GRADE高等），不替代HRT');
+  }
+  // Referral check
+  if(sbp>=200)alerts=['SBP≥200 → 紧急转诊'];
+  if(hba1c>9&&alerts.indexOf('HbA1c>9.0% → 必须转介内分泌科')<0)alerts.push('HbA1c>9.0% → 必须转介内分泌科');
+  const r=document.getElementById('r_c12');
+  r.innerHTML=`<div class="verdict-box ${alerts.length?'red':'green'}"><h4>${popNames[pop]}营养调整方案</h4>${alerts.length?'<b class="redline">红线警报：'+alerts.join(' ｜ ')+'</b>':'无红线指标'}</div>
+<h4 style="font-family:PingFang SC;color:#1a2332">推荐策略：</h4><ul>${recs.map(r=>'<li>'+r+'</li>').join('')}</ul>
+<div class="sop-note">执业红线：不诊断、不调药、无近期体检报告(3个月内)不开方案。每份方案须写入"不替代医生处方"。</div>`;
+  r.classList.add('show');
+}
+
+/* ==================== SOP CARDS ==================== */
+(function initSOP(){
+  const c=document.getElementById('sopContainer');
+  c.innerHTML=SOP_CARDS.map(s=>`<div class="sop-card"><h3><span class="tag">${s.mod}</span> ${s.title}</h3>${s.content}</div>`).join('');
+})();
+</script>
+</body>
+</html>

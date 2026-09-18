@@ -1,0 +1,912 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>加5磅 Day1 SOP 实操工作单（M1–M4）</title>
+<style>
+:root{
+  --paper:#ffffff; --bg:#f5f5f0; --ink:#1a1a1a; --ink-soft:#5a5a5a;
+  --brand:#1a2332; --accent:#c9a84c; --line:#e8e4dc;
+  --ok:#1a3a2a; --warn:#8a6d1b; --bad:#8a2a2a;
+  --ok-bg:#e6f0ea; --ok-bd:#a8c5b8;
+  --warn-bg:#f7f1e3; --warn-bd:#ddd0a8;
+  --bad-bg:#f8e8e8; --bad-bd:#dfb9b9;
+  --gold-soft:#f7f1e3;
+}
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  margin:0; background:var(--bg); color:var(--ink);
+  font-family:"Songti SC","STSong","SimSun","Noto Serif CJK SC",serif;
+  font-size:14.5px; line-height:1.7;
+}
+h1,h2,h3,h4,.sans,button,label,th,.tag,.field label,.toolbar,.sheet-tag,.verdict,.hint{
+  font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans CJK SC",system-ui,sans-serif;
+}
+header.topbar{
+  background:var(--paper); border-bottom:2px solid var(--accent);
+  padding:18px 20px 12px; text-align:center;
+}
+header.topbar h1{margin:0 0 4px; font-size:21px; color:var(--brand); letter-spacing:1px;}
+header.topbar .sub{color:var(--ink-soft); font-size:12.5px;}
+.toolbar{
+  position:sticky; top:0; z-index:30; background:var(--bg);
+  border-bottom:1px solid var(--line);
+  padding:10px 14px; display:flex; flex-wrap:wrap; gap:8px; align-items:center;
+  justify-content:center;
+}
+.toolbar .tabs{display:flex; flex-wrap:wrap; gap:6px;}
+.toolbar button.tabbtn{
+  border:1px solid var(--line); background:var(--paper); color:var(--ink-soft);
+  padding:7px 14px; border-radius:999px; font-size:13.5px; cursor:pointer;
+}
+.toolbar button.tabbtn.active{background:var(--brand); border-color:var(--brand); color:#fff;}
+.toolbar .tools{display:flex; flex-wrap:wrap; gap:8px; align-items:center; margin-left:8px;}
+.toolbar button.act{
+  border:1px solid var(--brand); background:var(--brand); color:#fff;
+  padding:7px 14px; border-radius:6px; font-size:13.5px; cursor:pointer;
+}
+.toolbar button.act.ghost{background:transparent; color:var(--brand);}
+.toolbar .savehint{font-size:12px; color:var(--ink-soft);}
+main{max-width:215mm; margin:0 auto; padding:18px 14px 60px;}
+.sheet{display:none;}
+.sheet.active{display:block;}
+.sheet-inner{
+  background:var(--paper); border:1px solid var(--line); border-radius:6px;
+  padding:26px 30px 22px; box-shadow:0 2px 8px rgba(60,50,30,.07);
+}
+.sheet-title h2{
+  margin:0 0 4px; font-size:18.5px; color:var(--brand);
+  border-bottom:2px solid var(--brand); padding-bottom:8px;
+}
+.sheet-tag{font-size:12px; color:var(--accent); margin-bottom:14px;}
+h3.sec{
+  font-size:15px; color:var(--accent); margin:18px 0 8px;
+  border-left:4px solid var(--accent); padding-left:8px;
+}
+h4.sub{font-size:13.5px; color:var(--brand); margin:12px 0 6px;}
+p.note{font-size:13px; color:var(--ink-soft); margin:6px 0;}
+.member-bar{
+  display:grid; grid-template-columns:repeat(auto-fill,minmax(170px,1fr));
+  gap:10px 16px; background:#faf8f3; border:1px solid var(--line);
+  border-radius:6px; padding:12px 14px; margin-bottom:6px;
+}
+.field{display:flex; flex-direction:column; font-size:12.5px;}
+.field label{color:var(--ink-soft); margin-bottom:2px;}
+.field input,.field select,.field textarea{
+  padding:6px 8px; border:1px solid var(--line); border-radius:4px;
+  font-size:14px; background:#fff; color:var(--ink); font-family:inherit;
+}
+.field textarea{resize:vertical; min-height:60px; font-size:13.5px;}
+.field.wide{grid-column:1/-1;}
+table.grid{width:100%; border-collapse:collapse; font-size:13px; margin:8px 0;}
+table.grid th,table.grid td{border:1px solid var(--line); padding:6px 8px; text-align:left; vertical-align:top;}
+table.grid th{background:#f1ede2; font-weight:600;}
+table.grid td input,table.grid td select{
+  width:100%; border:none; background:transparent; font-size:13px;
+  font-family:inherit; color:var(--ink); padding:2px 0;
+}
+table.grid td input:focus,table.grid td select:focus{outline:1px solid var(--brand); background:#fff;}
+.verdict{
+  border-radius:8px; padding:12px 16px; margin:12px 0; font-size:14px;
+  border:1px dashed var(--line); background:#faf8f3; color:var(--ink-soft);
+}
+.verdict.green{background:var(--ok-bg); border:1px solid var(--ok-bd); color:#2c4a3a;}
+.verdict.yellow{background:var(--warn-bg); border:1px solid var(--warn-bd); color:#6e4d22;}
+.verdict.red{background:var(--bad-bg); border:1px solid var(--bad-bd); color:#7c2f29;}
+.verdict h4{margin:0 0 6px; font-size:15px;}
+.verdict ul{margin:6px 0 4px 18px; padding:0;}
+.verdict li{margin-bottom:4px;}
+.verdict table{width:100%; border-collapse:collapse; font-size:13px; margin:8px 0; background:rgba(255,255,255,.55);}
+.verdict th,.verdict td{border:1px solid var(--line); padding:5px 8px; text-align:left;}
+.verdict th{background:rgba(255,255,255,.7);}
+.flow{border:1px dashed var(--brand); border-radius:8px; padding:9px 14px; margin:7px 0;
+  background:#f6f9f8; font-size:13.5px;}
+.flow .st{font-weight:600; color:var(--brand);}
+.concl-box{border:1px solid var(--line); border-radius:6px; padding:12px 14px; margin:10px 0; background:#faf8f3;}
+.concl-box .field{margin-bottom:10px;}
+.archive{
+  border:1.5px solid var(--brand); border-radius:6px; padding:12px 14px; margin:16px 0 8px;
+  background:#f7faf9;
+}
+.archive h3.sec{margin-top:4px;}
+.sheet-foot{
+  margin-top:16px; padding-top:10px; border-top:1px solid var(--line);
+  font-size:12px; color:var(--accent);
+}
+.sheet-foot .disc{color:var(--ink-soft); margin-top:3px;}
+.pill{display:inline-block; font-size:11.5px; padding:1px 8px; border-radius:4px;
+  background:#eef3f1; color:var(--brand); border:1px solid #cfddd8; margin:2px 4px 2px 0;}
+.pill.gold{background:#f7f0e6; color:var(--accent); border-color:#e6d5bf;}
+.pill.red{background:#f7e9e7; color:var(--bad); border-color:#e3c6c2;}
+.btn{
+  font-size:14px; cursor:pointer; border:1px solid var(--brand);
+  background:linear-gradient(135deg, var(--brand) 0%, #243044 100%); color:#fff;
+  padding:8px 22px; border-radius:8px; margin:6px 8px 6px 0;
+  transition:all .2s ease;
+}
+.btn:hover{box-shadow:0 3px 10px rgba(26,35,50,.18);}
+.btn.ghost{background:transparent; color:var(--brand); border-color:var(--brand);}
+@page{size:A4; margin:12mm;}
+@media print{
+  header.topbar,.toolbar{display:none !important;}
+  body{background:#fff; font-size:12px;}
+  main{max-width:100%; padding:0;}
+  .sheet{display:none !important;}
+  .sheet.active{display:block !important;}
+  .sheet-inner{border:none; box-shadow:none; padding:0;}
+  .verdict{break-inside:avoid;}
+  .flow,.archive{break-inside:avoid;}
+  input,textarea,select{color:#000 !important;}
+}
+</style>
+</head>
+<body>
+
+<header class="topbar no-print">
+  <h1>加5磅 · Day1 SOP 实操工作单</h1>
+  <div class="sub">M1 生化基础 · M2 训练营养依据 · M3 能量与宏量营养素 · M4 营养评估DAB ｜ 内置自动计算与判定，完成后可打印归档</div>
+</header>
+
+<div class="toolbar no-print">
+  <div class="tabs" id="tabBar">
+    <button class="tabbtn active" data-sheet="s1">SOP-1 能量需求评估</button>
+    <button class="tabbtn" data-sheet="s2">SOP-2 体成分评估</button>
+    <button class="tabbtn" data-sheet="s3">SOP-3 膳食评估</button>
+    <button class="tabbtn" data-sheet="s4">SOP-4 训练营养时机</button>
+    <button class="tabbtn" data-sheet="s5">SOP-5 能量系统匹配</button>
+  </div>
+  <div class="tools">
+    <button class="act" id="btnPrint">打印 / 保存当前工作单 PDF</button>
+    <button class="act ghost" id="btnClear">清空重填</button>
+    <span class="savehint" id="saveHint">内容自动保存在本机</span>
+  </div>
+</div>
+
+<main>
+
+<!-- ================= SOP-1 能量需求评估 ================= -->
+<section class="sheet active" id="sheet-s1">
+<div class="sheet-inner">
+  <div class="sheet-title">
+    <h2>SOP-1 ｜ 能量需求评估工作单</h2>
+    <div class="sheet-tag">教材定位：M3 §3.1 TDEE四组分结构 ｜ Mifflin-St Jeor / Cunningham公式 ｜ PAL系数 ｜ 热量目标设定</div>
+  </div>
+
+  <div class="member-bar">
+    <div class="field"><label>会员姓名</label><input type="text" id="s1-name"></div>
+    <div class="field"><label>评估日期</label><input type="date" id="s1-date"></div>
+    <div class="field"><label>年龄（岁）</label><input type="number" id="s1-age" min="10" max="100"></div>
+    <div class="field"><label>性别</label><select id="s1-sex"><option value="">请选择</option><option value="m">男</option><option value="f">女</option></select></div>
+    <div class="field"><label>体重（kg）</label><input type="number" id="s1-w" step="0.1"></div>
+    <div class="field"><label>身高（cm）</label><input type="number" id="s1-h" step="0.1"></div>
+    <div class="field"><label>体脂率（%，可选）</label><input type="number" id="s1-bf" step="0.1"></div>
+    <div class="field"><label>训练频率</label><select id="s1-freq">
+      <option value="">请选择</option>
+      <option value="1.3">静坐办公（PAL 1.3）</option>
+      <option value="1.4">轻度活动（PAL 1.4）</option>
+      <option value="1.5">每周3-5次健身（PAL 1.5，下限）</option>
+      <option value="1.6">每周4-5次力量训练（PAL 1.6）</option>
+      <option value="1.7">每日训练1次下限（PAL 1.7）</option>
+      <option value="1.8">每日训练1次（PAL 1.8）</option>
+      <option value="2.0">每日训练2次下限（PAL 2.0）</option>
+    </select></div>
+    <div class="field"><label>目标</label><select id="s1-goal">
+      <option value="-500">减脂标准（-500kcal/d）</option>
+      <option value="-300">减脂保守（-300kcal/d）</option>
+      <option value="-700">减脂激进（-700kcal/d）</option>
+      <option value="250">增肌干净（+250kcal/d）</option>
+      <option value="0">维持热量</option>
+    </select></div>
+    <div class="field wide"><label>备注</label><input type="text" id="s1-note"></div>
+  </div>
+
+  <h3 class="sec">一、自动计算</h3>
+  <button class="btn" onclick="calcSOP1()">计算 RMR / TDEE / 宏量分配</button>
+
+  <div class="verdict" id="s1-verdict">填写上方数据后点击计算，此处自动显示 RMR、TDEE、目标热量与宏量营养素分配建议。</div>
+
+  <h3 class="sec">二、教材阈值对照</h3>
+  <table class="grid">
+    <tr><th>参数</th><th>推荐范围</th><th>教材来源</th></tr>
+    <tr><td>Mifflin-St Jeor公式</td><td>男：10W+6.25H-5A+5；女：10W+6.25H-5A-161</td><td>M3 §3.1.2</td></tr>
+    <tr><td>Cunningham 1991</td><td>RMR = 21.6 × FFM + 370</td><td>M3 §3.1.2</td></tr>
+    <tr><td>PAL系数常见陷阱</td><td>从下限起算，高估可达300-500kcal/d</td><td>M3 §3.1.2</td></tr>
+    <tr><td>减脂缺口</td><td>-300至-500kcal/d，每周减0.25-0.5kg</td><td>M3 §3.1.3</td></tr>
+    <tr><td>增肌盈余</td><td>+200至+300kcal/d（干净增肌）</td><td>M3 §3.1.3</td></tr>
+    <tr><td>校准锚点</td><td>2-6周体重趋势</td><td>M3 §3.1.2</td></tr>
+  </table>
+
+  <h3 class="sec">三、结论填写区</h3>
+  <div class="concl-box">
+    <div class="field wide"><label>RMR/TDEE计算结论</label><textarea id="s1-c-rmr"></textarea></div>
+    <div class="field wide"><label>目标热量与宏量分配方案</label><textarea id="s1-c-macro"></textarea></div>
+    <div class="field"><label>复评计划日期</label><input type="date" id="s1-c-review"></div>
+  </div>
+
+  <div class="archive">
+    <h3 class="sec">归档 / 复评区</h3>
+    <div class="member-bar" style="background:transparent; border:none; padding:0;">
+      <div class="field"><label>教练签名</label><input type="text" id="s1-a-sign"></div>
+      <div class="field"><label>归档日期</label><input type="date" id="s1-a-date"></div>
+      <div class="field"><label>下次复评日期</label><input type="date" id="s1-a-next"></div>
+      <div class="field wide"><label>备注</label><input type="text" id="s1-a-note"></div>
+    </div>
+  </div>
+
+  <div class="sheet-foot">
+    教材定位：M3 §3.1 TDEE四组分结构；Mifflin-St Jeor 1990；Cunningham 1991；PAL系数表；热量目标分层。
+    <div class="disc">本记录用于营养教育，不替代医学评估。RED-S风险信号出现时须转介。</div>
+  </div>
+</div>
+</section>
+
+<!-- ================= SOP-2 体成分评估 ================= -->
+<section class="sheet" id="sheet-s2">
+<div class="sheet-inner">
+  <div class="sheet-title">
+    <h2>SOP-2 ｜ 体成分评估工作单（Navy围度法 + FFMI）</h2>
+    <div class="sheet-tag">教材定位：M4 §4.2 体成分评估 ｜ Navy围度法 ｜ FFMI分级参考 ｜ BIA局限性</div>
+  </div>
+
+  <div class="member-bar">
+    <div class="field"><label>会员姓名</label><input type="text" id="s2-name"></div>
+    <div class="field"><label>评估日期</label><input type="date" id="s2-date"></div>
+    <div class="field"><label>性别</label><select id="s2-sex"><option value="">请选择</option><option value="m">男</option><option value="f">女</option></select></div>
+    <div class="field"><label>年龄（岁）</label><input type="number" id="s2-age"></div>
+    <div class="field"><label>体重（kg）</label><input type="number" id="s2-w" step="0.1"></div>
+    <div class="field"><label>身高（cm）</label><input type="number" id="s2-h" step="0.1"></div>
+    <div class="field"><label>腰围（cm）</label><input type="number" id="s2-waist" step="0.1" placeholder="髂前上棘与第12肋中点"></div>
+    <div class="field"><label>颈围（cm）</label><input type="number" id="s2-neck" step="0.1"></div>
+    <div class="field" id="s2-hip-field" style="display:none"><label>臀围（cm）</label><input type="number" id="s2-hip" step="0.1" placeholder="女性填写"></div>
+    <div class="field"><label>BIA体脂率（%，如有）</label><input type="number" id="s2-bia-bf" step="0.1"></div>
+    <div class="field wide"><label>备注</label><input type="text" id="s2-note"></div>
+  </div>
+
+  <h3 class="sec">一、自动计算</h3>
+  <button class="btn" onclick="calcSOP2()">计算体脂率 / FFMI / 分层判定</button>
+
+  <div class="verdict" id="s2-verdict">填写上方数据后点击计算，此处自动显示Navy围度法体脂估算、FFMI及分级判定、中心性肥胖筛查。</div>
+
+  <h3 class="sec">二、教材阈值对照</h3>
+  <table class="grid">
+    <tr><th>参数</th><th>判定标准</th><th>教材来源</th></tr>
+    <tr><td>中国成人中心性肥胖</td><td>男腰围≥90cm，女≥85cm</td><td>M4 §4.2.1</td></tr>
+    <tr><td>FFMI分级（男）</td><td>&lt;17低平均 | 17-20平均 | 20-22高于平均 | 22-25优秀 | 25-27自然极限 | &gt;27疑似药物</td><td>M4 §4.2.2</td></tr>
+    <tr><td>FFMI分级（女）</td><td>比男性低约4-5个点</td><td>M4 §4.2.2</td></tr>
+    <tr><td>BIA局限性</td><td>水合状态可波动2%-5%，设备间不可比</td><td>M4 §4.2.1</td></tr>
+    <tr><td>BMI局限</td><td>不能区分脂肪和肌肉</td><td>M4 §4.2.3</td></tr>
+  </table>
+
+  <h3 class="sec">三、结论填写区</h3>
+  <div class="concl-box">
+    <div class="field wide"><label>体成分评估结论</label><textarea id="s2-c-result"></textarea></div>
+    <div class="field wide"><label>训练目标建议与监测计划</label><textarea id="s2-c-plan"></textarea></div>
+    <div class="field"><label>复评计划日期</label><input type="date" id="s2-c-review"></div>
+  </div>
+
+  <div class="archive">
+    <h3 class="sec">归档 / 复评区</h3>
+    <div class="member-bar" style="background:transparent; border:none; padding:0;">
+      <div class="field"><label>教练签名</label><input type="text" id="s2-a-sign"></div>
+      <div class="field"><label>归档日期</label><input type="date" id="s2-a-date"></div>
+      <div class="field"><label>下次复评日期</label><input type="date" id="s2-a-next"></div>
+      <div class="field wide"><label>备注</label><input type="text" id="s2-a-note"></div>
+    </div>
+  </div>
+
+  <div class="sheet-foot">
+    教材定位：M4 §4.2 体成分评估方法学；Navy围度法；FFMI（Kouri 1995）；BIA纵向监测原则。
+    <div class="disc">Navy围度法为估算方法，精度低于DXA。FFMI是群体统计指标，非个体诊断工具。</div>
+  </div>
+</div>
+</section>
+
+<!-- ================= SOP-3 膳食评估 ================= -->
+<section class="sheet" id="sheet-s3">
+<div class="sheet-inner">
+  <div class="sheet-title">
+    <h2>SOP-3 ｜ 膳食评估工作单（3天饮食记录分析）</h2>
+    <div class="sheet-tag">教材定位：M4 §4.1 饮食日记 ｜ 蛋白质分配分析 ｜ 低报识别（EI:BMR）｜ 微量营养素缺口信号</div>
+  </div>
+
+  <div class="member-bar">
+    <div class="field"><label>会员姓名</label><input type="text" id="s3-name"></div>
+    <div class="field"><label>评估日期</label><input type="date" id="s3-date"></div>
+    <div class="field"><label>体重（kg）</label><input type="number" id="s3-w" step="0.1"></div>
+    <div class="field"><label>BMR（kcal/d）</label><input type="number" id="s3-bmr"></div>
+    <div class="field wide"><label>备注（训练安排、特殊饮食等）</label><input type="text" id="s3-note"></div>
+  </div>
+
+  <h3 class="sec">一、3天饮食记录输入</h3>
+  <p class="note">推荐组合：2个训练日 + 1个休息日。记录所有正餐、加餐、饮品、补剂、调味品。</p>
+  <table class="grid">
+    <tr><th>日期</th><th>日类型</th><th>总能量(kcal)</th><th>蛋白质(g)</th><th>碳水(g)</th><th>脂肪(g)</th></tr>
+    <tr>
+      <td><input type="text" id="s3-d1-date" placeholder="Day 1"></td>
+      <td><select id="s3-d1-type"><option value="t">训练日</option><option value="r">休息日</option></select></td>
+      <td><input type="number" id="s3-d1-cal"></td>
+      <td><input type="number" id="s3-d1-pro"></td>
+      <td><input type="number" id="s3-d1-cho"></td>
+      <td><input type="number" id="s3-d1-fat"></td>
+    </tr>
+    <tr>
+      <td><input type="text" id="s3-d2-date" placeholder="Day 2"></td>
+      <td><select id="s3-d2-type"><option value="t">训练日</option><option value="r">休息日</option></select></td>
+      <td><input type="number" id="s3-d2-cal"></td>
+      <td><input type="number" id="s3-d2-pro"></td>
+      <td><input type="number" id="s3-d2-cho"></td>
+      <td><input type="number" id="s3-d2-fat"></td>
+    </tr>
+    <tr>
+      <td><input type="text" id="s3-d3-date" placeholder="Day 3"></td>
+      <td><select id="s3-d3-type"><option value="t">训练日</option><option value="r">休息日</option></select></td>
+      <td><input type="number" id="s3-d3-cal"></td>
+      <td><input type="number" id="s3-d3-pro"></td>
+      <td><input type="number" id="s3-d3-cho"></td>
+      <td><input type="number" id="s3-d3-fat"></td>
+    </tr>
+  </table>
+
+  <h3 class="sec">二、自动分析</h3>
+  <button class="btn" onclick="calcSOP3()">分析膳食数据</button>
+
+  <div class="verdict" id="s3-verdict">填写3天饮食数据和会员体重、BMR后点击分析，此处自动计算均值、蛋白g/kg/d、EI:BMR比值及低报判定。</div>
+
+  <h3 class="sec">三、教材阈值对照</h3>
+  <table class="grid">
+    <tr><th>参数</th><th>推荐/判定标准</th><th>教材来源</th></tr>
+    <tr><td>蛋白日总量</td><td>增肌1.6-2.0g/kg/d；减脂2.0-2.4g/kg/d</td><td>M3 §3.2</td></tr>
+    <tr><td>单餐蛋白阈值</td><td>20-40g（亮氨酸2-3g）</td><td>M1 §1.2.2</td></tr>
+    <tr><td>EI:BMR低报判定</td><td>EI:BMR < 1.35 提示可疑低报（Black 2000）</td><td>M4 §4.1.5</td></tr>
+    <tr><td>低报幅度</td><td>平均低估19%（Capling 2017）</td><td>M4 §4.1.5</td></tr>
+    <tr><td>记录天数</td><td>蛋白均值需4天；能量均值需31天</td><td>M4 §4.1.4</td></tr>
+    <tr><td>微量营养素信号</td><td>连续3天以上无乳制品/红肉/深色蔬菜→缺口提示</td><td>M4 §4.1.3</td></tr>
+  </table>
+
+  <h3 class="sec">四、结论填写区</h3>
+  <div class="concl-box">
+    <div class="field wide"><label>膳食模式分析（2-3个关键发现）</label><textarea id="s3-c-pattern"></textarea></div>
+    <div class="field wide"><label>干预靶点与调整建议</label><textarea id="s3-c-action"></textarea></div>
+    <div class="field"><label>是否需要转介RD</label><select id="s3-c-ref"><option value="">请选择</option><option value="no">否</option><option value="yes">是（说明原因）</option></select></div>
+  </div>
+
+  <div class="archive">
+    <h3 class="sec">归档 / 复评区</h3>
+    <div class="member-bar" style="background:transparent; border:none; padding:0;">
+      <div class="field"><label>教练签名</label><input type="text" id="s3-a-sign"></div>
+      <div class="field"><label>归档日期</label><input type="date" id="s3-a-date"></div>
+      <div class="field"><label>下次复评日期</label><input type="date" id="s3-a-next"></div>
+      <div class="field wide"><label>备注</label><input type="text" id="s3-a-note"></div>
+    </div>
+  </div>
+
+  <div class="sheet-foot">
+    教材定位：M4 §4.1 饮食日记记录与分析；EI:BMR低报判定（Goldberg/Black）；蛋白质分配分析；微量营养素缺口信号。
+    <div class="disc">教练角色为模式识别者，非临床诊断者。严重能量不足或疑似进食障碍须转介。</div>
+  </div>
+</div>
+</section>
+
+<!-- ================= SOP-4 训练营养时机 ================= -->
+<section class="sheet" id="sheet-s4">
+<div class="sheet-inner">
+  <div class="sheet-title">
+    <h2>SOP-4 ｜ 训练营养时机工作单</h2>
+    <div class="sheet-tag">教材定位：M2 §2.1 训练前/中/后营养策略 ｜ 时间梯度 ｜ 液体补给 ｜ 碳水分级</div>
+  </div>
+
+  <div class="member-bar">
+    <div class="field"><label>会员姓名</label><input type="text" id="s4-name"></div>
+    <div class="field"><label>评估日期</label><input type="date" id="s4-date"></div>
+    <div class="field"><label>体重（kg）</label><input type="number" id="s4-w" step="0.1"></div>
+    <div class="field"><label>训练类型</label><select id="s4-type">
+      <option value="">请选择</option>
+      <option value="strength">力量训练（1-5RM）</option>
+      <option value="hyper">肌肥大训练（6-12RM）</option>
+      <option value="hiit">HIIT / 代谢力量训练</option>
+      <option value="endurance">耐力训练</option>
+      <option value="crossfit">CrossFit WOD</option>
+    </select></div>
+    <div class="field"><label>训练时长（分钟）</label><input type="number" id="s4-dur"></div>
+    <div class="field"><label>训练强度</label><select id="s4-int">
+      <option value="">请选择</option>
+      <option value="low">低强度（可轻松对话）</option>
+      <option value="mod">中等强度（能说短句）</option>
+      <option value="high">高强度（只能说单词）</option>
+    </select></div>
+    <div class="field"><label>训练前距上次进食（h）</label><input type="number" id="s4-lastmeal" step="0.5"></div>
+    <div class="field"><label>训练前体重（kg）</label><input type="number" id="s4-pre" step="0.1"></div>
+    <div class="field"><label>训练后体重（kg）</label><input type="number" id="s4-post" step="0.1"></div>
+    <div class="field"><label>训练中饮水量（L）</label><input type="number" id="s4-drink" step="0.1"></div>
+    <div class="field"><label>下次训练间隔（h）</label><input type="number" id="s4-next" step="1"></div>
+    <div class="field wide"><label>备注</label><input type="text" id="s4-note"></div>
+  </div>
+
+  <h3 class="sec">一、自动方案生成</h3>
+  <button class="btn" onclick="calcSOP4()">生成训练营养方案</button>
+
+  <div class="verdict" id="s4-verdict">填写上方数据后点击生成，此处自动输出训练前/中/后营养方案与液体补给计划。</div>
+
+  <h3 class="sec">二、教材阈值对照</h3>
+  <table class="grid">
+    <tr><th>时间窗口</th><th>推荐</th><th>教材来源</th></tr>
+    <tr><td>训练前3-4h（正餐）</td><td>碳水1-4g/kg + 适量蛋白质</td><td>M2 §2.1.1</td></tr>
+    <tr><td>训练前1-2h（补充）</td><td>碳水0.5-1.0g/kg + 10-15g蛋白</td><td>M2 §2.1.1</td></tr>
+    <tr><td>训练前30-60min（快速）</td><td>碳水0.3-0.5g/kg（液体/半固体）</td><td>M2 §2.1.1</td></tr>
+    <tr><td>运动中碳水</td><td>&lt;30min无需；30-60min: 30g/h；1-3h: 60g/h；>2.5h: 90g/h</td><td>M2 §2.1.2</td></tr>
+    <tr><td>训练后蛋白</td><td>0.4-0.55g/kg</td><td>M2 §2.1.3</td></tr>
+    <tr><td>训练后碳水</td><td>0.5-1.2g/kg（取决于下次训练间隔）</td><td>M2 §2.1.3</td></tr>
+    <tr><td>训练后液体</td><td>体重损失×1.2-1.5倍</td><td>M2 §2.1.3</td></tr>
+  </table>
+
+  <h3 class="sec">三、结论填写区</h3>
+  <div class="concl-box">
+    <div class="field wide"><label>训练营养方案确认</label><textarea id="s4-c-plan"></textarea></div>
+    <div class="field wide"><label>需要调整的事项</label><textarea id="s4-c-adjust"></textarea></div>
+  </div>
+
+  <div class="archive">
+    <h3 class="sec">归档 / 复评区</h3>
+    <div class="member-bar" style="background:transparent; border:none; padding:0;">
+      <div class="field"><label>教练签名</label><input type="text" id="s4-a-sign"></div>
+      <div class="field"><label>归档日期</label><input type="date" id="s4-a-date"></div>
+      <div class="field"><label>下次复评日期</label><input type="date" id="s4-a-next"></div>
+      <div class="field wide"><label>备注</label><input type="text" id="s4-a-note"></div>
+    </div>
+  </div>
+
+  <div class="sheet-foot">
+    教材定位：M2 §2.1 训练前/中/后营养策略时间梯度；多种可转运碳水；液体补给ACSM框架。
+    <div class="disc">训练后30min非绝对窗口，当全天蛋白总量充足时紧迫性降低。</div>
+  </div>
+</div>
+</section>
+
+<!-- ================= SOP-5 能量系统匹配 ================= -->
+<section class="sheet" id="sheet-s5">
+<div class="sheet-inner">
+  <div class="sheet-title">
+    <h2>SOP-5 ｜ 能量系统匹配工作单</h2>
+    <div class="sheet-tag">教材定位：M1 §1.1 三大能量系统 ｜ 脂肪-碳水交叉点 ｜ RQ值 ｜ 力量/耐力营养策略差异</div>
+  </div>
+
+  <div class="member-bar">
+    <div class="field"><label>会员姓名</label><input type="text" id="s5-name"></div>
+    <div class="field"><label>评估日期</label><input type="date" id="s5-date"></div>
+    <div class="field"><label>运动类型</label><select id="s5-type">
+      <option value="">请选择</option>
+      <option value="sprint">冲刺/1-5RM举重</option>
+      <option value="strength">力量训练（6-15RM）</option>
+      <option value="hiit">HIIT / 400-800m跑</option>
+      <option value="middle">中等强度持续运动（30-60min）</option>
+      <option value="endurance">耐力运动（>60min）</option>
+      <option value="marathon">超长耐力（马拉松+）</option>
+    </select></div>
+    <div class="field"><label>运动强度</label><select id="s5-int">
+      <option value="">请选择</option>
+      <option value="max">全力（>90% VO₂max）</option>
+      <option value="high">高强度（65-90% VO₂max）</option>
+      <option value="mod">中等强度（30-65% VO₂max）</option>
+      <option value="low">低强度（<30% VO₂max）</option>
+    </select></div>
+    <div class="field"><label>持续时间（分钟）</label><input type="number" id="s5-dur"></div>
+    <div class="field"><label>体重（kg）</label><input type="number" id="s5-w" step="0.1"></div>
+    <div class="field"><label>训练目标</label><select id="s5-goal">
+      <option value="">请选择</option>
+      <option value="strength">增肌/力量发展</option>
+      <option value="fatloss">减脂</option>
+      <option value="endurance">耐力提升</option>
+      <option value="recomp">身体重组</option>
+    </select></div>
+    <div class="field wide"><label>备注</label><input type="text" id="s5-note"></div>
+  </div>
+
+  <h3 class="sec">一、自动判定</h3>
+  <button class="btn" onclick="calcSOP5()">判定主供能系统与营养策略</button>
+
+  <div class="verdict" id="s5-verdict">填写上方数据后点击判定，此处自动分析主供能系统、底物氧化比例、对应营养策略。</div>
+
+  <h3 class="sec">二、教材阈值对照</h3>
+  <table class="grid">
+    <tr><th>能量系统</th><th>底物</th><th>功率(W/kg)</th><th>持续时间</th><th>典型场景</th></tr>
+    <tr><td>磷酸原系统</td><td>ATP+PCr</td><td>极高（50-70）</td><td>5-10秒</td><td>1-5RM举重、冲刺、抓举</td></tr>
+    <tr><td>糖酵解系统</td><td>糖原/葡萄糖</td><td>高（25-50）</td><td>30秒-2分钟</td><td>6-15RM代谢力量训练、HIIT</td></tr>
+    <tr><td>有氧氧化系统</td><td>糖原+脂肪+蛋白质</td><td>低-中（10-25）</td><td>>2分钟至数小时</td><td>耐力运动、LISS、组间恢复</td></tr>
+  </table>
+  <table class="grid">
+    <tr><th>强度区间</th><th>底物主导</th><th>营养策略要点</th></tr>
+    <tr><td>&lt;30% VO₂max</td><td>脂肪供能约60-70%</td><td>低强度有氧，Zone 2训练</td></tr>
+    <tr><td>30-65% VO₂max</td><td>脂肪氧化峰值（Fatmax）</td><td>脂肪-碳水交叉点区域</td></tr>
+    <tr><td>>65% VO₂max</td><td>碳水主导</td><td>训练日碳水≥3-5g/kg</td></tr>
+  </table>
+
+  <h3 class="sec">三、结论填写区</h3>
+  <div class="concl-box">
+    <div class="field wide"><label>主供能系统判定与营养策略</label><textarea id="s5-c-result"></textarea></div>
+    <div class="field wide"><label>碳水/蛋白/液体调整建议</label><textarea id="s5-c-adjust"></textarea></div>
+  </div>
+
+  <div class="archive">
+    <h3 class="sec">归档 / 复评区</h3>
+    <div class="member-bar" style="background:transparent; border:none; padding:0;">
+      <div class="field"><label>教练签名</label><input type="text" id="s5-a-sign"></div>
+      <div class="field"><label>归档日期</label><input type="date" id="s5-a-date"></div>
+      <div class="field"><label>下次复评日期</label><input type="date" id="s5-a-next"></div>
+      <div class="field wide"><label>备注</label><input type="text" id="s5-a-note"></div>
+    </div>
+  </div>
+
+  <div class="sheet-foot">
+    教材定位：M1 §1.1 三大能量系统功率与底物特征；脂肪-碳水交叉点（Brooks & Mercier 1994）；RQ判读。
+    <div class="disc">三大系统协同供能，任何运动都是三者按比例共同参与。</div>
+  </div>
+</div>
+</section>
+
+</main>
+
+<script>
+'use strict';
+
+/* === Tab切换 === */
+document.querySelectorAll('.toolbar button.tabbtn').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    document.querySelectorAll('.toolbar button.tabbtn').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    document.querySelectorAll('.sheet').forEach(s=>s.classList.remove('active'));
+    document.getElementById('sheet-'+btn.dataset.sheet).classList.add('active');
+  });
+});
+
+/* === 性别联动 === */
+document.getElementById('s2-sex').addEventListener('change',function(){
+  document.getElementById('s2-hip-field').style.display=this.value==='f'?'flex':'none';
+});
+
+/* === 打印 === */
+document.getElementById('btnPrint').addEventListener('click',()=>window.print());
+
+/* === 清空 === */
+document.getElementById('btnClear').addEventListener('click',()=>{
+  if(!confirm('确认清空当前工作单所有数据？'))return;
+  const active=document.querySelector('.sheet.active');
+  active.querySelectorAll('input,textarea,select').forEach(el=>{
+    if(el.type==='select-one')el.selectedIndex=0;else el.value='';
+  });
+  active.querySelectorAll('.verdict').forEach(v=>{v.className='verdict';v.innerHTML='';});
+  localStorage.removeItem('sop_day1_data');
+});
+
+/* === localStorage === */
+function saveData(){
+  const data={};
+  document.querySelectorAll('input,textarea,select').forEach(el=>{
+    if(el.id&&el.value)data[el.id]=el.value;
+  });
+  try{localStorage.setItem('sop_day1_data',JSON.stringify(data));}catch(e){}
+}
+function loadData(){
+  try{
+    const d=JSON.parse(localStorage.getItem('sop_day1_data'));
+    if(!d)return;
+    Object.keys(d).forEach(k=>{
+      const el=document.getElementById(k);
+      if(el)el.value=d[k];
+    });
+  }catch(e){}
+}
+document.addEventListener('input',saveData);
+document.addEventListener('change',saveData);
+loadData();
+
+/* === SOP-1 计算 === */
+function calcSOP1(){
+  const sex=document.getElementById('s1-sex').value;
+  const w=parseFloat(document.getElementById('s1-w').value);
+  const h=parseFloat(document.getElementById('s1-h').value);
+  const a=parseFloat(document.getElementById('s1-age').value);
+  const bf=parseFloat(document.getElementById('s1-bf').value);
+  const pal=parseFloat(document.getElementById('s1-freq').value);
+  const goal=parseFloat(document.getElementById('s1-goal').value);
+  const v=document.getElementById('s1-verdict');
+  if(!sex||!w||!h||!a||!pal){v.className='verdict red';v.innerHTML='<h4>⚠ 数据不完整</h4>请填写性别、体重、身高、年龄和训练频率。';return;}
+
+  // RMR
+  const msj=sex==='m'?10*w+6.25*h-5*a+5:10*w+6.25*h-5*a-161;
+  let rmr=msj,formula='Mifflin-St Jeor 1990';
+  let cunRmr='';
+  if(bf){
+    const ffm=w*(1-bf/100);
+    const cun=21.6*ffm+370;
+    cunRmr=`<br>Cunningham 1991: RMR = 21.6 × ${ffm.toFixed(1)} + 370 = <b>${Math.round(cun)} kcal/d</b>`;
+  }
+  const tdee=rmr*pal;
+  const target=tdee+goal;
+
+  // 宏量分配（默认增肌1.8g/kg蛋白，1.0g/kg脂肪）
+  const proRate=goal<0?2.0:1.8;
+  const fatRate=1.0;
+  const proG=Math.round(proRate*w);
+  const fatG=Math.round(fatRate*w);
+  const proCal=proG*4;
+  const fatCal=fatG*9;
+  const choCal=target-proCal-fatCal;
+  const choG=choCal>0?Math.round(choCal/4):0;
+
+  v.className='verdict green';
+  v.innerHTML=`<h4>计算结果</h4>
+    <table>
+    <tr><th>项目</th><th>数值</th></tr>
+    <tr><td>RMR（${formula}）</td><td><b>${Math.round(rmr)} kcal/d</b></td></tr>
+    ${cunRmr?'<tr><td colspan="2">'+cunRmr+'</td></tr>':''}
+    <tr><td>PAL系数</td><td>${pal}</td></tr>
+    <tr><td>TDEE</td><td><b>${Math.round(tdee)} kcal/d</b></td></tr>
+    <tr><td>目标调整</td><td>${goal>0?'+':''}${goal} kcal/d</td></tr>
+    <tr><td>目标热量</td><td><b>${Math.round(target)} kcal/d</b></td></tr>
+    </table>
+    <h4>宏量营养素分配</h4>
+    <table>
+    <tr><th>营养素</th><th>克数</th><th>热量</th><th>占比</th></tr>
+    <tr><td>蛋白质（${proRate}g/kg/d）</td><td>${proG}g</td><td>${proCal}kcal</td><td>${Math.round(proCal/target*100)}%</td></tr>
+    <tr><td>脂肪（${fatRate}g/kg/d）</td><td>${fatG}g</td><td>${fatCal}kcal</td><td>${Math.round(fatCal/target*100)}%</td></tr>
+    <tr><td>碳水（弹性填充）</td><td>${choG}g</td><td>${choG*4}kcal</td><td>${choG>0?Math.round(choG*4/target*100):0}%</td></tr>
+    </table>
+    ${goal<-500?'<p style="color:var(--bad)">⚠ 缺口偏大，建议保守方案（-200至-300kcal/d），蛋白质上调至2.0-2.4g/kg/d。</p>':''}
+    <p>校准锚点：以2-6周体重趋势验证，若偏差>0.5kg/周需调整±100-200kcal。</p>`;
+}
+
+/* === SOP-2 计算 === */
+function calcSOP2(){
+  const sex=document.getElementById('s2-sex').value;
+  const w=parseFloat(document.getElementById('s2-w').value);
+  const h=parseFloat(document.getElementById('s2-h').value);
+  const waist=parseFloat(document.getElementById('s2-waist').value);
+  const neck=parseFloat(document.getElementById('s2-neck').value);
+  const biaBf=parseFloat(document.getElementById('s2-bia-bf').value);
+  const v=document.getElementById('s2-verdict');
+  if(!sex||!w||!h||!waist||!neck){v.className='verdict red';v.innerHTML='<h4>⚠ 数据不完整</h4>请填写性别、体重、身高、腰围和颈围。';return;}
+
+  // Navy法
+  let navyBf;
+  if(sex==='m'){
+    navyBf=86.010*Math.log10(waist-neck)-70.041*Math.log10(h)+36.76;
+  }else{
+    const hip=parseFloat(document.getElementById('s2-hip').value);
+    if(!hip){v.className='verdict red';v.innerHTML='<h4>⚠ 女性需要臀围数据</h4>';return;}
+    navyBf=163.205*Math.log10(waist+hip-neck)-355.055*Math.log10(h)+74.595;
+  }
+  navyBf=Math.max(navyBf,5);
+
+  // BMI
+  const bmi=w/((h/100)**2);
+
+  // 中心性肥胖
+  let centralObesity='';
+  if(sex==='m'&&waist>=90)centralObesity='⚠ 中心性肥胖（男≥90cm）';
+  if(sex==='f'&&waist>=85)centralObesity='⚠ 中心性肥胖（女≥85cm）';
+
+  // FFMI
+  let ffmiHtml='';
+  const useBf=biaBf||navyBf;
+  const ffm=w*(1-useBf/100);
+  const ffmi=ffm/((h/100)**2);
+  const nffmi=ffmi+6.1*(1.80-h/100);
+  let ffmiGrade='';
+  if(sex==='m'){
+    if(nffmi<17)ffmiGrade='低于平均';else if(nffmi<20)ffmiGrade='平均';
+    else if(nffmi<22)ffmiGrade='高于平均';else if(nffmi<25)ffmiGrade='优秀';
+    else if(nffmi<27)ffmiGrade='自然极限区间';else ffmiGrade='>25：需结合其他证据';
+  }
+
+  v.className='verdict green';
+  v.innerHTML=`<h4>Navy围度法体脂估算</h4>
+    <p>体脂率：<b>${navyBf.toFixed(1)}%</b>（${biaBf?`BIA实测${biaBf}%，差值${(navyBf-biaBf).toFixed(1)}%`:''})</p>
+    ${centralObesity?`<p style="color:var(--bad)">${centralObesity}</p>`:'<p>腰围在正常范围内。</p>'}
+    <h4>FFMI（使用${biaBf?'BIA':'Navy'}体脂率${useBf.toFixed(1)}%）</h4>
+    <p>FFM=${ffm.toFixed(1)}kg ｜ FFMI=${ffmi.toFixed(1)} ｜ 标准化FFMI=<b>${nffmi.toFixed(1)}</b></p>
+    ${ffmiGrade?`<p>分级判定：<b>${ffmiGrade}</b></p>`:''}
+    <h4>BMI</h4>
+    <p>${bmi.toFixed(1)} kg/m²（注意：BMI不能区分脂肪和肌肉，对训练者参考价值有限）</p>
+    ${Math.abs(navyBf-(biaBf||navyBf))>2&&biaBf?'<p style="color:var(--warn)">⚠ Navy法与BIA差值>2%，接近BIA测量变异范围。以纵向趋势为准。</p>':''}
+    <p>BIA局限性提醒：水合状态可导致2-5%波动。仅用于同一设备、同一条件的纵向趋势监测。</p>`;
+}
+
+/* === SOP-3 计算 === */
+function calcSOP3(){
+  const w=parseFloat(document.getElementById('s3-w').value);
+  const bmr=parseFloat(document.getElementById('s3-bmr').value);
+  const v=document.getElementById('s3-verdict');
+  if(!w||!bmr){v.className='verdict red';v.innerHTML='<h4>⚠ 请填写体重和BMR</h4>';return;}
+
+  const days=[1,2,3];
+  let totalCal=0,totalPro=0,totalCho=0,totalFat=0,validDays=0;
+  let trainCal=0,trainPro=0,trainDays=0,restCal=0,restPro=0,restDays=0;
+  days.forEach(d=>{
+    const cal=parseFloat(document.getElementById(`s3-d${d}-cal`).value);
+    const pro=parseFloat(document.getElementById(`s3-d${d}-pro`).value);
+    const cho=parseFloat(document.getElementById(`s3-d${d}-cho`).value);
+    const fat=parseFloat(document.getElementById(`s3-d${d}-fat`).value);
+    const type=document.getElementById(`s3-d${d}-type`).value;
+    if(cal&&pro){
+      validDays++;
+      totalCal+=cal;totalPro+=pro;totalCho+=(cho||0);totalFat+=(fat||0);
+      if(type==='t'){trainCal+=cal;trainPro+=pro;trainDays++;}
+      else{restCal+=cal;restPro+=pro;restDays++;}
+    }
+  });
+  if(!validDays){v.className='verdict red';v.innerHTML='<h4>⚠ 请至少填写1天完整数据</h4>';return;}
+
+  const avgCal=totalCal/validDays;
+  const avgPro=totalPro/validDays;
+  const proPerKg=avgPro/w;
+  const eiBmr=avgCal/bmr;
+
+  // 低报判定
+  let underReport='';
+  if(eiBmr<1.35){
+    underReport=`<p style="color:var(--bad)">⚠ EI:BMR = ${eiBmr.toFixed(2)} < 1.35，提示可疑低报（Black 2000）。Capling 2017报告平均低估19%。建议与体重变化趋势交叉验证。</p>`;
+  }else{
+    underReport=`<p>EI:BMR = ${eiBmr.toFixed(2)} ≥ 1.35，无明显低报信号。</p>`;
+  }
+
+  // 蛋白判定
+  let proVerdict='';
+  if(proPerKg<1.2)proVerdict=`<p style="color:var(--bad)">⚠ 蛋白质${proPerKg.toFixed(1)}g/kg/d，低于1.6g/kg/d推荐下限。优先补量。</p>`;
+  else if(proPerKg<1.6)proVerdict=`<p style="color:var(--warn)">蛋白质${proPerKg.toFixed(1)}g/kg/d，处于偏低区间。增肌期建议上调至1.6-2.0g/kg/d。</p>`;
+  else if(proPerKg<=2.4)proVerdict=`<p style="color:var(--ok)">蛋白质${proPerKg.toFixed(1)}g/kg/d，在推荐区间内。</p>`;
+  else proVerdict=`<p>蛋白质${proPerKg.toFixed(1)}g/kg/d，偏高但在安全范围内（≤2.4g/kg/d，肾功能正常者）。</p>`;
+
+  v.className='verdict green';
+  v.innerHTML=`<h4>3天均值分析</h4>
+    <table>
+    <tr><th>指标</th><th>3天均值</th>${trainDays?`<th>训练日均值</th>`:''} ${restDays?`<th>休息日均值</th>`:''}</tr>
+    <tr><td>能量(kcal)</td><td><b>${Math.round(avgCal)}</b></td>${trainDays?`<td>${Math.round(trainCal/trainDays)}</td>`:''}${restDays?`<td>${Math.round(restCal/restDays)}</td>`:''}</tr>
+    <tr><td>蛋白质(g)</td><td><b>${Math.round(avgPro)}</b> (${proPerKg.toFixed(1)}g/kg/d)</td>${trainDays?`<td>${(trainPro/trainDays/w).toFixed(1)}g/kg/d</td>`:''}${restDays?`<td>${(restPro/restDays/w).toFixed(1)}g/kg/d</td>`:''}</tr>
+    <tr><td>碳水(g)</td><td>${Math.round(totalCho/validDays)}</td>${trainDays?`<td>${Math.round((totalCho>0?totalCho:0)/validDays)}</td>`:''}</tr>
+    <tr><td>脂肪(g)</td><td>${Math.round(totalFat/validDays)}</td></tr>
+    </table>
+    <h4>EI:BMR 低报判定</h4>
+    ${underReport}
+    <h4>蛋白质判定</h4>
+    ${proVerdict}
+    <p>参考阈值：增肌1.6-2.0g/kg/d ｜ 减脂2.0-2.4g/kg/d ｜ 单餐有效阈值20-40g（亮氨酸2-3g）</p>`;
+}
+
+/* === SOP-4 计算 === */
+function calcSOP4(){
+  const w=parseFloat(document.getElementById('s4-w').value);
+  const type=document.getElementById('s4-type').value;
+  const dur=parseFloat(document.getElementById('s4-dur').value);
+  const intensity=document.getElementById('s4-int').value;
+  const lastMeal=parseFloat(document.getElementById('s4-lastmeal').value);
+  const pre=parseFloat(document.getElementById('s4-pre').value);
+  const post=parseFloat(document.getElementById('s4-post').value);
+  const drink=parseFloat(document.getElementById('s4-drink').value)||0;
+  const next=parseFloat(document.getElementById('s4-next').value);
+  const v=document.getElementById('s4-verdict');
+  if(!w||!type||!dur){v.className='verdict red';v.innerHTML='<h4>⚠ 请填写体重、训练类型和时长</h4>';return;}
+
+  let preAdvice='',midAdvice='',postAdvice='',fluidAdvice='';
+
+  // 训练前
+  if(lastMeal>=8){
+    preAdvice=`距上次进食${lastMeal}h（>8h，空腹状态）。训练前30-60min补充碳水0.3-0.5g/kg（约${(0.3*w).toFixed(0)}-${(0.5*w).toFixed(0)}g），形式以液体/半固体为主。空腹训练MPS反应在早期阶段受限。`;
+  }else if(lastMeal>=4){
+    preAdvice=`距上次进食${lastMeal}h。训练前1-2h补充碳水0.5-1.0g/kg + 10-15g易消化蛋白质。`;
+  }else if(lastMeal>=2){
+    preAdvice=`距上次进食${lastMeal}h，已有正餐。无需额外补充，直接训练即可。`;
+  }else{
+    preAdvice=`距上次进食仅${lastMeal}h。注意胃肠耐受性，等待至≥1.5h再训练，或减少进食量。`;
+  }
+
+  // 运动中
+  if(dur<30){
+    midAdvice='训练<30分钟，无需额外碳水。纯水即可。';
+  }else if(dur<=60&&(type==='strength'||type==='hyper')){
+    midAdvice='60min以内常规力量训练，通常不需要运动中补碳。纯水即可。';
+  }else if(dur<=60){
+    midAdvice=`训练时长${dur}min，建议每小时补充30g碳水。`;
+  }else{
+    midAdvice=`训练${dur}min（>${dur>180?'2.5h':'60min'}），建议每小时补充${dur>180?'60-90g（多种可转运碳水 葡萄糖:果糖=2:1）':'30-60g'}碳水。`;
+  }
+
+  // 训练后
+  const proG=Math.round(0.4*w);
+  const proGhi=Math.round(0.55*w);
+  if(next&&next<8){
+    postAdvice=`下次训练间隔${next}h（<8h，恢复紧迫）。训练后0-4h内：蛋白质${proG}-${proGhi}g + 碳水${(1.0*w).toFixed(0)}g/kg/h（${Math.round(1.0*w)}g/h）×4h。糖原恢复紧迫性高。`;
+  }else{
+    postAdvice=`训练后蛋白质${proG}-${proGhi}g（0.4-0.55g/kg）。碳水0.5-1.0g/kg（${(0.5*w).toFixed(0)}-${(1.0*w).toFixed(0)}g）。全天碳水总量充足即可，训练后即时补碳紧迫性低。`;
+  }
+
+  // 液体
+  if(pre&&post){
+    const loss=pre-post+drink;
+    const rehyLo=(loss*1.2).toFixed(1);
+    const rehyHi=(loss*1.5).toFixed(1);
+    fluidAdvice=`体重损失${(pre-post).toFixed(1)}kg + 饮水${drink}L = 总汗量${loss.toFixed(2)}L。推荐补液${rehyLo}-${rehyHi}L（1.2-1.5倍），训练后2-6h分次摄入。含钠饮料促进潴留。`;
+  }else{
+    fluidAdvice='未填写训练前后体重，无法计算补液量。建议使用汗率测量法。';
+  }
+
+  v.className='verdict green';
+  v.innerHTML=`<h4>训练前营养方案</h4><p>${preAdvice}</p>
+    <h4>训练中补给方案</h4><p>${midAdvice}</p>
+    <h4>训练后恢复方案</h4><p>${postAdvice}</p>
+    <h4>液体补给方案</h4><p>${fluidAdvice}</p>`;
+}
+
+/* === SOP-5 计算 === */
+function calcSOP5(){
+  const type=document.getElementById('s5-type').value;
+  const intensity=document.getElementById('s5-int').value;
+  const dur=parseFloat(document.getElementById('s5-dur').value);
+  const w=parseFloat(document.getElementById('s5-w').value);
+  const goal=document.getElementById('s5-goal').value;
+  const v=document.getElementById('s5-verdict');
+  if(!type||!intensity||!dur){v.className='verdict red';v.innerHTML='<h4>⚠ 请填写运动类型、强度和持续时间</h4>';return;}
+
+  // 判断主供能系统
+  let primarySystem='',ratio='',nutritionStrategy='';
+
+  if(intensity==='max'){
+    primarySystem='磷酸原系统主导（50-70 W/kg）';
+    ratio=dur<=10?'ATP-PCr系统≈90%+':'磷酸原+糖酵解系统协同';
+  }else if(intensity==='high'){
+    if(dur<=120){
+      primarySystem='糖酵解系统主导（25-50 W/kg）';
+      ratio='糖酵解系统为主要供能，磷酸原有氧系统协同';
+    }else{
+      primarySystem='糖酵解→有氧氧化过渡';
+      ratio='随持续时间增加，有氧氧化占比上升';
+    }
+  }else if(intensity==='mod'){
+    primarySystem='有氧氧化系统为主';
+    ratio=dur>60?'脂肪-碳水交叉点区域（~50-65% VO₂max），脂肪和碳水混合供能':'混合底物供能，碳水比例随强度升高';
+  }else{
+    primarySystem='有氧氧化系统（脂肪主导）';
+    ratio='低强度<30% VO₂max，脂肪供能比例约60-70%。但总能耗低。';
+  }
+
+  // 营养策略
+  let strategies=[];
+  if(goal==='fatloss'){
+    strategies.push('减脂核心是总热量缺口，非运动中燃脂比例');
+    if(intensity==='low')strategies.push('低强度有氧可增强脂肪氧化比例，但"低强度=燃脂最优"是片面推论');
+    strategies.push('训练日碳水≥3-5g/kg，休息日3-4g/kg');
+  }
+  if(goal==='strength'){
+    strategies.push('训练日碳水5-7g/kg，确保糖原储备');
+    strategies.push('蛋白质1.6-2.0g/kg/d，每餐25-40g均匀分配');
+    if(type==='endurance'||dur>60)strategies.push('并发训练：力量与有氧间隔≥6h，同日先力量后有氧');
+  }
+  if(dur>60){
+    strategies.push(`训练${dur}min>60min，运动中建议补碳30-60g/h`);
+    strategies.push('训练后补液：体重损失×1.2-1.5倍');
+  }
+  if(type==='sprint'||type==='strength'){
+    strategies.push('组间休息1-3分钟恢复PCr储备，PCr未充分恢复时表现下降是正常生理现象');
+  }
+
+  // RQ参考
+  let rqNote='';
+  if(intensity==='max')rqNote='RQ接近1.0（纯碳水氧化）';
+  else if(intensity==='high')rqNote='RQ 0.85-1.0（碳水主导）';
+  else if(intensity==='mod')rqNote='RQ 0.80-0.90（混合底物）';
+  else rqNote='RQ 0.70-0.80（脂肪主导）';
+
+  v.className='verdict green';
+  v.innerHTML=`<h4>主供能系统判定</h4>
+    <p><b>${primarySystem}</b></p>
+    <p>供能比例：${ratio}</p>
+    <p>RQ参考：${rqNote}</p>
+    <h4>对应营养策略</h4>
+    <ul>${strategies.map(s=>`<li>${s}</li>`).join('')}</ul>
+    <h4>交叉点参考</h4>
+    <p>脂肪-碳水交叉点约50-65% VO₂max（Brooks & Mercier 1994）。低强度脂肪供能比例高但总能耗低，减脂核心是总热量缺口而非运动中燃脂比例。</p>`;
+}
+</script>
+</body>
+</html>

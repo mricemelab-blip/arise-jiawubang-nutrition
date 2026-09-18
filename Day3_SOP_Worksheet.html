@@ -1,0 +1,752 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>加五磅 Day3 SOP实操工作单 · 增肌平台期RED-S与特殊人群</title>
+<style>
+:root{
+  --paper:#ffffff;--bg:#f5f5f0;--ink:#1a1a1a;--ink-soft:#5a5a5a;
+  --brand:#1a2332;--accent:#c9a84c;--line:#e8e4dc;
+  --ok:#1a3a2a;--warn:#8a6d1b;--bad:#8a2a2a;
+  --gold-soft:#f7f1e3;--brand-soft:#e8ecf0;
+}
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font-family:"Songti SC","STSong","SimSun","Noto Serif CJK SC",serif;
+  font-size:15.5px;line-height:1.75;}
+h1,h2,h3,h4,.sans,nav,button,label,.tag,.chip,.sop-note{
+  font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans CJK SC",system-ui,sans-serif;}
+header{background:var(--paper);border-bottom:3px solid var(--accent);padding:26px 20px 18px;text-align:center;}
+header h1{margin:0 0 6px;font-size:24px;color:var(--brand);letter-spacing:2px;font-weight:700;}
+header .sub{color:var(--ink-soft);font-size:13.5px;line-height:1.7;}
+.wrap{max-width:1100px;margin:0 auto;padding:0 18px 60px;}
+nav.tabs{position:sticky;top:0;z-index:20;background:var(--bg);display:flex;flex-wrap:wrap;gap:6px;padding:14px 0 10px;border-bottom:1px solid var(--line);}
+nav.tabs button{border:1px solid var(--line);background:var(--paper);color:var(--ink-soft);padding:8px 16px;border-radius:999px;font-size:14px;cursor:pointer;transition:all .2s ease;}
+nav.tabs button:hover{border-color:var(--accent);color:var(--brand);background:#faf8f3;}
+nav.tabs button.active{background:linear-gradient(135deg,var(--brand) 0%,#243044 100%);border-color:var(--brand);color:#fff;box-shadow:0 2px 6px rgba(26,35,50,.18);}
+section.tab-panel{display:none;padding-top:18px;}
+section.tab-panel.active{display:block;}
+
+/* SOP工作单 */
+.sop-sheet{background:#fff;border:1px solid var(--line);border-radius:8px;max-width:210mm;margin:0 auto 26px;padding:26px 30px;box-shadow:0 1px 3px rgba(0,0,0,.04),0 6px 20px rgba(0,0,0,.07);}
+.sop-sheet h3{color:var(--brand);border-bottom:2px solid var(--accent);padding-bottom:8px;margin:0 0 6px;font-size:19px;}
+.sop-sheet .sop-meta{font-size:12.5px;color:var(--ink-soft);margin-bottom:14px;font-family:"PingFang SC",sans-serif;}
+.sop-sheet h4{font-size:15px;color:var(--accent);margin:16px 0 6px;}
+
+/* 会员信息栏 */
+.member-bar{background:var(--gold-soft);border:1px solid #e4d9b8;border-radius:8px;padding:14px 18px;margin-bottom:18px;}
+.member-bar h4{margin:0 0 8px;color:var(--brand);font-size:14px;}
+.member-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:8px 16px;}
+.member-grid .mg-field{display:flex;flex-direction:column;font-family:"PingFang SC",sans-serif;font-size:13px;}
+.member-grid .mg-field label{color:var(--ink-soft);margin-bottom:2px;font-size:12px;}
+.member-grid .mg-field input,.member-grid .mg-field select{padding:6px 8px;border:1px solid var(--line);border-radius:5px;font-size:14px;background:#fff;color:var(--ink);font-family:inherit;}
+
+/* 输入表单 */
+.form-section{margin:14px 0;}
+.form-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px 16px;margin:10px 0;}
+.field{display:flex;flex-direction:column;font-family:"PingFang SC",sans-serif;font-size:13.5px;}
+.field label{color:var(--ink-soft);margin-bottom:3px;}
+.field input,.field select{padding:8px 10px;border:1px solid var(--line);border-radius:6px;font-size:15px;background:#fff;color:var(--ink);font-family:inherit;}
+
+.btn{font-family:"PingFang SC",sans-serif;font-size:15px;cursor:pointer;border:1px solid var(--brand);background:linear-gradient(135deg,var(--brand) 0%,#243044 100%);color:#fff;padding:9px 26px;border-radius:8px;margin:6px 8px 6px 0;transition:all .2s ease;box-shadow:0 1px 3px rgba(26,35,50,.10);}
+.btn:hover{box-shadow:0 3px 10px rgba(26,35,50,.18);transform:translateY(-1px);}
+.btn.ghost{background:transparent;color:var(--brand);border-color:var(--brand);}
+.btn.ghost:hover{background:var(--brand-soft);}
+.btn.danger{background:linear-gradient(135deg,#8a2a2a 0%,#6a1a1a 100%);border-color:#8a2a2a;}
+
+/* 结果展示 */
+.result-area{display:none;margin-top:18px;border-top:2px dashed var(--accent);padding-top:16px;}
+.result-area.show{display:block;}
+.result-area h4{color:var(--brand);font-size:16px;margin:0 0 10px;}
+.result table{width:100%;border-collapse:collapse;font-size:13.5px;margin:10px 0;}
+.result th,.result td{border:1px solid var(--line);padding:6px 9px;text-align:left;}
+.result th{background:var(--brand);color:#fff;font-family:"PingFang SC",sans-serif;font-weight:600;}
+.result .big{font-family:"PingFang SC",sans-serif;font-size:24px;font-weight:bold;color:var(--brand);}
+
+.verdict-box{border-radius:8px;padding:12px 16px;margin:12px 0;font-size:14.5px;font-family:"PingFang SC",sans-serif;}
+.verdict-box.green{background:#e6f0ea;border:1px solid #a8c5b8;color:#1a3a2a;}
+.verdict-box.yellow{background:var(--gold-soft);border:1px solid #ddd0a8;color:#6a4e10;}
+.verdict-box.red{background:#f8e8e8;border:1px solid #dfb9b9;color:#8a3333;}
+.verdict-box h4{margin:0 0 6px;font-size:16px;}
+
+.flow-box{border:1px dashed var(--accent);border-radius:8px;padding:10px 14px;margin:8px 0;background:#faf8f2;font-size:13.5px;}
+.flow-step{font-family:"PingFang SC",sans-serif;font-weight:bold;color:var(--brand);}
+.sop-note{font-size:12.5px;color:var(--ink-soft);background:#faf6ec;border-left:3px solid var(--accent);padding:8px 12px;border-radius:0 6px 6px 0;margin-top:12px;}
+.script-box{background:var(--gold-soft);border-radius:8px;padding:12px 16px;font-size:14px;margin-top:10px;border:1px dashed var(--accent);}
+.redline{color:var(--bad);font-weight:bold;}
+.tag{display:inline-block;font-size:12px;padding:1px 9px;border-radius:4px;background:var(--brand-soft);color:var(--brand);border:1px solid #cdd5de;margin-right:6px;}
+
+/* 教材阈值对照 */
+.ref-table{margin:10px 0;font-size:12.5px;}
+.ref-table table{width:100%;border-collapse:collapse;}
+.ref-table th,.ref-table td{border:1px solid var(--line);padding:5px 8px;text-align:left;}
+.ref-table th{background:#f1ede2;font-family:"PingFang SC",sans-serif;font-weight:600;font-size:12px;}
+
+/* 归档区 */
+.archive-area{margin-top:20px;padding-top:14px;border-top:1px dashed var(--line);}
+.archive-area h4{color:var(--ink-soft);font-size:13px;margin:0 0 8px;}
+.archive-area textarea{width:100%;border:1.4px dashed var(--line);border-radius:5px;background:#fffefa;
+  background-image:repeating-linear-gradient(to bottom,transparent 0,transparent 26px,rgba(220,213,198,.85) 26px,rgba(220,213,198,.85) 27px);
+  line-height:27px;padding:2px 9px;font-family:inherit;font-size:11.5pt;color:var(--ink);resize:vertical;min-height:80px;}
+
+footer{text-align:center;color:var(--ink-soft);font-size:12.5px;padding:24px 0 10px;border-top:1px solid var(--line);margin-top:30px;font-family:"PingFang SC",sans-serif;}
+
+@media print{
+  header,nav.tabs,footer,.no-print{display:none!important;}
+  body{background:#fff;}
+  section.tab-panel{display:block!important;page-break-after:always;}
+  .sop-sheet{box-shadow:none;border:1px solid #999;max-width:100%;}
+}
+</style>
+</head>
+<body>
+<header>
+  <h1>加五磅 Day3 · SOP实操工作单</h1>
+  <div class="sub">增肌方案制定 ｜ 平台期诊断 ｜ RED-S识别与转介 ｜ Body Recomposition ｜ 特殊人群营养调整 ｜ 循证判断<br>全部阈值与公式取自教材原文 ｜ 可打印归档</div>
+</header>
+<div class="wrap">
+
+<nav class="tabs" id="mainNav">
+  <button class="active" onclick="showTab(0)">增肌方案SOP</button>
+  <button onclick="showTab(1)">平台期诊断SOP</button>
+  <button onclick="showTab(2)">RED-S转介SOP</button>
+  <button onclick="showTab(3)">Body Recomposition SOP</button>
+  <button onclick="showTab(4)">特殊人群调整SOP</button>
+  <button onclick="showTab(5)">循证判断SOP</button>
+</nav>
+
+<!-- ============ SOP 1: 增肌方案制定 ============ -->
+<section class="tab-panel active" id="sop0">
+<div class="sop-sheet">
+  <h3><span class="tag">M9</span> 增肌方案制定 SOP</h3>
+  <div class="sop-meta">覆盖：热量盈余校准 → 蛋白分配 → 碳水周期化 → 体脂监控 → 12周模板</div>
+
+  <div class="member-bar">
+    <h4>📋 会员信息</h4>
+    <div class="member-grid">
+      <div class="mg-field"><label>姓名</label><input type="text" id="s1_name" placeholder="来访者姓名"></div>
+      <div class="mg-field"><label>日期</label><input type="date" id="s1_date"></div>
+      <div class="mg-field"><label>性别</label><select id="s1_sex"><option value="m">男</option><option value="f">女</option></select></div>
+      <div class="mg-field"><label>年龄</label><input type="number" id="s1_age" value="28"></div>
+      <div class="mg-field"><label>体重(kg)</label><input type="number" id="s1_wt" value="78"></div>
+      <div class="mg-field"><label>身高(cm)</label><input type="number" id="s1_ht" value="175"></div>
+      <div class="mg-field"><label>体脂率(%)</label><input type="number" id="s1_bf" value="16" step="0.1"></div>
+      <div class="mg-field"><label>训练龄</label><select id="s1_lv"><option value="nov">新手(<1年)</option><option value="int" selected>中阶(1–3年)</option><option value="adv">高阶(>3年)</option></select></div>
+      <div class="mg-field"><label>PAL</label><select id="s1_pal"><option>1.55</option><option selected>1.70</option><option>1.85</option><option>2.00</option></select></div>
+    </div>
+  </div>
+
+  <h4>Step 1：RMR/TEE计算 → 热量盈余</h4>
+  <div class="form-section">
+    <button class="btn" onclick="s1_calc()">计算增肌方案参数</button>
+    <button class="btn ghost" onclick="window.print()">打印</button>
+  </div>
+
+  <div class="result-area" id="s1_result">
+    <h4>📊 方案参数输出</h4>
+    <div id="s1_output"></div>
+    
+    <div class="ref-table">
+      <h4 style="font-size:13px;color:var(--ink-soft)">教材阈值对照</h4>
+      <table>
+        <tr><th>训练龄</th><th>盈余幅度</th><th>周增重</th><th>蛋白靶值</th><th>12周LBM预期</th></tr>
+        <tr><td>新手(<1年)</td><td>+15%–+20% TEE</td><td>0.4–0.5% BM</td><td>1.6–1.8 g/kg</td><td>+1.5–3.0 kg</td></tr>
+        <tr><td>中阶(1–3年)</td><td>+10%–+15% TEE</td><td>0.25–0.4% BM</td><td>1.8–2.0 g/kg</td><td>+1.0–2.5 kg</td></tr>
+        <tr><td>高阶(>3年)</td><td>+5%–+10% TEE</td><td>0.15–0.25% BM</td><td>2.0–2.2 g/kg</td><td>+0.5–1.5 kg</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="archive-area">
+    <h4>📝 方案备注 / 咨询师签字</h4>
+    <textarea placeholder="记录方案执行要点、客户沟通内容、特殊调整等"></textarea>
+  </div>
+</div>
+</section>
+
+<!-- ============ SOP 2: 平台期诊断 ============ -->
+<section class="tab-panel" id="sop1">
+<div class="sop-sheet">
+  <h3><span class="tag">M10</span> 平台期诊断决策树 SOP</h3>
+  <div class="sop-meta">前置假平台排除 → 五路径分层干预 → 输出诊断结论与解决方案</div>
+
+  <div class="member-bar">
+    <h4>📋 会员信息</h4>
+    <div class="member-grid">
+      <div class="mg-field"><label>姓名</label><input type="text" id="s2_name" placeholder="来访者姓名"></div>
+      <div class="mg-field"><label>日期</label><input type="date" id="s2_date"></div>
+      <div class="mg-field"><label>基线体重(kg)</label><input type="number" id="s2_bwt" value="80"></div>
+      <div class="mg-field"><label>当前体重(kg)</label><input type="number" id="s2_cwt" value="77.5"></div>
+      <div class="mg-field"><label>方案执行周数</label><input type="number" id="s2_wks" value="6"></div>
+    </div>
+  </div>
+
+  <h4>Step 1：假平台排除</h4>
+  <div class="form-grid">
+    <div class="field"><label>体重测量是否标准化（晨起空腹/同衣物/同秤）？</label><select id="s2_meas"><option value="y">是</option><option value="n">否</option></select></div>
+    <div class="field"><label>近2周是否有高盐/高碳/月经期水钠波动？</label><select id="s2_water"><option value="n">无</option><option value="y">有</option></select></div>
+    <div class="field"><label>饮食依从率(%)</label><input type="number" id="s2_adh" value="85"></div>
+  </div>
+
+  <h4>Step 2：真平台排查变量</h4>
+  <div class="form-grid">
+    <div class="field"><label>2周体重变化(kg，负为降)</label><input type="number" id="s2_chg" value="-0.1" step="0.1"></div>
+    <div class="field"><label>基线日均步数</label><input type="number" id="s2_bsteps" value="8000"></div>
+    <div class="field"><label>当前日均步数</label><input type="number" id="s2_csteps" value="5500"></div>
+    <div class="field"><label>训练频率达标率(%)</label><input type="number" id="s2_freq" value="75"></div>
+    <div class="field"><label>训练量较增肌期变化(%)</label><select id="s2_vol"><option value="0">维持</option><option value="up">增加>20%</option><option value="dn">下降>20%</option></select></div>
+    <div class="field"><label>RPE趋势</label><select id="s2_rpe"><option value="n">正常(6–8)</option><option value="hi">持续≥8+量降</option><option value="lo">持续≤5</option></select></div>
+    <div class="field"><label>减脂周数（用于Refeed/DB选择）</label><input type="number" id="s2_dietwks" value="6"></div>
+  </div>
+
+  <div class="form-section">
+    <button class="btn" onclick="s2_calc()">诊断</button>
+    <button class="btn ghost" onclick="window.print()">打印</button>
+  </div>
+
+  <div class="result-area" id="s2_result">
+    <h4>📊 诊断输出</h4>
+    <div id="s2_output"></div>
+  </div>
+
+  <div class="archive-area">
+    <h4>📝 诊断记录 / 干预方案</h4>
+    <textarea placeholder="记录诊断结论、选择的干预路径、执行计划等"></textarea>
+  </div>
+</div>
+</section>
+
+<!-- ============ SOP 3: RED-S转介 ============ -->
+<section class="tab-panel" id="sop2">
+<div class="sop-sheet">
+  <h3><span class="tag">M11</span> RED-S 识别与转介 SOP</h3>
+  <div class="sop-meta">信号识别 → 风险评分 → 红色信号判断 → 转介决策 + 话术</div>
+
+  <div class="member-bar">
+    <h4>📋 会员信息</h4>
+    <div class="member-grid">
+      <div class="mg-field"><label>姓名</label><input type="text" id="s3_name" placeholder="训练者姓名"></div>
+      <div class="mg-field"><label>日期</label><input type="date" id="s3_date"></div>
+      <div class="mg-field"><label>性别</label><select id="s3_sex"><option value="m">男</option><option value="f">女</option></select></div>
+      <div class="mg-field"><label>年龄</label><input type="number" id="s3_age" value="25"></div>
+      <div class="mg-field"><label>体重(kg)</label><input type="number" id="s3_wt" value="55"></div>
+      <div class="mg-field"><label>身高(cm)</label><input type="number" id="s3_ht" value="165"></div>
+    </div>
+  </div>
+
+  <h4>Step 1：信号评估（6维度）</h4>
+  <div class="form-grid">
+    <div class="field"><label>训练表现持续下降？</label><select id="s3_perf"><option value="0">否</option><option value="1">是</option></select></div>
+    <div class="field"><label>反复应力性损伤？</label><select id="s3_inj"><option value="0">否</option><option value="1">是</option></select></div>
+    <div class="field"><label>月经异常/闭经(女) 或 晨勃减少(男)？</label><select id="s3_repr"><option value="0">否</option><option value="1">是</option></select></div>
+    <div class="field"><label>反复URTI/免疫下降？</label><select id="s3_imm"><option value="0">否</option><option value="1">是</option></select></div>
+    <div class="field"><label>强迫性食物关注/社交进食回避？</label><select id="s3_psy"><option value="0">否</option><option value="1">是</option></select></div>
+    <div class="field"><label>称重频率异常/体重情绪反应过度？</label><select id="s3_weigh"><option value="0">否</option><option value="1">是</option></select></div>
+  </div>
+
+  <h4>Step 2：红色信号筛查</h4>
+  <div class="form-grid">
+    <div class="field"><label>BMI是否<17.5？</label><select id="s3_bmi"><option value="0">否</option><option value="1">是</option></select></div>
+    <div class="field"><label>闭经是否>3个月？</label><select id="s3_amen"><option value="0">否/不适用</option><option value="1">是</option></select></div>
+    <div class="field"><label>是否有反复呕吐/清泻行为？</label><select id="s3_purge"><option value="0">否</option><option value="1">是</option></select></div>
+    <div class="field"><label>是否有新发应力性骨折？</label><select id="s3_frac"><option value="0">否</option><option value="1">是</option></select></div>
+    <div class="field"><label>静息心率是否<40次/分？</label><select id="s3_hr"><option value="0">否</option><option value="1">是</option></select></div>
+    <div class="field"><label>是否有晕厥/接近晕厥？</label><select id="s3_faint"><option value="0">否</option><option value="1">是</option></select></div>
+  </div>
+
+  <h4>Step 3：EA计算（可选）</h4>
+  <div class="form-grid">
+    <div class="field"><label>膳食能量摄入EI(kcal/d)</label><input type="number" id="s3_ei" value="1500"></div>
+    <div class="field"><label>运动额外消耗ExEE(kcal/d)</label><input type="number" id="s3_ex" value="600"></div>
+    <div class="field"><label>体脂率(%)</label><input type="number" id="s3_bf" value="18" step="0.1"></div>
+  </div>
+
+  <div class="form-section">
+    <button class="btn" onclick="s3_calc()">评估</button>
+    <button class="btn ghost" onclick="window.print()">打印</button>
+  </div>
+
+  <div class="result-area" id="s3_result">
+    <h4>📊 评估输出</h4>
+    <div id="s3_output"></div>
+  </div>
+
+  <div class="archive-area">
+    <h4>📝 转介记录</h4>
+    <textarea placeholder="记录观察到的信号、转介去向、话术要点、信息包内容等"></textarea>
+  </div>
+</div>
+</section>
+
+<!-- ============ SOP 4: Body Recomposition ============ -->
+<section class="tab-panel" id="sop3">
+<div class="sop-sheet">
+  <h3><span class="tag">M12</span> Body Recomposition 方案 SOP</h3>
+  <div class="sop-meta">三维评估 → 可行性判断 → 方案参数输出 → W4复评决策</div>
+
+  <div class="member-bar">
+    <h4>📋 会员信息</h4>
+    <div class="member-grid">
+      <div class="mg-field"><label>姓名</label><input type="text" id="s4_name" placeholder="来访者姓名"></div>
+      <div class="mg-field"><label>日期</label><input type="date" id="s4_date"></div>
+      <div class="mg-field"><label>性别</label><select id="s4_sex"><option value="m">男</option><option value="f">女</option></select></div>
+      <div class="mg-field"><label>年龄</label><input type="number" id="s4_age" value="30"></div>
+      <div class="mg-field"><label>体重(kg)</label><input type="number" id="s4_wt" value="85"></div>
+      <div class="mg-field"><label>身高(cm)</label><input type="number" id="s4_ht" value="175"></div>
+      <div class="mg-field"><label>体脂率(%)</label><input type="number" id="s4_bf" value="24" step="0.1"></div>
+      <div class="mg-field"><label>抗阻训练龄(年)</label><input type="number" id="s4_yrs" value="0.5" step="0.1"></div>
+      <div class="mg-field"><label>停训时长(月)</label><input type="number" id="s4_off" value="0"></div>
+      <div class="mg-field"><label>PAL</label><select id="s4_pal"><option>1.55</option><option selected>1.70</option><option>1.85</option></select></div>
+    </div>
+  </div>
+
+  <div class="form-section">
+    <button class="btn" onclick="s4_calc()">评估并生成方案</button>
+    <button class="btn ghost" onclick="window.print()">打印</button>
+  </div>
+
+  <div class="result-area" id="s4_result">
+    <h4>📊 方案输出</h4>
+    <div id="s4_output"></div>
+  </div>
+
+  <div class="archive-area">
+    <h4>📝 方案备注 / W4复评记录</h4>
+    <textarea placeholder="记录W4复评数据(LBM变化/体脂变化)、决策(维持/切换微赤字/双相路径)等"></textarea>
+  </div>
+</div>
+</section>
+
+<!-- ============ SOP 5: 特殊人群营养调整 ============ -->
+<section class="tab-panel" id="sop4">
+<div class="sop-sheet">
+  <h3><span class="tag">M14</span> 特殊人群营养调整 SOP</h3>
+  <div class="sop-meta">人群类型选择 → 基础数据输入 → 营养方案输出 → 转介红线筛查</div>
+
+  <div class="member-bar">
+    <h4>📋 会员信息</h4>
+    <div class="member-grid">
+      <div class="mg-field"><label>姓名</label><input type="text" id="s5_name" placeholder="客户姓名"></div>
+      <div class="mg-field"><label>日期</label><input type="date" id="s5_date"></div>
+      <div class="mg-field"><label>人群类型</label><select id="s5_pop"><option value="hyper">高血压</option><option value="lipid">血脂异常</option><option value="t2dm">T2DM/高血糖</option><option value="meta">代谢综合征</option><option value="old50">50+训练者</option><option value="meno">绝经后女性</option></select></div>
+      <div class="mg-field"><label>年龄</label><input type="number" id="s5_age" value="55"></div>
+      <div class="mg-field"><label>体重(kg)</label><input type="number" id="s5_wt" value="70"></div>
+      <div class="mg-field"><label>身高(cm)</label><input type="number" id="s5_ht" value="170"></div>
+      <div class="mg-field"><label>TEE(kcal/d)</label><input type="number" id="s5_tee" value="2200"></div>
+      <div class="mg-field"><label>SBP(mmHg)</label><input type="number" id="s5_sbp" value="138"></div>
+      <div class="mg-field"><label>DBP(mmHg)</label><input type="number" id="s5_dbp" value="88"></div>
+      <div class="mg-field"><label>HbA1c(%)</label><input type="number" id="s5_hba1c" value="6.8" step="0.1"></div>
+      <div class="mg-field"><label>LDL-C(mmol/L)</label><input type="number" id="s5_ldl" value="3.2" step="0.1"></div>
+      <div class="mg-field"><label>TG(mmol/L)</label><input type="number" id="s5_tg" value="2.1" step="0.1"></div>
+      <div class="mg-field"><label>腰围(cm)</label><input type="number" id="s5_waist" value="94"></div>
+      <div class="mg-field"><label>当前用药</label><input type="text" id="s5_meds" placeholder="如：二甲双胍500mg bid"></div>
+      <div class="mg-field"><label>是否有3个月内体检报告？</label><select id="s5_report"><option value="y">是</option><option value="n">否</option></select></div>
+    </div>
+  </div>
+
+  <div class="form-section">
+    <button class="btn" onclick="s5_calc()">生成营养调整方案</button>
+    <button class="btn ghost" onclick="window.print()">打印</button>
+  </div>
+
+  <div class="result-area" id="s5_result">
+    <h4>📊 方案输出</h4>
+    <div id="s5_output"></div>
+  </div>
+
+  <div class="archive-area">
+    <h4>📝 方案备注 / 医生反馈</h4>
+    <textarea placeholder="记录医生建议、体检报告关键指标、方案调整等"></textarea>
+  </div>
+</div>
+</section>
+
+<!-- ============ SOP 6: 循证判断 ============ -->
+<section class="tab-panel" id="sop5">
+<div class="sop-sheet">
+  <h3><span class="tag">M13</span> 循证判断 SOP</h3>
+  <div class="sop-meta">输入营养声明/文献结论 → 五问评估 → 信息源定级 → 证据等级判定 → 回应话术</div>
+
+  <div class="member-bar">
+    <h4>📋 声明信息</h4>
+    <div class="member-grid">
+      <div class="mg-field" style="grid-column:1/-1"><label>待评估的营养声明/文献结论</label><input type="text" id="s6_claim" placeholder="如：'间歇性禁食是减脂的最佳策略'"></div>
+      <div class="mg-field" style="grid-column:1/-1"><label>声称来源</label><input type="text" id="s6_source" placeholder="如：某健身博主Instagram帖文/品牌官网/健康门户网站"></div>
+    </div>
+  </div>
+
+  <h4>五问评估</h4>
+  <div class="form-grid">
+    <div class="field"><label>Q1 信息源层级</label><select id="s6_q1"><option value="">--选择--</option><option value="1">L1 系统综述/Meta分析</option><option value="2">L2 RCT</option><option value="3">L3 队列研究</option><option value="4">L4 专家共识/立场声明</option><option value="5">L5 教科书</option><option value="6">L6 自媒体/商业宣传</option></select></div>
+    <div class="field"><label>Q2 研究设计是否匹配问题类型？</label><select id="s6_q2"><option value="">--选择--</option><option value="match">匹配</option><option value="partial">部分匹配</option><option value="mismatch">不匹配</option></select></div>
+    <div class="field"><label>Q3 样本量</label><select id="s6_q3"><option value="">--选择--</option><option value="large">≥100（充分）</option><option value="medium">30–99（中等）</option><option value="small"><30（不足）</option><option value="none">无研究数据</option></select></div>
+    <div class="field"><label>Q3b 效应量是否有临床意义？</label><select id="s6_q3b"><option value="">--选择--</option><option value="yes">是，临床有意义</option><option value="stat">仅统计学显著</option><option value="no">无临床意义</option><option value="na">不适用</option></select></div>
+    <div class="field"><label>Q4 是否存在利益冲突？</label><select id="s6_q4"><option value="">--选择--</option><option value="none">无</option><option value="ind">产业资助</option><option value="brand">品牌白皮书/自发布</option></select></div>
+    <div class="field"><label>Q5 可推广性</label><select id="s6_q5"><option value="">--选择--</option><option value="high">高（人群匹配）</option><option value="partial">部分匹配</option><option value="low">低（人群/剂量/指标不匹配）</option></select></div>
+  </div>
+
+  <div class="form-section">
+    <button class="btn" onclick="s6_calc()">评估</button>
+    <button class="btn ghost" onclick="window.print()">打印</button>
+  </div>
+
+  <div class="result-area" id="s6_result">
+    <h4>📊 评估输出</h4>
+    <div id="s6_output"></div>
+  </div>
+
+  <div class="archive-area">
+    <h4>📝 评估记录 / 会员回应话术</h4>
+    <textarea placeholder="记录评估结论、向会员的回应话术等"></textarea>
+  </div>
+</div>
+</section>
+
+</div>
+<footer>加五磅 Day3 SOP实操工作单 ｜ 增肌平台期RED-S与特殊人群 ｜ 全部阈值取自教材原文 ｜ 可打印归档</footer>
+
+<script>
+function showTab(i){
+  document.querySelectorAll('section.tab-panel').forEach((s,j)=>s.classList.toggle('active',j===i));
+  document.querySelectorAll('#mainNav button').forEach((b,j)=>b.classList.toggle('active',j===i));
+}
+
+/* ============ SOP1: 增肌方案 ============ */
+function s1_calc(){
+  const sex=document.getElementById('s1_sex').value,age=+document.getElementById('s1_age').value,wt=+document.getElementById('s1_wt').value,ht=+document.getElementById('s1_ht').value,bf=+document.getElementById('s1_bf').value,lv=document.getElementById('s1_lv').value,pal=+document.getElementById('s1_pal').value;
+  const rmr=sex==='m'?10*wt+6.25*ht-5*age+5:10*wt+6.25*ht-5*age-161;
+  const tee=rmr*pal;
+  const lvMap={nov:{sur:[0.15,0.20],pro:[1.6,1.8],wk:[0.004,0.005],label:'新手',lbm:[1.5,3.0]},int:{sur:[0.10,0.15],pro:[1.8,2.0],wk:[0.0025,0.004],label:'中阶',lbm:[1.0,2.5]},adv:{sur:[0.05,0.10],pro:[2.0,2.2],wk:[0.0015,0.0025],label:'高阶',lbm:[0.5,1.5]}};
+  const cfg=lvMap[lv];
+  const surLow=tee*cfg.sur[0],surHigh=tee*cfg.sur[1];
+  const calLow=tee+surLow,calHigh=tee+surHigh;
+  const proLow=wt*cfg.pro[0],proHigh=wt*cfg.pro[1];
+  const perMeal=proLow/4;
+  const carbT=wt*4.75; // 简化中间值
+  const fatLow=wt*0.8,fatHigh=wt*1.2;
+  const bfThresh=sex==='m'?18:28;
+  const bfStatus=bf>=bfThresh?`<span class='redline'>⚠️ 当前体脂${bf}%已达暂停阈值(${bfThresh}%)，建议先mini-cut再增肌</span>`:`当前体脂${bf}%在安全区间`;
+  const o=document.getElementById('s1_output');
+  o.innerHTML=`<div class="verdict-box green"><h4>增肌方案参数（${cfg.label}）</h4>${bfStatus}</div>
+<table><tr><th>指标</th><th>数值</th></tr>
+<tr><td>RMR (Mifflin-St Jeor)</td><td>${Math.round(rmr)} kcal/d</td></tr>
+<tr><td>TEE (×${pal})</td><td>${Math.round(tee)} kcal/d</td></tr>
+<tr><td>推荐盈余</td><td>+${Math.round(surLow)}–${Math.round(surHigh)} kcal/d (+${(cfg.sur[0]*100).toFixed(0)}%–${(cfg.sur[1]*100).toFixed(0)}%)</td></tr>
+<tr><td>总热量</td><td class="big">${Math.round(calLow)}–${Math.round(calHigh)} kcal/d</td></tr>
+<tr><td>蛋白靶值</td><td>${Math.round(proLow)}–${Math.round(proHigh)} g/d (${cfg.pro[0]}–${cfg.pro[1]} g/kg)</td></tr>
+<tr><td>单餐最低(4餐)</td><td>≥${Math.round(perMeal)} g/餐 (≥0.4 g/kg)</td></tr>
+<tr><td>碳水(简化)</td><td>${Math.round(carbT)} g/d (~4.5–5 g/kg，训练日/非训练日差异±30–50 g)</td></tr>
+<tr><td>脂肪</td><td>${Math.round(fatLow)}–${Math.round(fatHigh)} g/d (0.8–1.2 g/kg)</td></tr>
+<tr><td>周增重目标</td><td>${(wt*cfg.wk[0]).toFixed(2)}–${(wt*cfg.wk[1]).toFixed(2)} kg (${(cfg.wk[0]*100).toFixed(2)}%–${(cfg.wk[1]*100).toFixed(2)}% BM)</td></tr>
+<tr><td>12周LBM预期</td><td>+${cfg.lbm[0]}–${cfg.lbm[1]} kg</td></tr></table>
+<div class="flow-box"><span class="flow-step">执行框架：</span>W1–W2适应期(不动方案) → W3–W8主增期(W4复评) → W9–W11微调期 → W12终评(三选一：继续增肌/mini-cut/转减脂)</div>
+<div class="sop-note">体脂暂停阈值：男≥18%/女≥28% → 暂停增肌→mini-cut 4–6周。mini-cut方案：赤字−15%–−20% TEE，蛋白上调至2.2–2.4 g/kg，训练量不减。</div>`;
+  document.getElementById('s1_result').classList.add('show');
+}
+
+/* ============ SOP2: 平台期诊断 ============ */
+function s2_calc(){
+  const name=document.getElementById('s2_name').value||'来访者';
+  const bwt=+document.getElementById('s2_bwt').value,cwt=+document.getElementById('s2_cwt').value,wks=+document.getElementById('s2_wks').value;
+  const meas=document.getElementById('s2_meas').value,water=document.getElementById('s2_water').value,adh=+document.getElementById('s2_adh').value;
+  const chg=+document.getElementById('s2_chg').value,bSteps=+document.getElementById('s2_bsteps').value,cSteps=+document.getElementById('s2_csteps').value;
+  const freq=+document.getElementById('s2_freq').value,vol=document.getElementById('s2_vol').value,rpe=document.getElementById('s2_rpe').value,dietWks=+document.getElementById('s2_dietwks').value;
+  const thresh=bwt*0.005;
+  const stepDrop=bSteps-cSteps;
+  let steps=[],conclusion='',cls='green',action='';
+
+  // Step 1: 假平台排除
+  if(meas==='n'){steps.push('<b>❌ 测量未标准化</b> → 要求按标准条件重新采集2周数据后再评估');conclusion='假平台（测量误差）';cls='yellow';action='标准化测量后重新评估';}
+  else if(water==='y'){steps.push('<b>⚠️ 水钠波动存在</b> → 等待1–2周恢复正常饮食后评估');conclusion='假平台（水钠波动）';cls='yellow';action='恢复正常饮食1–2周后复评';}
+  else if(wks<4){steps.push('<b>⚠️ 方案执行<4周</b> → 不构成平台期诊断');conclusion='不构成平台期（执行时间不足）';cls='yellow';action='继续执行至W4';}
+  else if(adh<70){steps.push(`<b>❌ 依从率${adh}%<70%</b> → 优先处理行为依从性问题`);conclusion='行为依从性问题（非平台期）';cls='yellow';action='使用TTM模型评估行为改变阶段，重建饮食记录习惯';}
+  else{
+    steps.push('✅ 假平台排除完成');
+    // 真平台排查
+    if(Math.abs(chg)>=thresh){steps.push(`✅ 2周体重变化${chg}kg（阈值±${thresh.toFixed(2)}kg）→ 未达平台期标准`);conclusion='未达平台期标准';cls='green';action='继续当前方案';}
+    else{
+      steps.push(`⚠️ 2周体重变化${chg}kg（阈值±${thresh.toFixed(2)}kg）→ 确认平台期`);
+      let paths=[];
+      if(adh<80){steps.push(`路径一：饮食精度核查（依从率${adh}%<80%）→ 六类隐藏热量识别`);paths.push('饮食精度核查');}
+      if(freq<75){steps.push(`路径二：训练频率${freq}%<75% → 恢复频率优先`);paths.push('训练变量调整');}
+      if(stepDrop>2000){steps.push(`路径三：NEAT下降${stepDrop}步(>2000) → 结构化步行+站立替代+LISS`);paths.push('NEAT优化');}
+      if(vol==='up')steps.push('⚠️ 训练量增加>20% → 减脂期不宜增容量，回调至增肌期水平');
+      if(vol==='dn')steps.push('⚠️ 训练量下降>20% → 逐步增加1–2组/周');
+      if(rpe==='hi')steps.push('⚠️ RPE持续≥8+训练量降 → 过度训练信号，降低训练量');
+      if(rpe==='lo')steps.push('⚠️ RPE持续≤5 → 训练强度不足，渐进增加负重');
+      
+      if(paths.length===0){
+        // All paths excluded, consider Refeed or Diet Break
+        if(dietWks<=8){steps.push('路径一至三排除 → 路径四：Refeed（减脂4–8周内轻度停滞）');action='安排Refeed日：碳水8–12 g/kg BM，脂肪≤20%，安排在最大训练日';}
+        else{steps.push('路径一至三排除 → 路径五：Diet Break（减脂≥8周明显平台）');action='Diet Break 3–7天：维持热量TEE±100–200 kcal/d，结束后2–3天逐步恢复赤字';}
+      }else{action='按优先级执行：'+paths.join(' → ');paths.forEach(p=>{
+        if(p==='饮食精度核查')action+='\n• 逐项核查六类隐藏热量(酱料/饮品/零食/烹饪油/健康食物/周末外食)，重新采集饮食日记1周';
+        if(p==='训练变量调整')action+='\n• 频率<75%→先恢复频率→审视容量→校准强度(RIR 2–3)';
+        if(p==='NEAT优化')action+='\n• 每日+2000–4000步 + 每小时起身3–5 min + LISS 2–3次/周×20–30 min';
+      });}
+      conclusion='确认平台期 → 按优先级排查干预';cls='yellow';
+    }
+  }
+  const o=document.getElementById('s2_output');
+  o.innerHTML=`<div class="verdict-box ${cls}"><h4>诊断结论：${conclusion}</h4></div>
+<div class="flow-box">${steps.map((s,i)=>`<span class="flow-step">Step ${i+1}：</span>${s}`).join('<br>')}</div>
+${action?`<div class="script-box"><b>干预方案：</b><br>${action.replace(/\n/g,'<br>')}</div>`:''}
+<div class="sop-note"><span class="redline">禁止在四条排查路径全部完成前直接砍热量。</span>直接砍热量是平台期处理中最常见的方向性错误。</div>`;
+  document.getElementById('s2_result').classList.add('show');
+}
+
+/* ============ SOP3: RED-S转介 ============ */
+function s3_calc(){
+  const sex=document.getElementById('s3_sex').value,age=+document.getElementById('s3_age').value,wt=+document.getElementById('s3_wt').value,ht=+document.getElementById('s3_ht').value;
+  const items=['s3_perf','s3_inj','s3_repr','s3_imm','s3_psy','s3_weigh'];
+  const labels=['训练表现下降','反复应力性损伤','月经/性功能异常','免疫下降','心理/行为信号','称重异常'];
+  let score=0,flagged=[];
+  items.forEach((id,i)=>{const v=+document.getElementById(id).value;if(v){score++;flagged.push(labels[i]);}});
+  // Red signals
+  const reds=[{id:'s3_bmi',label:'极低BMI'},{id:'s3_amen',label:'长期闭经>3月'},{id:'s3_purge',label:'清泻行为'},{id:'s3_frac',label:'新发应力性骨折'},{id:'s3_hr',label:'严重心动过缓'},{id:'s3_faint',label:'晕厥/接近晕厥'}];
+  let redFlags=[];
+  reds.forEach(r=>{if(+document.getElementById(r.id).value)redFlags.push(r.label);});
+  // EA
+  const ei=+document.getElementById('s3_ei').value,ex=+document.getElementById('s3_ex').value,bf=+document.getElementById('s3_bf').value;
+  const ffm=wt*(1-bf/100),ea=(ei-ex)/ffm;
+  let verdict='',cls='green',action='';
+  if(redFlags.length>0){
+    verdict='🚨 存在红色信号 → 48小时内强制转介';cls='red';
+    action=`<b>立即执行：</b><br>①停止当前减脂方案/体重目标推进<br>②记录信号详情（时间戳+持续时间）<br>③48h内转介${redFlags.includes('极低BMI')||redFlags.includes('清泻行为')?'精神科/进食障碍专科+运动医学医生':redFlags.includes('长期闭经>3月')?'妇科/内分泌科+运动医学医生':redFlags.includes('严重心动过缓')?'心内科+运动医学医生':'运动医学医生'}<br>④整理近3个月训练日志+体重记录+饮食日志移交医生`;
+  }else if(score>=2){
+    verdict=`识别到${score}项信号（${flagged.join('、')}）→ 多项信号同时出现，建议EA评估+转介`;cls='red';
+    action=`<b>建议执行：</b><br>①暂停减脂方案<br>②转介运动医学医生进行全面评估<br>③使用转介话术沟通`;
+  }else if(score===1){
+    verdict=`识别到1项信号（${flagged[0]}）→ 加强监测，4周后重新评估`;cls='yellow';
+    action='<b>建议执行：</b>①加强日常观察 ②4周后重新评估信号累积 ③如有第二项信号出现则启动转介';
+  }else{
+    verdict='当前未识别到显著RED-S信号';cls='green';
+    action='继续常规监测，每4周评估一次信号累积';
+  }
+  let eaHtml='';
+  if(ea<30)eaHtml=`<div class="verdict-box red"><h4>EA = ${ea.toFixed(1)} kcal·kg FFM⁻¹·d⁻¹ → 临床LEA</h4>EA低于30，高风险。即使无红色信号，也建议转介医学评估。</div>`;
+  else if(ea<45)eaHtml=`<div class="verdict-box yellow"><h4>EA = ${ea.toFixed(1)} kcal·kg FFM⁻¹·d⁻¹ → 次优/适应性LEA</h4>短期可耐受，需监测功能终点（月经/训练表现/骨标志物）。</div>`;
+  else eaHtml=`<div class="verdict-box green"><h4>EA = ${ea.toFixed(1)} kcal·kg FFM⁻¹·d⁻¹ → 最优区</h4></div>`;
+  const bmi=wt/((ht/100)**2);
+  const o=document.getElementById('s3_output');
+  o.innerHTML=`<div class="verdict-box ${cls}"><h4>${verdict}</h4>风险评分：${score}/6${redFlags.length>0?' ｜ <span class="redline">红色信号：'+redFlags.join('、')+'</span>':''}</div>
+${eaHtml}
+${flagged.length?`<p>信号清单：${flagged.map(f=>'✅ '+f).join('<br>')}</p>`:''}
+<p>BMI = ${bmi.toFixed(1)} ｜ FFM = ${ffm.toFixed(1)} kg</p>
+${action?`<div class="script-box">${action}</div>`:''}
+<div class="script-box"><b>转介话术模板：</b><br>①"我注意到你最近${flagged.length?flagged.slice(0,2).join('和'):'出现了一些变化'}"→②"这些信息放在一起需要有专业医生来判断，建议你去运动医学科做全面评估"→③"我可以在你看完医生后配合调整训练和营养方案"→④"我帮你整理训练记录和饮食日志带给医生"</div>
+<div class="ref-table"><table><tr><th>红色信号</th><th>标准</th><th>转介去向</th></tr>
+<tr><td>极低BMI</td><td><17.5</td><td>运动医学+进食障碍专科</td></tr>
+<tr><td>长期闭经</td><td>>3个月</td><td>妇科/内分泌+运动医学</td></tr>
+<tr><td>清泻行为</td><td>反复催吐/滥用泻药</td><td>精神科+运动医学</td></tr>
+<tr><td>应力性骨折</td><td>影像学确诊</td><td>运动医学</td></tr>
+<tr><td>严重心动过缓</td><td><40次/分</td><td>心内科+运动医学</td></tr>
+<tr><td>晕厥</td><td>训练中意识丧失</td><td>急诊/运动医学</td></tr></table></div>
+<div class="sop-note"><span class="redline">教练四步：识别→记录→停止自行干预→转介。</span>不得诊断、判读生化报告、制定能量恢复方案。</div>`;
+  document.getElementById('s3_result').classList.add('show');
+}
+
+/* ============ SOP4: Body Recomposition ============ */
+function s4_calc(){
+  const sex=document.getElementById('s4_sex').value,age=+document.getElementById('s4_age').value,wt=+document.getElementById('s4_wt').value,ht=+document.getElementById('s4_ht').value;
+  const bf=+document.getElementById('s4_bf').value,yrs=+document.getElementById('s4_yrs').value,off=+document.getElementById('s4_off').value,pal=+document.getElementById('s4_pal').value;
+  const rmr=sex==='m'?10*wt+6.25*ht-5*age+5:10*wt+6.25*ht-5*age-161;
+  const tee=rmr*pal;
+  const bfThresh=sex==='m'?25:32,bfMid=sex==='m'?18:28;
+  const lbm=wt*(1-bf/100);
+  // 三维评估
+  let dims=[],brScore=0;
+  if(yrs<1){dims.push({dim:'训练龄',val:`<1年(${yrs}年)`,status:'✅ BR适合'});brScore++;}
+  else if(yrs<=3){dims.push({dim:'训练龄',val:`1–3年(${yrs}年)`,status:'⚠️ 需结合体脂'});}
+  else{dims.push({dim:'训练龄',val:`>3年(${yrs}年)`,status:'❌ BR不适合'});}
+  if(bf>=bfThresh){dims.push({dim:'体脂率',val:`${bf}%≥${bfThresh}%`,status:'✅ BR适合'});brScore++;}
+  else if(bf>=bfMid){dims.push({dim:'体脂率',val:`${bf}%中位区间`,status:'⚠️ 需判断'});}
+  else{dims.push({dim:'体脂率',val:`${bf}%<${bfMid}%`,status:'❌ BR不适合'});}
+  if(off>=6){dims.push({dim:'方案史',val:`停训${off}月≥6月`,status:'✅ BR适合'});brScore++;}
+  else if(off>=3){dims.push({dim:'方案史',val:`停训${off}月`,status:'⚠️ 需判断'});}
+  else{dims.push({dim:'方案史',val:'持续训练无中断',status:'❌ BR不适合'});}
+  let verdict='',cls='green',params='',expect='';
+  if(brScore>=2){
+    verdict='适合BR路径（≥2项达标）';cls='green';
+    params=`<table><tr><th>参数</th><th>设定</th></tr>
+<tr><td>热量</td><td>等热量 ${Math.round(tee)} kcal/d (TEE×1.0)${bf>=bfThresh?' ｜ 高体脂可选微赤字TEE×0.95 = '+Math.round(tee*0.95)+' kcal/d':''}</td></tr>
+<tr><td>蛋白</td><td>${brScore===3&&yrs<1?'1.8–2.2':brScore>=2&&bf>=bfThresh?'2.2–2.7':'2.0–2.4'} g/kg/d = ${Math.round(wt*(yrs<1?1.8:bf>=bfThresh?2.2:2.0))}–${Math.round(wt*(yrs<1?2.2:bf>=bfThresh?2.7:2.4))} g/d</td></tr>
+<tr><td>单餐分配</td><td>4–5餐 × 每餐≥${Math.round(wt*0.4)} g (≥0.4 g/kg)</td></tr>
+<tr><td>训练</td><td>每肌群≥10 sets/周、≥2次/周、RPE 7–9、渐进超负荷不可妥协</td></tr>
+<tr><td>有氧</td><td>≤2–3次/周×20–30 min LISS (HR 60%–70% max)，避免干扰效应</td></tr></table>`;
+    expect=yrs<1?'LBM +1.5–3 kg, BF −2%–4%':off>=6?'LBM +1–2 kg, BF −1%–3%':'LBM +0.5–1.5 kg, BF −3%–5%';
+  }else if(brScore>=1){
+    verdict='边界情况，需综合判断';cls='yellow';
+    params='<p>可尝试BR但预期降低，LBM增益可能落在DEXA测量噪声(±0.5 kg)内。建议先尝试等热量4周观察响应。</p>';
+    expect='不确定，可能无效';
+  }else{
+    verdict='不适合BR → 推荐双相路径';cls='red';
+    params=`<div class="flow-box"><span class="flow-step">双相路径：</span>mini-cut 4–6周(赤字−15%–−20% TEE, 蛋白2.2–2.4 g/kg) → 增肌期8–16周(盈余+10%–+15% TEE)</div><p>双相路径LBM净增益约为单相BR尝试的1.5–2倍。</p>`;
+    expect='双相路径优于BR';
+  }
+  const o=document.getElementById('s4_output');
+  o.innerHTML=`<div class="verdict-box ${cls}"><h4>${verdict}</h4>12周预期：${expect}</div>
+<table><tr><th>维度</th><th>评估</th><th>状态</th></tr>${dims.map(d=>`<tr><td>${d.dim}</td><td>${d.val}</td><td>${d.status}</td></tr>`).join('')}</table>
+${params}
+<div class="ref-table"><h4 style="font-size:13px;color:var(--ink-soft)">教材阈值对照</h4>
+<table><tr><th>人群类型</th><th>操作定义</th><th>12周预期</th></tr>
+<tr><td>训练新手</td><td>抗阻训练龄<1年</td><td>LBM +1.5–3 kg / BF −2%–4%</td></tr>
+<tr><td>回归训练者</td><td>停训≥6月(此前训练≥6月)</td><td>LBM +1–2 kg / BF −1%–3%</td></tr>
+<tr><td>高体脂</td><td>BMI≥30或男BF≥25%/女BF≥32%</td><td>LBM +0.5–1.5 kg / BF −3%–5%</td></tr></table></div>
+<div class="sop-note">BR成功标准(W12)：LBM+1 kg以上且体脂−1%以上。W4复评为核心决策节点：LBM≥+0.5kg且BF−1%+→维持 ｜ LBM无变化→核查依从性→切换微赤字/双相路径。</div>`;
+  document.getElementById('s4_result').classList.add('show');
+}
+
+/* ============ SOP5: 特殊人群 ============ */
+function s5_calc(){
+  const pop=document.getElementById('s5_pop').value,name=document.getElementById('s5_name').value||'客户';
+  const age=+document.getElementById('s5_age').value,wt=+document.getElementById('s5_wt').value,tee=+document.getElementById('s5_tee').value;
+  const sbp=+document.getElementById('s5_sbp').value,dbp=+document.getElementById('s5_dbp').value,hba1c=+document.getElementById('s5_hba1c').value;
+  const ldl=+document.getElementById('s5_ldl').value,tg=+document.getElementById('s5_tg').value,waist=+document.getElementById('s5_waist').value;
+  const meds=document.getElementById('s5_meds').value,report=document.getElementById('s5_report').value;
+  const popNames={hyper:'高血压',lipid:'血脂异常',t2dm:'T2DM/高血糖',meta:'代谢综合征',old50:'50+训练者',meno:'绝经后女性'};
+  let recs=[],alerts=[],referrals=[];
+  // No report check
+  if(report==='n'){alerts.push('⚠️ 无近期体检报告(3个月内) → 不开方案，降级为信息收集阶段');}
+  // Red lines
+  if(sbp>=200||dbp>=110){referrals.push('SBP≥200/DBP≥110 → 紧急转诊');}
+  else if(sbp>=180||dbp>=110){referrals.push('SBP≥180/DBP≥110 → 首诊不启动方案，支持性会谈+转介');}
+  if(hba1c>9){referrals.push('HbA1c>9.0% → 必须转介内分泌科');}
+  // Population-specific
+  if(pop==='hyper'||pop==='meta'){
+    recs.push('<b>DASH饮食模式</b>：富水果蔬菜全谷物低脂乳制品，限饱和脂肪/钠/含糖饮料');
+    recs.push(`<b>限钠</b>：<2 g/d（盐<5 g/d）${age>50||pop==='meta'?'，个体化，已用利尿剂/ACEI者需监测血电解质':''}`);
+    recs.push('<b>降压幅度参考</b>：DASH降低SBP −4.4 mmHg(高血压亚组)；耐力训练−8.3/−5.2 mmHg；等长训练−10.0/−6.2 mmHg');
+    if(sbp>=140)alerts.push('SBP≥140 → 训练中避免Valsalva，负荷60%–80% 1RM');
+    if(meds.includes('β')||meds.includes('阻滞'))alerts.push('使用β阻滞剂 → 用RPE替代心率作为强度指标');
+  }
+  if(pop==='lipid'||pop==='meta'){
+    recs.push('<b>脂肪质量</b>：饱和脂肪<10%总能量，反式脂肪趋零；用不饱和脂肪替代');
+    recs.push(`<b>Omega-3</b>：EPA+DHA ${tg>=2.3?'2–4 g/d（高TG，降TG 15%–30%）':'1–2 g/d'}（每1g/d降TG 5%–8%）`);
+    recs.push('<b>碳水</b>：低GI/GL替代精制碳水，HbA1c改善0.31%（Chiavaroli 2021 BMJ）');
+    recs.push('<b>食物替换</b>：深海鱼每周≥2次×120–150 g ｜ 坚果25–30 g/d ｜ 红肉≤300 g/周');
+  }
+  if(pop==='t2dm'||pop==='meta'){
+    recs.push('<b>碳水分配</b>：每餐30–60 g，均匀分配至三餐，低GI(GL≤55)');
+    recs.push('每餐搭配蛋白20–30 g + 纤维≥5 g，减缓胃排空和葡萄糖吸收');
+    recs.push('<b>减重目标</b>：≥5%体重可同时改善HbA1c、血压、血脂；7%–10%可使部分T2DM缓解');
+    if(meds.includes('二甲双胍'))recs.push('<b>二甲双胍+B12</b>：长期使用(≥4年)与VitB12缺乏相关→建议定期监测B12');
+    if(meds.includes('磺脲')||meds.includes('格列'))alerts.push('使用磺脲类 → 运动中低血糖风险↑，运动前监测血糖，随身携带速效碳水15–20 g');
+    if(meds.includes('SGLT'))alerts.push('使用SGLT-2抑制剂 → 注意脱水风险，训练中监测酮体');
+  }
+  if(pop==='old50'){
+    recs.push('<b>蛋白上调</b>：1.0–1.6 g/kg/d = '+Math.round(wt*1.0)+'–'+Math.round(wt*1.6)+' g/d（规律训练者靠近上限）');
+    recs.push('<b>每餐</b>：25–40 g高质量蛋白（克服合成代谢抵抗，亮氨酸阈值比年轻人高1.67×）');
+    recs.push('<b>蛋白源</b>：乳清蛋白(亮氨酸~11%)、鸡蛋(~9%)、鱼类(~8%)优先，植物蛋白需更大食物量');
+    recs.push('<b>骨骼三联</b>：钙1000–1200 mg/d + VD 800–2000 IU/d + VK2(MK-7) 90–180 μg/d');
+    recs.push('<b>咖啡因</b>：<400 mg/d（高咖啡因增加尿钙排泄）');
+    recs.push('<b>训练日钙补充</b>：避开训练前后2 h');
+  }
+  if(pop==='meno'){
+    recs.push('<b>蛋白</b>：1.6–2.0 g/kg/d（减脂期）= '+Math.round(wt*1.6)+'–'+Math.round(wt*2.0)+' g/d');
+    recs.push('<b>热量底线</b>：≥1200 kcal/d（<1200加速骨丢失）');
+    recs.push('<b>温和赤字</b>：300–500 kcal/d，减脂速度比年轻女性慢20%–30%');
+    recs.push('<b>BR优先</b>：抗阻训练+高蛋白+温和赤字，同时改善体成分/骨密度/代谢健康');
+    recs.push('<b>骨骼三联</b>：钙1000–1200 mg/d + VD 800–2000 IU/d + VK2(MK-7) 90–180 μg/d');
+    recs.push('<b>Omega-3</b>：EPA+DHA 2–4 g/d（心血管风险↑+抗炎+肌肉蛋白合成支持）');
+    recs.push('<b>植物异黄酮</b>：可推荐（安全性GRADE高等），效应量小至中等(Hedges g=−0.25)，不替代HRT');
+  }
+  // Metabolic syndrome check
+  if(pop==='meta'){
+    const metaCount = (waist>=90?1:0) + (tg>=1.7?1:0) + (sbp>=130||dbp>=85?1:0) + (hba1c>=5.6||hba1c>0?1:0);
+    recs.push(`<b>代谢综合征组分</b>：中心性肥胖${waist>=90?'✅':'❌'} + TG${tg>=1.7?'✅':'❌'} + BP${sbp>=130||dbp>=85?'✅':'❌'} + 血糖${hba1c>=5.6?'✅':'❌'} = ${metaCount}项（需≥3项+中心性肥胖确诊）`);
+    recs.push('<b>核心干预</b>：减脂5%–10%即可显著改善全部指标。减重5.1 kg平均降低SBP 4.44 mmHg。');
+  }
+  const cls=referrals.length?'red':alerts.length?'yellow':'green';
+  const o=document.getElementById('s5_output');
+  o.innerHTML=`<div class="verdict-box ${cls}"><h4>${popNames[pop]}营养调整方案</h4>
+${referrals.length?'<span class="redline">🚨 必须转介：'+referrals.join(' ｜ ')+'</span>':'无红线指标'}
+${alerts.length?'<br>'+alerts.map(a=>'⚠️ '+a).join('<br>'):''}</div>
+${recs.length?`<h4 style="font-family:PingFang SC;color:#1a2332">推荐策略：</h4><ul>${recs.map(r=>'<li>'+r+'</li>').join('')}</ul>`:''}
+<div class="ref-table"><h4 style="font-size:13px;color:var(--ink-soft)">教材执业红线</h4>
+<table><tr><th>红线指标</th><th>阈值</th><th>动作</th></tr>
+<tr><td>SBP</td><td>≥180 mmHg（任一次）</td><td>首诊不启动方案→转介</td></tr>
+<tr><td>HbA1c</td><td>>9.0%</td><td>必须转介内分泌科</td></tr>
+<tr><td>急性心血管事件</td><td><3个月</td><td>首诊不启动方案</td></tr>
+<tr><td>eGFR</td><td><60 mL/min/1.73m²</td><td>首诊不启动方案</td></tr></table></div>
+<div class="sop-note"><span class="redline">执业四原则：</span>①不诊断 ②不调药 ③在医疗团队框架内提供营养支持 ④无近期体检报告不开方案。<br>每份方案须写入："本方案不替代医生处方；减药/降级决策由主治医生评估。"</div>`;
+  document.getElementById('s5_result').classList.add('show');
+}
+
+/* ============ SOP6: 循证判断 ============ */
+function s6_calc(){
+  const claim=document.getElementById('s6_claim').value||'（未填写声明）';
+  const source=document.getElementById('s6_source').value||'（未填写来源）';
+  const q1=+document.getElementById('s6_q1').value||0,q2=document.getElementById('s6_q2').value,q3=document.getElementById('s6_q3').value,q3b=document.getElementById('s6_q3b').value,q4=document.getElementById('s6_q4').value,q5=document.getElementById('s6_q5').value;
+  let levelName={1:'L1 系统综述/Meta分析',2:'L2 RCT',3:'L3 队列研究',4:'L4 专家共识/立场声明',5:'L5 教科书',6:'L6 自媒体/商业宣传'};
+  let issues=[],score=0;
+  // Q1
+  if(q1>=1&&q1<=2){score+=2;issues.push('✅ 信息源层级较高(L'+q1+')');}
+  else if(q1===3){score+=1;issues.push('⚠️ 队列研究(L3)→只能建立相关，不能证明因果');}
+  else if(q1===4){score+=1.5;issues.push('✅ 立场声明(L4)→检查发布日期和引用证据质量');}
+  else if(q1===5){score+=0.5;issues.push('⚠️ 教科书(L5)→可能存在滞后性');}
+  else if(q1===6){score+=0;issues.push('❌ 自媒体/商业宣传(L6)→默认权重极低');}
+  // Q2
+  if(q2==='match'){score+=1;issues.push('✅ 研究设计匹配问题类型');}
+  else if(q2==='partial'){score+=0.5;issues.push('⚠️ 研究设计部分匹配');}
+  else if(q2==='mismatch'){score+=0;issues.push('❌ 研究设计不匹配（如用队列研究证明疗效/用动物实验推导人体效果）');}
+  // Q3
+  if(q3==='large'){score+=1;issues.push('✅ 样本量充分(≥100)');}
+  else if(q3==='medium'){score+=0.5;issues.push('⚠️ 样本量中等(30–99)，效应量估计可能不稳定');}
+  else if(q3==='small'){score+=0;issues.push('❌ 样本量不足(<30)，后续大样本研究可能无法复现');}
+  else if(q3==='none'){score+=0;issues.push('❌ 无研究数据支撑');}
+  // Q3b
+  if(q3b==='yes'){score+=0.5;issues.push('✅ 效应量有临床意义');}
+  else if(q3b==='stat'){score+=0.25;issues.push('⚠️ 仅统计学显著(p<0.05)但临床意义有限');}
+  else if(q3b==='no'){score+=0;issues.push('❌ 无临床意义');}
+  // Q4
+  if(q4==='none'){score+=1;issues.push('✅ 无利益冲突');}
+  else if(q4==='ind'){score+=0;issues.push('❌ 产业资助→有利结论概率为非产业资助的3.6倍(Ioannidis 2008)');}
+  else if(q4==='brand'){score+=0;issues.push('❌ 品牌白皮书/自发布→未经同行评审');}
+  // Q5
+  if(q5==='high'){score+=1;issues.push('✅ 可推广性高（人群匹配）');}
+  else if(q5==='partial'){score+=0.5;issues.push('⚠️ 部分匹配（检查受试人群/干预剂量/结局指标差异）');}
+  else if(q5==='low'){score+=0;issues.push('❌ 可推广性低');}
+  // Verdict
+  const maxScore=7;
+  const pct=Math.round(score/maxScore*100);
+  let verdict='',cls='green';
+  if(pct>=70){verdict='证据基础较好，可作为参考但仍需关注局限性';cls='green';}
+  else if(pct>=40){verdict='证据基础不完整，需谨慎引用，不建议作为决策主要依据';cls='yellow';}
+  else{verdict='证据基础不足，不支持该声称。"目前证据不充分"';cls='red';}
+  // Common manipulation check
+  let manipChecks=[];
+  if(q4==='ind'||q4==='brand')manipChecks.push('⚠️ 产业资助偏倚风险：品牌方资助研究得出有利结论概率为非产业资助3.6×');
+  if(q3==='small'&&q1<=2)manipChecks.push('⚠️ 小样本RCT：效应量估计不稳定，Power failure(Button 2013)');
+  if(q2==='mismatch')manipChecks.push('⚠️ 设计-问题不匹配：观察性研究≠因果');
+  if(source.includes('proprietary')||source.includes('ProBlend')||source.includes('专利'))manipChecks.push('⚠️ Proprietary blend：成分/剂量不公开，规避循证核查');
+  if(source.includes('Instagram')||source.includes('小红书')||source.includes('博主'))manipChecks.push('⚠️ 自媒体来源：证据层级L6，不能作为决策主要依据');
+  const o=document.getElementById('s6_output');
+  o.innerHTML=`<div class="verdict-box ${cls}"><h4>证据评估得分：${score.toFixed(1)}/${maxScore}（${pct}%）</h4>${verdict}</div>
+<p><b>待评估声明：</b>"${claim}"<br><b>声称来源：</b>${source}</p>
+<h4 style="font-family:PingFang SC;color:#1a2332">五问评估详情：</h4>
+<table><tr><th>问题</th><th>评估结果</th></tr>
+<tr><td>Q1 信息源层级</td><td>${q1?levelName[q1]:'未评估'}</td></tr>
+<tr><td>Q2 设计匹配</td><td>${q2||'未评估'}</td></tr>
+<tr><td>Q3 样本量</td><td>${q3||'未评估'}</td></tr>
+<tr><td>Q3b 效应量</td><td>${q3b||'未评估'}</td></tr>
+<tr><td>Q4 利益冲突</td><td>${q4||'未评估'}</td></tr>
+<tr><td>Q5 可推广性</td><td>${q5||'未评估'}</td></tr></table>
+<h4 style="font-family:PingFang SC;color:#1a2332">逐项分析：</h4>
+<ul>${issues.map(i=>'<li>'+i+'</li>').join('')}</ul>
+${manipChecks.length?`<h4 style="font-family:PingFang SC;color:#8a2a2a">常见证据操纵手法识别：</h4><ul>${manipChecks.map(m=>'<li class="redline">'+m+'</li>').join('')}</ul>`:''}
+<div class="script-box"><b>建议回应话术（2–3句）：</b><br>"这个声称${pct>=70?'有一定证据基础，但':'的证据基础还不够充分'}。${q1>=1&&q1<=2?'目前来自'+levelName[q1]+'级别的证据显示…':'该证据来源层级较低'}。${q4==='ind'?'需要注意的是该研究由产业方资助，偏倚风险较高。':''}${q5==='low'?'此外，研究人群/干预方案与您的情况存在较大差异。':''}我建议${pct>=40?'参考这个证据的同时，关注更多独立研究的结果':'暂时不以此作为决策依据，等有更充分的证据再考虑'}。"</div>
+<div class="ref-table"><h4 style="font-size:13px;color:var(--ink-soft)">四级分析框架参考</h4>
+<table><tr><th>层级</th><th>内容</th></tr>
+<tr><td>① 整体图谱</td><td>现有证据全貌（多源交叉验证）</td></tr>
+<tr><td>② 方法学批判</td><td>设计缺陷、偏倚来源、样本量、异质性</td></tr>
+<tr><td>③ 适用边界</td><td>结论在何条件下成立/不成立</td></tr>
+<tr><td>④ 全量结论</td><td>"目前证据表明…但存在以下局限…"</td></tr></table></div>
+<div class="sop-note">核心原则：举证责任在声称方，不在质疑方。教练不需要证伪声称，而是要求信息源方提供充分证据。当证据不足时，诚实告知"目前证据不充分"。</div>`;
+  document.getElementById('s6_result').classList.add('show');
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,734 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>加5磅 Day2 SOP实操工作单（M5–M8）</title>
+<style>
+:root{
+  --bg:#faf8f3;--card:#fffdf8;--paper:#ffffff;
+  --ink:#2a2925;--ink-soft:#6b675e;
+  --brand:#1a2332;--accent:#c9a84c;--line:#e8e4dc;
+  --ok:#1a3a2a;--warn:#8a6d1b;--bad:#8a2a2a;
+  --ok-bg:#e6f0ea;--ok-bd:#a8c5b8;
+  --warn-bg:#f7f1e3;--warn-bd:#e4d9b8;
+  --bad-bg:#fbeaea;--bad-bd:#e3c6c6;
+}
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Songti SC","STSong","SimSun","Noto Serif CJK SC",serif;font-size:14.5px;line-height:1.7;}
+h1,h2,h3,h4,.sans,button,label,th,.tag,.field label,.toolbar,.sheet-tag,.verdict,.hint{font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans CJK SC",system-ui,sans-serif;}
+header.topbar{background:var(--card);border-bottom:2px solid var(--brand);padding:18px 20px 12px;text-align:center;}
+header.topbar h1{margin:0 0 4px;font-size:21px;color:var(--brand);letter-spacing:1px;}
+header.topbar .sub{color:var(--ink-soft);font-size:12.5px;font-family:"PingFang SC",sans-serif;}
+.toolbar{position:sticky;top:0;z-index:30;background:var(--bg);border-bottom:1px solid var(--line);padding:10px 14px;display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:center;}
+.toolbar .tabs{display:flex;flex-wrap:wrap;gap:6px;}
+.toolbar button.tabbtn{border:1px solid var(--line);background:var(--card);color:var(--ink-soft);padding:7px 14px;border-radius:999px;font-size:13.5px;cursor:pointer;}
+.toolbar button.tabbtn.active{background:var(--brand);border-color:var(--brand);color:#fff;}
+.toolbar .tools{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-left:8px;}
+.toolbar input[type=text]{padding:7px 10px;border:1px solid var(--line);border-radius:6px;font-size:13.5px;background:#fff;color:var(--ink);width:130px;font-family:"PingFang SC",sans-serif;}
+.toolbar button.act{border:1px solid var(--brand);background:var(--brand);color:#fff;padding:7px 14px;border-radius:6px;font-size:13.5px;cursor:pointer;}
+.toolbar button.act.ghost{background:transparent;color:var(--brand);}
+.toolbar .savehint{font-size:12px;color:var(--ink-soft);font-family:"PingFang SC",sans-serif;}
+main{max-width:215mm;margin:0 auto;padding:18px 14px 60px;}
+.sheet{display:none;}.sheet.active{display:block;}
+.sheet-inner{background:var(--paper);border:1px solid var(--line);border-radius:6px;padding:26px 30px 22px;box-shadow:0 2px 8px rgba(60,50,30,.07);}
+.sheet-title h2{margin:0 0 4px;font-size:18.5px;color:var(--brand);border-bottom:2px solid var(--brand);padding-bottom:8px;}
+.sheet-tag{font-size:12px;color:var(--accent);margin-bottom:14px;}
+h3.sec{font-size:15px;color:var(--accent);margin:18px 0 8px;border-left:4px solid var(--accent);padding-left:8px;}
+h4.sub{font-size:13.5px;color:var(--brand);margin:12px 0 6px;}
+p.note{font-size:13px;color:var(--ink-soft);margin:6px 0;}
+.member-bar{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:10px 16px;background:var(--card);border:1px solid var(--line);border-radius:6px;padding:12px 14px;margin-bottom:6px;}
+.field{display:flex;flex-direction:column;font-size:12.5px;}
+.field label{color:var(--ink-soft);margin-bottom:2px;}
+.field input,.field select,.field textarea{padding:6px 8px;border:1px solid var(--line);border-radius:4px;font-size:14px;background:#fff;color:var(--ink);font-family:inherit;}
+.field textarea{resize:vertical;min-height:60px;font-size:13.5px;}
+.field.wide{grid-column:1/-1;}
+table.grid{width:100%;border-collapse:collapse;font-size:13px;margin:8px 0;}
+table.grid th,table.grid td{border:1px solid var(--line);padding:6px 8px;text-align:left;vertical-align:top;}
+table.grid th{background:#f1ede2;font-family:"PingFang SC",sans-serif;font-weight:600;}
+.verdict{border-radius:8px;padding:12px 16px;margin:12px 0;font-size:14px;border:1px dashed var(--line);background:#faf8f3;color:var(--ink-soft);font-family:"PingFang SC",sans-serif;}
+.verdict.green{background:var(--ok-bg);border:1px solid var(--ok-bd);color:#1a3a2a;}
+.verdict.yellow{background:var(--warn-bg);border:1px solid var(--warn-bd);color:#6a4e10;}
+.verdict.red{background:var(--bad-bg);border:1px solid var(--bad-bd);color:#8a2a2a;}
+.verdict h4{margin:0 0 6px;font-size:15px;}
+.verdict ul{margin:6px 0 4px 18px;padding:0;}.verdict li{margin-bottom:4px;}
+.verdict table{width:100%;border-collapse:collapse;font-size:13px;margin:8px 0;background:rgba(255,255,255,.55);}
+.verdict th,.verdict td{border:1px solid var(--line);padding:5px 8px;text-align:left;}
+.verdict th{background:rgba(255,255,255,.7);}
+.flow{border:1px dashed var(--brand);border-radius:8px;padding:9px 14px;margin:7px 0;background:#f6f9f8;font-size:13.5px;}
+.flow .st{font-family:"PingFang SC",sans-serif;font-weight:600;color:var(--brand);}
+.concl-box{border:1px solid var(--line);border-radius:6px;padding:12px 14px;margin:10px 0;background:var(--card);}
+.concl-box .field{margin-bottom:10px;}
+.archive{border:1.5px solid var(--brand);border-radius:6px;padding:12px 14px;margin:16px 0 8px;background:#f7faf9;}
+.archive h3.sec{margin-top:4px;}
+.sheet-foot{margin-top:16px;padding-top:10px;border-top:1px solid var(--line);font-size:12px;color:var(--accent);font-family:"PingFang SC",sans-serif;}
+.sheet-foot .disc{color:var(--ink-soft);margin-top:3px;}
+.calc-btn{background:var(--brand);color:#fff;border:none;padding:8px 22px;border-radius:6px;font-size:14px;cursor:pointer;font-family:"PingFang SC",sans-serif;margin:8px 0;}
+.calc-btn:hover{opacity:.85;}
+.ref-table{font-size:12.5px;color:var(--ink-soft);margin:8px 0;padding:8px 12px;background:#faf6ec;border-left:3px solid var(--accent);border-radius:0 6px 6px 0;}
+@page{size:A4;margin:12mm;}
+@media print{
+  header.topbar,.toolbar{display:none!important;}
+  body{background:#fff;font-size:12px;}
+  main{max-width:100%;padding:0;}
+  .sheet{display:none!important;}.sheet.active{display:block!important;}
+  .sheet-inner{border:none;box-shadow:none;padding:0;}
+  .verdict{break-inside:avoid;}
+  input,textarea,select{color:#000!important;}
+}
+</style>
+</head>
+<body>
+
+<header class="topbar no-print">
+  <h1>加5磅 · Day2 SOP 实操工作单</h1>
+  <div class="sub">微量营养素 · 补剂 · 首次咨询 · 水合 · 减脂 ｜ 覆盖 M5–M8 ｜ 内置自动计算与判定，完成后可打印归档</div>
+</header>
+
+<div class="toolbar no-print">
+  <div class="tabs" id="tabBar">
+    <button class="tabbtn active" data-sheet="s1">SOP-1 微量营养素筛查</button>
+    <button class="tabbtn" data-sheet="s2">SOP-2 水合状态评估</button>
+    <button class="tabbtn" data-sheet="s3">SOP-3 补剂决策</button>
+    <button class="tabbtn" data-sheet="s4">SOP-4 首次咨询</button>
+    <button class="tabbtn" data-sheet="s5">SOP-5 减脂方案</button>
+  </div>
+  <div class="tools">
+    <input type="text" id="globalNick" class="nick" placeholder="会员昵称（同步各单）">
+    <button class="act" id="btnPrint">打印 / 保存PDF</button>
+  </div>
+</div>
+
+<main>
+
+<!-- ===== SOP-1 微量营养素筛查 ===== -->
+<section class="sheet active" id="sheet-s1">
+<div class="sheet-inner">
+  <div class="sheet-title">
+    <h2>SOP-1 ｜ 微量营养素缺乏风险筛查工作单</h2>
+    <div class="sheet-tag">教材定位：M5 §5.2 高风险人群识别 · §5.1 VD/Mg/Fe/Zn机制 · §5.4 铁代谢三阶段</div>
+  </div>
+
+  <div class="member-bar">
+    <div class="field"><label>会员昵称</label><input type="text" class="nick" id="s1-nick"></div>
+    <div class="field"><label>评估日期</label><input type="date" id="s1-date"></div>
+    <div class="field"><label>年龄</label><input type="number" id="s1-age" min="10" max="100"></div>
+    <div class="field"><label>性别</label><select id="s1-sex"><option value="">请选择</option><option value="女">女</option><option value="男">男</option></select></div>
+    <div class="field wide"><label>训练目标</label><input type="text" id="s1-goal" placeholder="如：减脂 / 增肌 / 耐力提升"></div>
+  </div>
+
+  <h3 class="sec">一、风险因子采集（输入后自动判断）</h3>
+
+  <div class="member-bar">
+    <div class="field"><label>每周训练频率</label><select id="s1-freq"><option value="">请选择</option><option value="1-2">1–2次/周</option><option value="3-4">3–4次/周</option><option value="5-6">5–6次/周</option><option value="7+">≥7次/周（含一日两练）</option></select></div>
+    <div class="field"><label>训练环境</label><select id="s1-env"><option value="">请选择</option><option value="indoor">以室内为主</option><option value="outdoor">以户外为主</option><option value="mixed">混合</option></select></div>
+    <div class="field"><label>日晒时长（日均）</label><select id="s1-sun"><option value="">请选择</option><option value="<15">&lt;15分钟</option><option value="15-30">15–30分钟</option><option value=">30">&gt;30分钟</option></select></div>
+    <div class="field"><label>肤色</label><select id="s1-skin"><option value="">请选择</option><option value="light">浅肤色</option><option value="medium">中等肤色</option><option value="dark">深肤色</option></select></div>
+    <div class="field"><label>饮食类型</label><select id="s1-diet"><option value="">请选择</option><option value="omni">杂食</option><option value="veg-occ">偶尔素食</option><option value="veg">严格素食</option><option value="caloric">热量限制中</option></select></div>
+    <div class="field"><label>热量缺口</label><select id="s1-cal"><option value="">请选择</option><option value="none">无缺口</option><option value="<500">&lt;500 kcal/d</option><option value=">=500">≥500 kcal/d持续&gt;8周</option></select></div>
+    <div class="field"><label>月经状况（女性）</label><select id="s1-mens"><option value="">请选择/不适用</option><option value="regular">规律</option><option value="irregular">不规律/稀少</option><option value="absent">停经&gt;3个月</option></select></div>
+    <div class="field"><label>反复感染（年≥3次URI）</label><select id="s1-infect"><option value="">请选择</option><option value="no">否</option><option value="yes">是</option></select></div>
+    <div class="field"><label>已知SF值（如有）</label><input type="number" id="s1-sf" step="0.1" placeholder="μg/L"></div>
+  </div>
+
+  <h3 class="sec">二、自动风险判定</h3>
+  <div class="verdict" id="s1-verdict">完成上方采集后点击「评估」按钮，此处自动给出各微量营养素风险等级与处置建议。</div>
+  <button class="calc-btn" id="s1-calc">评估风险</button>
+
+  <h3 class="sec">三、教材阈值对照</h3>
+  <div class="ref-table">
+    <p><b>维生素D</b>：25(OH)D &lt;50 nmol/L为缺乏（Holick）；≥75 nmol/L为充足（Endocrine Society）。内场馆训练者不足率37%–83%。</p>
+    <p><b>铁蛋白SF</b>：&lt;30 μg/L为警惕阈值；&lt;15 μg/L为转介阈值。解读须结合CRP（SF为急性期反应物）。</p>
+    <p><b>镁</b>：99%位于细胞内/骨骼，血清镁正常不能排除组织边缘不足。运动训练可能使镁需求增加10%–20%。</p>
+    <p><b>锌</b>：汗锌浓度0.6–1.5 mg/L。高剂量锌补充（&gt;25 mg/d）可抑制铜吸收。锌铜比例参考10:1–15:1。</p>
+  </div>
+
+  <div class="archive">
+    <h3 class="sec">四、归档区</h3>
+    <div class="member-bar" style="background:transparent;border:none;padding:0;">
+      <div class="field"><label>咨询师签名</label><input type="text"></div>
+      <div class="field"><label>归档日期</label><input type="date"></div>
+      <div class="field"><label>下次复评日期</label><input type="date"></div>
+      <div class="field wide"><label>备注（转介建议、实验室检测安排等）</label><textarea></textarea></div>
+    </div>
+  </div>
+
+  <div class="sheet-foot">
+    教材定位：M5 §5.1–5.4 维生素矿物质与水 · 高风险人群识别 · 铁代谢三阶段
+    <div class="disc">本记录用于营养教育与风险识别，不替代医学评估。SF解读须结合CRP。铁状态异常时转介医生或注册营养专业人员。</div>
+  </div>
+</div>
+</section>
+
+<!-- ===== SOP-2 水合状态评估 ===== -->
+<section class="sheet" id="sheet-s2">
+<div class="sheet-inner">
+  <div class="sheet-title">
+    <h2>SOP-2 ｜ 水合状态评估工作单</h2>
+    <div class="sheet-tag">教材定位：M5 §5.3 水合状态评估与管理 · ACSM 2007三阶段补水原则 · 体重差值法 · 尿液颜色自评</div>
+  </div>
+
+  <div class="member-bar">
+    <div class="field"><label>会员昵称</label><input type="text" class="nick" id="s2-nick"></div>
+    <div class="field"><label>评估日期</label><input type="date" id="s2-date"></div>
+    <div class="field"><label>训练类型</label><input type="text" id="s2-type" placeholder="如：力量训练 / 跑步 / HIIT"></div>
+    <div class="field"><label>环境条件</label><input type="text" id="s2-env2" placeholder="如：室内25°C / 室外35°C"></div>
+  </div>
+
+  <h3 class="sec">一、体重差值法数据输入</h3>
+  <div class="member-bar">
+    <div class="field"><label>训练前裸重 (kg)</label><input type="number" id="s2-wpre" step="0.01" placeholder="如 75.2"></div>
+    <div class="field"><label>训练后裸重 (kg)</label><input type="number" id="s2-wpost" step="0.01" placeholder="如 74.0"></div>
+    <div class="field"><label>训练中饮水量 (mL)</label><input type="number" id="s2-drink" step="1" placeholder="如 800"></div>
+    <div class="field"><label>训练中尿量 (mL)</label><input type="number" id="s2-urine" step="1" placeholder="如 0"></div>
+    <div class="field"><label>训练时长 (分钟)</label><input type="number" id="s2-dur" step="1" placeholder="如 90"></div>
+    <div class="field"><label>尿液颜色（Armstrong 1–8）</label><select id="s2-ucolor"><option value="">请选择</option><option value="1">1（近无色）</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8（深琥珀）</option></select></div>
+  </div>
+
+  <h3 class="sec">二、自动计算</h3>
+  <button class="calc-btn" id="s2-calc">计算水合状态</button>
+  <div class="verdict" id="s2-verdict">输入数据后点击「计算水合状态」。</div>
+
+  <h3 class="sec">三、教材阈值对照</h3>
+  <div class="ref-table">
+    <p><b>脱水分级</b>：&lt;1% BW = 良好 | 1%–2% = 轻度 | &gt;2% = 有氧表现和认知功能开始受损（ACSM 2007，A级证据）| 3%–5% = 不降低无氧/绝对肌力（A/B级）</p>
+    <p><b>尿液颜色</b>：1–4 = 水合良好（USG约&lt;1.020）| 5–6 = 轻度脱水 | 7–8 = 明显脱水</p>
+    <p><b>补液方案</b>：训练后每丢失1 kg体重补充1.25–1.5 L含钠液体。推荐钠含量50–90 mmol/L。90分钟以下中低强度训练，白水通常足够。</p>
+    <p><b>EAH警示</b>：体重不降反升 + 头痛 + 恶心 + 步态飘忽 = 运动相关低钠血症可能。未排除EAH前不能盲目补充低渗液体。</p>
+  </div>
+
+  <h3 class="sec">四、个体化补液方案</h3>
+  <div class="concl-box">
+    <div class="field"><label>预水化方案（训练前2–4小时）</label><textarea id="s2-pre" placeholder="自动生成的预水化建议..."></textarea></div>
+    <div class="field"><label>训练中补液方案</label><textarea id="s2-during" placeholder="自动生成的训练中建议..."></textarea></div>
+    <div class="field"><label>训练后补液方案</label><textarea id="s2-post" placeholder="自动生成的训练后建议..."></textarea></div>
+  </div>
+
+  <div class="archive">
+    <h3 class="sec">归档区</h3>
+    <div class="member-bar" style="background:transparent;border:none;padding:0;">
+      <div class="field"><label>咨询师签名</label><input type="text"></div>
+      <div class="field"><label>归档日期</label><input type="date"></div>
+      <div class="field"><label>建议连续测量次数</label><input type="text" value="3–5次不同条件取均值"></div>
+      <div class="field wide"><label>备注</label><textarea></textarea></div>
+    </div>
+  </div>
+
+  <div class="sheet-foot">
+    教材定位：M5 §5.3 水合状态评估与管理
+    <div class="disc">本记录用于教练场景下的水合管理教育。连续监测次日晨起体重以确认恢复效果。</div>
+  </div>
+</div>
+</section>
+
+<!-- ===== SOP-3 补剂决策 ===== -->
+<section class="sheet" id="sheet-s3">
+<div class="sheet-inner">
+  <div class="sheet-title">
+    <h2>SOP-3 ｜ 补剂决策工作单</h2>
+    <div class="sheet-tag">教材定位：M6 §6.1 AIS ABCD分类 · §6.2 A级补剂深度解析 · §6.3 争议品项分析 · §6.4 安全与反兴奋剂</div>
+  </div>
+
+  <div class="member-bar">
+    <div class="field"><label>会员昵称</label><input type="text" class="nick" id="s3-nick"></div>
+    <div class="field"><label>评估日期</label><input type="date" id="s3-date"></div>
+    <div class="field"><label>训练年限</label><select id="s3-exp"><option value="">请选择</option><option value="<6">&lt;6个月</option><option value="6-12">6–12个月</option><option value=">12">&gt;1年</option></select></div>
+    <div class="field"><label>训练目标</label><select id="s3-goal"><option value="">请选择</option><option value="strength">最大力量/增肌</option><option value="endurance">耐力提升</option><option value="fatloss">减脂</option><option value="general">一般健身</option></select></div>
+  </div>
+
+  <h3 class="sec">一、基础营养检查（补剂使用前提）</h3>
+  <div class="member-bar">
+    <div class="field"><label>每日蛋白摄入</label><input type="number" id="s3-protein" step="0.1" placeholder="g/kg/d"></div>
+    <div class="field"><label>能量状态</label><select id="s3-energy"><option value="">请选择</option><option value="balance">能量平衡</option><option value="deficit">热量缺口</option><option value="surplus">能量盈余</option></select></div>
+    <div class="field"><label>膳食多样性</label><select id="s3-diversity"><option value="">请选择</option><option value="good">良好（含蔬果/全谷/动物蛋白）</option><option value="fair">一般</option><option value="poor">差</option></select></div>
+    <div class="field"><label>是否有兴奋剂检测义务</label><select id="s3-wada"><option value="">请选择</option><option value="no">无</option><option value="yes">有</option></select></div>
+  </div>
+
+  <h3 class="sec">二、当前补剂清单</h3>
+  <table class="grid">
+    <tr><th style="width:30%">补剂名称</th><th style="width:20%">当前剂量</th><th style="width:20%">第三方认证</th><th style="width:30%">AIS分级与处置建议</th></tr>
+    <tr><td><input type="text" id="s3-sup1" placeholder="如：乳清蛋白"></td><td><input type="text" id="s3-dose1"></td><td><select id="s3-cert1"><option value="">未确认</option><option value="IS">Informed Sport</option><option value="NSF">NSF Certified</option><option value="none">无认证</option></select></td><td class="s3-rec" id="s3-rec1">—</td></tr>
+    <tr><td><input type="text" id="s3-sup2"></td><td><input type="text" id="s3-dose2"></td><td><select id="s3-cert2"><option value="">未确认</option><option value="IS">Informed Sport</option><option value="NSF">NSF Certified</option><option value="none">无认证</option></select></td><td class="s3-rec" id="s3-rec2">—</td></tr>
+    <tr><td><input type="text" id="s3-sup3"></td><td><input type="text" id="s3-dose3"></td><td><select id="s3-cert3"><option value="">未确认</option><option value="IS">Informed Sport</option><option value="NSF">NSF Certified</option><option value="none">无认证</option></select></td><td class="s3-rec" id="s3-rec3">—</td></tr>
+    <tr><td><input type="text" id="s3-sup4"></td><td><input type="text" id="s3-dose4"></td><td><select id="s3-cert4"><option value="">未确认</option><option value="IS">Informed Sport</option><option value="NSF">NSF Certified</option><option value="none">无认证</option></select></td><td class="s3-rec" id="s3-rec4">—</td></tr>
+    <tr><td><input type="text" id="s3-sup5"></td><td><input type="text" id="s3-dose5"></td><td><select id="s3-cert5"><option value="">未确认</option><option value="IS">Informed Sport</option><option value="NSF">NSF Certified</option><option value="none">无认证</option></select></td><td class="s3-rec" id="s3-rec5">—</td></tr>
+  </table>
+
+  <button class="calc-btn" id="s3-calc">自动分级</button>
+
+  <h3 class="sec">三、自动分级结果</h3>
+  <div class="verdict" id="s3-verdict">输入补剂清单后点击「自动分级」。</div>
+
+  <h3 class="sec">四、教材阈值对照</h3>
+  <div class="ref-table">
+    <p><b>Group A性能补剂剂量</b>：肌酸维持期3–5 g/d | β-丙氨酸4–6 g/d分次≥10–12周 | 咖啡因3–6 mg/kg运动前60min | 硝酸盐6–8 mmol NO₃⁻运动前2–2.5h</p>
+    <p><b>Group C不推荐</b>：BCAA（蛋白达标时）、HMB（训练者）、左旋肉碱、谷氨酰胺。标准处置：告知证据不支持，支出重构至食物路径或A级品项。</p>
+    <p><b>Group D一律停用</b>：蒺藜、SARMs、前体激素。教练不得推荐未经第三方检测认证的补剂（执业红线）。</p>
+    <p><b>污染风险</b>：14.8%–27.9%的非激素类补剂含未声明物质。第三方批次检测（Informed Sport / NSF Certified for Sport）是最有效风险降低手段。</p>
+  </div>
+
+  <div class="archive">
+    <h3 class="sec">归档区</h3>
+    <div class="member-bar" style="background:transparent;border:none;padding:0;">
+      <div class="field"><label>咨询师签名</label><input type="text"></div>
+      <div class="field"><label>归档日期</label><input type="date"></div>
+      <div class="field"><label>4–8周复评日期</label><input type="date"></div>
+      <div class="field wide"><label>补剂调整方案摘要</label><textarea></textarea></div>
+    </div>
+  </div>
+
+  <div class="sheet-foot">
+    教材定位：M6 §6.1–6.4 AIS ABCD分类 · A级补剂解析 · 争议品项 · 安全与反兴奋剂
+    <div class="disc">教练角色是评估、告知、转介，不开具。食物优先原则贯穿始终。</div>
+  </div>
+</div>
+</section>
+
+<!-- ===== SOP-4 首次咨询 ===== -->
+<section class="sheet" id="sheet-s4">
+<div class="sheet-inner">
+  <div class="sheet-title">
+    <h2>SOP-4 ｜ 首次咨询流程工作单</h2>
+    <div class="sheet-tag">教材定位：M7 §7.1 60分钟标准流程 · §7.2 行为改变三层框架 · §7.3 执业边界与法律风险</div>
+  </div>
+
+  <div class="member-bar">
+    <div class="field"><label>来访者昵称</label><input type="text" class="nick" id="s4-nick"></div>
+    <div class="field"><label>咨询日期</label><input type="date" id="s4-date"></div>
+    <div class="field"><label>年龄</label><input type="number" id="s4-age" min="6" max="100"></div>
+    <div class="field"><label>性别</label><select id="s4-sex"><option value="">请选择</option><option value="女">女</option><option value="男">男</option></select></div>
+    <div class="field wide"><label>来访者主诉目标</label><input type="text" id="s4-goal" placeholder="如：减脂 / 增肌 / 改善训练表现"></div>
+    <div class="field"><label>身高 (cm)</label><input type="number" id="s4-ht" step="0.1"></div>
+    <div class="field"><label>体重 (kg)</label><input type="number" id="s4-wt" step="0.1"></div>
+    <div class="field"><label>腰围 (cm)</label><input type="number" id="s4-waist" step="0.1"></div>
+    <div class="field"><label>BMI（自动计算）</label><input type="text" id="s4-bmi" readonly></div>
+  </div>
+
+  <h3 class="sec">一、红线7类快速筛查</h3>
+  <table class="grid">
+    <tr><th>编号</th><th>红线类别</th><th>筛查结果</th><th>备注</th></tr>
+    <tr><td>1</td><td>饮食障碍倾向（BMI&lt;17.5/极端体脂目标/催吐泻药史）</td><td><select id="s4-r1"><option value="neg">阴性</option><option value="pos">阳性</option><option value="gray">灰色</option></select></td><td><input type="text" id="s4-r1n"></td></tr>
+    <tr><td>2</td><td>急性期/重症慢病</td><td><select id="s4-r2"><option value="neg">阴性</option><option value="pos">阳性</option><option value="gray">灰色</option></select></td><td><input type="text" id="s4-r2n"></td></tr>
+    <tr><td>3</td><td>孕产期高危</td><td><select id="s4-r3"><option value="neg">阴性</option><option value="pos">阳性</option><option value="gray">灰色</option></select></td><td><input type="text" id="s4-r3n"></td></tr>
+    <tr><td>4</td><td>儿童年龄红线（&lt;6岁）</td><td><select id="s4-r4"><option value="neg">阴性</option><option value="pos">阳性</option><option value="gray">灰色</option></select></td><td><input type="text" id="s4-r4n"></td></tr>
+    <tr><td>5</td><td>单一复杂用药</td><td><select id="s4-r5"><option value="neg">阴性</option><option value="pos">阳性</option><option value="gray">灰色</option></select></td><td><input type="text" id="s4-r5n"></td></tr>
+    <tr><td>6</td><td>心理障碍并发（PHQ-9≥15/GAD-7≥15）</td><td><select id="s4-r6"><option value="neg">阴性</option><option value="pos">阳性</option><option value="gray">灰色</option></select></td><td><input type="text" id="s4-r6n"></td></tr>
+    <tr><td>7</td><td>老年多重用药综合征（≥65岁+用药≥5种）</td><td><select id="s4-r7"><option value="neg">阴性</option><option value="pos">阳性</option><option value="gray">灰色</option></select></td><td><input type="text" id="s4-r7n"></td></tr>
+  </table>
+
+  <button class="calc-btn" id="s4-calc">筛查判定</button>
+  <div class="verdict" id="s4-verdict">完成筛查后点击「筛查判定」。</div>
+
+  <h3 class="sec">二、COM-B三格评估</h3>
+  <table class="grid">
+    <tr><th>维度</th><th>评估（0–3分）</th><th>描述</th></tr>
+    <tr><td>C（能力）</td><td><select id="s4-comc"><option value="0">0 – 知识/技能充分</option><option value="1">1 – 偶有困难</option><option value="2">2 – 明显短板</option><option value="3">3 – 严重缺失</option></select></td><td><input type="text" id="s4-comcd" placeholder="如：不会算热量/不会备餐"></td></tr>
+    <tr><td>O（机会）</td><td><select id="s4-como"><option value="0">0 – 条件充分</option><option value="1">1 – 偶有不便</option><option value="2">2 – 明显阻碍</option><option value="3">3 – 严重受限</option></select></td><td><input type="text" id="s4-comod" placeholder="如：无厨房/公司无健康餐"></td></tr>
+    <tr><td>M（动机）</td><td><select id="s4-comm"><option value="0">0 – 动机充分</option><option value="1">1 – 偶有犹豫</option><option value="2">2 – 明显不足</option><option value="3">3 – 严重冲突</option></select></td><td><input type="text" id="s4-commd" placeholder="如：知道该做但不想做"></td></tr>
+  </table>
+
+  <button class="calc-btn" id="s4-comb-calc">COM-B诊断</button>
+  <div class="verdict" id="s4-comb-verdict">完成评估后点击「COM-B诊断」。</div>
+
+  <h3 class="sec">三、方案框架与行为目标</h3>
+  <div class="concl-box">
+    <div class="field"><label>评估发现反馈（非评判性语言）</label><textarea id="s4-feedback"></textarea></div>
+    <div class="field"><label>方向性建议（标注个体化空间）</label><textarea id="s4-direction"></textarea></div>
+    <div class="field"><label>首个行为目标（来访者自选，时间锚定+可观察+一周内可完成）</label><textarea id="s4-bhgoal"></textarea></div>
+    <div class="field"><label>3日饮食记录安排日期</label><input type="text" id="s4-diet3" placeholder="如：下周X至周X"></div>
+  </div>
+
+  <div class="archive">
+    <h3 class="sec">归档区</h3>
+    <div class="member-bar" style="background:transparent;border:none;padding:0;">
+      <div class="field"><label>知情同意书签署</label><select><option value="yes">已签署</option><option value="no">未签署</option></select></div>
+      <div class="field"><label>下次咨询日期</label><input type="date"></div>
+      <div class="field"><label>咨询师签名</label><input type="text"></div>
+      <div class="field wide"><label>备注</label><textarea></textarea></div>
+    </div>
+  </div>
+
+  <div class="sheet-foot">
+    教材定位：M7 §7.1 六段式流程 · §7.2 COM-B/BCT/TTM · §7.3 执业边界与法律风险
+    <div class="disc">首次咨询不输出完整饮食方案。方案制定需等待3日饮食记录收齐后在第二次咨询进行。</div>
+  </div>
+</div>
+</section>
+
+<!-- ===== SOP-5 减脂方案 ===== -->
+<section class="sheet" id="sheet-s5">
+<div class="sheet-inner">
+  <div class="sheet-title">
+    <h2>SOP-5 ｜ 减脂方案制定工作单</h2>
+    <div class="sheet-tag">教材定位：M8 §8.1.1 分层策略 · §8.1.2 蛋白保底 · §8.1.3 代谢适应 · §8.1.4 Diet Break · §8.1.5 复评调整</div>
+  </div>
+
+  <div class="member-bar">
+    <div class="field"><label>会员昵称</label><input type="text" class="nick" id="s5-nick"></div>
+    <div class="field"><label>方案日期</label><input type="date" id="s5-date"></div>
+    <div class="field"><label>年龄</label><input type="number" id="s5-age"></div>
+    <div class="field"><label>性别</label><select id="s5-sex"><option value="">请选择</option><option value="女">女</option><option value="男">男</option></select></div>
+  </div>
+
+  <h3 class="sec">一、基础数据</h3>
+  <div class="member-bar">
+    <div class="field"><label>体重 (kg)</label><input type="number" id="s5-wt" step="0.1"></div>
+    <div class="field"><label>身高 (cm)</label><input type="number" id="s5-ht" step="0.1"></div>
+    <div class="field"><label>体脂率 (%)</label><input type="number" id="s5-bf" step="0.1" placeholder="可选"></div>
+    <div class="field"><label>FFM (kg)</label><input type="number" id="s5-ffm" step="0.1" placeholder="可选（有DXA/BIA时填）"></div>
+    <div class="field"><label>PAL系数</label><select id="s5-pal"><option value="1.2">1.2（久坐）</option><option value="1.4" selected>1.4（轻度活动）</option><option value="1.55">1.55（中等活动）</option><option value="1.725">1.725（高度活动）</option></select></div>
+    <div class="field"><label>训练状态</label><select id="s5-train"><option value="none">无规律抗阻训练</option><option value="regular">规律抗阻训练≥3月</option><option value="systematic">系统抗阻训练≥4次/wk≥1年</option></select></div>
+  </div>
+
+  <h3 class="sec">二、自动计算与分层</h3>
+  <button class="calc-btn" id="s5-calc">计算TEE与分层</button>
+  <div class="verdict" id="s5-verdict">输入数据后点击「计算TEE与分层」。</div>
+
+  <h3 class="sec">三、宏量营养素分配</h3>
+  <div class="concl-box">
+    <div class="field"><label>蛋白靶值 (g/d)</label><input type="text" id="s5-prot" readonly></div>
+    <div class="field"><label>脂肪靶值 (g/d)</label><input type="text" id="s5-fat" readonly></div>
+    <div class="field"><label>碳水靶值 (g/d)</label><input type="text" id="s5-carb" readonly></div>
+    <div class="field"><label>目标摄入 (kcal/d)</label><input type="text" id="s5-target" readonly></div>
+  </div>
+
+  <h3 class="sec">四、监测计划</h3>
+  <table class="grid">
+    <tr><th>指标</th><th>频率</th><th>评估方法</th></tr>
+    <tr><td>晨起空腹体重</td><td>每日</td><td>同一秤同一条件；7天滚动均值</td></tr>
+    <tr><td>腰围</td><td>每2周</td><td>髂嵴上缘与最低肋中点</td></tr>
+    <tr><td>体成分</td><td>每4周</td><td>同一设备/时间/条件；关注趋势</td></tr>
+    <tr><td>力量表现</td><td>每1–2周</td><td>主要动作训练重量与次数</td></tr>
+    <tr><td>步数/NEAT</td><td>每日</td><td>可穿戴设备；与基线对比</td></tr>
+    <tr><td>主观状态</td><td>每周</td><td>饥饿感/精力/情绪 1–10分</td></tr>
+  </table>
+
+  <h3 class="sec">五、复评节点与终止条件</h3>
+  <div class="concl-box">
+    <div class="field"><label>第2周随访日期</label><input type="date"></div>
+    <div class="field"><label>第4周到店复评日期</label><input type="date"></div>
+    <div class="field"><label>第8周复评日期</label><input type="date"></div>
+    <div class="field"><label>第12周终评日期</label><input type="date"></div>
+  </div>
+  <div class="ref-table">
+    <p><b>终止红旗</b>：<span class="redline">月经停止 / 持续疲劳 / 力量显著下降 / 睡眠障碍 / 暴食频率增加 → 立即终止减脂进入维持期或转介</span></p>
+    <p>减脂持续超过20–24周也应考虑终止。长期热量限制的代谢与心理风险随时间累积。</p>
+  </div>
+
+  <div class="archive">
+    <h3 class="sec">归档区</h3>
+    <div class="member-bar" style="background:transparent;border:none;padding:0;">
+      <div class="field"><label>咨询师签名</label><input type="text"></div>
+      <div class="field"><label>归档日期</label><input type="date"></div>
+      <div class="field"><label>Diet Break触发评估</label><input type="text" placeholder="第8周评估是否触发"></div>
+      <div class="field wide"><label>备注</label><textarea></textarea></div>
+    </div>
+  </div>
+
+  <div class="sheet-foot">
+    教材定位：M8 §8.1.1–8.1.5 分层策略/蛋白保底/代谢适应/Diet Break/复评调整
+    <div class="disc">TEE是估算起点而非终值。4周后根据实测体重轨迹反推真实TEE并校准。Murphy & Koehler 2022：赤字>500 kcal/d时瘦体重开始净流失。</div>
+  </div>
+</div>
+</section>
+
+</main>
+
+<script>
+'use strict';
+
+/* ===== Tab切换 ===== */
+document.querySelectorAll('.tabbtn').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    document.querySelectorAll('.tabbtn').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    const s=btn.dataset.sheet;
+    document.querySelectorAll('.sheet').forEach(x=>x.classList.remove('active'));
+    document.getElementById('sheet-'+s).classList.add('active');
+  });
+});
+
+/* ===== 昵称同步 ===== */
+const gNick=document.getElementById('globalNick');
+gNick.addEventListener('input',()=>{
+  document.querySelectorAll('.nick').forEach(n=>n.value=gNick.value);
+});
+
+/* ===== 打印 ===== */
+document.getElementById('btnPrint').addEventListener('click',()=>window.print());
+
+/* ===== SOP-1 微量营养素筛查 ===== */
+document.getElementById('s1-calc').addEventListener('click',()=>{
+  const freq=document.getElementById('s1-freq').value;
+  const env=document.getElementById('s1-env').value;
+  const sun=document.getElementById('s1-sun').value;
+  const skin=document.getElementById('s1-skin').value;
+  const diet=document.getElementById('s1-diet').value;
+  const cal=document.getElementById('s1-cal').value;
+  const mens=document.getElementById('s1-mens').value;
+  const infect=document.getElementById('s1-infect').value;
+  const sf=parseFloat(document.getElementById('s1-sf').value);
+  const sex=document.getElementById('s1-sex').value;
+
+  let vdRisk=0,ironRisk=0,mgRisk=0,znRisk=0;
+  let vdNotes=[],ironNotes=[],mgNotes=[],znNotes=[];
+
+  // VD风险
+  if(env==='indoor'){vdRisk+=2;vdNotes.push('室内训练为主（内场馆训练者不足率37%–83%）');}
+  if(sun==='<15'){vdRisk+=2;vdNotes.push('日均日晒<15分钟');}
+  if(skin==='dark'){vdRisk+=1;vdNotes.push('深肤色（黑色素降低皮肤UVB合成效率）');}
+  if(vdRisk>=4)vdRisk=3;
+
+  // 铁风险
+  if(sex==='女'){ironRisk+=1;ironNotes.push('女性（Fallon数据：19%女性运动员SF<30 μg/L）');}
+  if(mens==='irregular'||mens==='absent'){ironRisk+=2;ironNotes.push('月经异常（月经过多显著增加铁丢失）');}
+  if(diet==='veg'){ironRisk+=2;ironNotes.push('严格素食（非血红素铁吸收率仅2%–15%）');}
+  if(diet==='caloric'){ironRisk+=1;ironNotes.push('热量限制中');}
+  if(cal==='>=500'){ironRisk+=2;ironNotes.push('热量缺口≥500 kcal/d持续>8周');}
+  if(freq==='5-6'||freq==='7+'){ironRisk+=1;ironNotes.push('高训练量（hepcidin升高抑制铁吸收）');}
+  if(!isNaN(sf)){if(sf<30){ironRisk+=2;ironNotes.push('SF<30 μg/L（警惕阈值）');}if(sf<15){ironRisk+=3;ironNotes.push('SF<15 μg/L（转介阈值）');}}
+
+  // 镁/锌风险
+  if(freq==='5-6'||freq==='7+'){mgRisk+=1;znRisk+=1;mgNotes.push('高训练量（汗液矿物质丢失累积）');znNotes.push('高训练量（汗锌0.6–1.5 mg/L）');}
+  if(diet==='veg'){mgRisk+=1;mgNotes.push('素食可能影响矿物质摄入');}
+  if(cal==='>=500'){mgRisk+=1;znRisk+=1;mgNotes.push('热量限制压缩矿物质摄入');znNotes.push('热量限制');}
+  if(infect==='yes'){znRisk+=2;znNotes.push('反复感染（锌缺乏影响免疫功能）');}
+
+  function level(n){
+    if(n>=3)return'<span style="color:#8a2a2a;font-weight:bold;">高风险</span>';
+    if(n>=1)return'<span style="color:#8a6d1b;font-weight:bold;">中等风险</span>';
+    return'<span style="color:#1a3a2a;font-weight:bold;">低风险</span>';
+  }
+  function colorClass(n){return n>=3?'red':n>=1?'yellow':'green';}
+
+  let html=`<table><tr><th>营养素</th><th>风险等级</th><th>识别因子</th></tr>`;
+  html+=`<tr><td>维生素D</td><td>${level(vdRisk)}</td><td>${vdNotes.join('；')||'未识别到风险因子'}</td></tr>`;
+  html+=`<tr><td>铁</td><td>${level(ironRisk)}</td><td>${ironNotes.join('；')||'未识别到风险因子'}</td></tr>`;
+  html+=`<tr><td>镁</td><td>${level(mgRisk)}</td><td>${mgNotes.join('；')||'未识别到风险因子'}</td></tr>`;
+  html+=`<tr><td>锌</td><td>${level(znRisk)}</td><td>${znNotes.join('；')||'未识别到风险因子'}</td></tr>`;
+  html+=`</table>`;
+
+  const maxRisk=Math.max(vdRisk,ironRisk,mgRisk,znRisk);
+  if(maxRisk>=3){
+    html+=`<div class="verdict red"><h4>建议转介医学评估</h4>存在高风险因子。建议实验室筛查（CBC、Hb、MCV、MCH、SF、TSAT、CRP、25(OH)D）。铁状态异常时转介医生或注册营养专业人员，教练不处方铁剂。</div>`;
+  }else if(maxRisk>=1){
+    html+=`<div class="verdict yellow"><h4>建议加强筛查与膳食优化</h4>存在中等风险因子。建议优化膳食结构（每餐加约50mg VC增强铁吸收、避免主餐时浓茶咖啡），12周后复查相关指标。</div>`;
+  }else{
+    html+=`<div class="verdict green"><h4>当前低风险</h4>未识别到显著风险因子。继续常规监测。</div>`;
+  }
+
+  document.getElementById('s1-verdict').innerHTML=html;
+  document.getElementById('s1-verdict').className='verdict '+colorClass(maxRisk);
+});
+
+/* ===== SOP-2 水合状态 ===== */
+document.getElementById('s2-calc').addEventListener('click',()=>{
+  const wp=parseFloat(document.getElementById('s2-wpre').value);
+  const wa=parseFloat(document.getElementById('s2-wpost').value);
+  const dr=parseFloat(document.getElementById('s2-drink').value)||0;
+  const ur=parseFloat(document.getElementById('s2-urine').value)||0;
+  const dur=parseFloat(document.getElementById('s2-dur').value);
+  const ucolor=document.getElementById('s2-ucolor').value;
+
+  if(isNaN(wp)||isNaN(wa)||isNaN(dur)||dur<=0){
+    document.getElementById('s2-verdict').innerHTML='<div class="verdict red">请填写完整的体重和训练时长数据。</div>';
+    return;
+  }
+
+  const bwLoss=wp-wa;
+  const pctLoss=bwLoss/wp*100;
+  const sweatVol=bwLoss*1000+dr-ur;
+  const sweatRate=sweetVol/(dur/60);
+  const postLow=(sweatVol/1000)*1.25;
+  const postHigh=(sweatVol/1000)*1.5;
+
+  let status='',color='';
+  if(pctLoss<1&&ucolor&&parseInt(ucolor)<=4){status='水合良好';color='green';}
+  else if(pctLoss<2){status='轻度脱水';color='yellow';}
+  else if(pctLoss<3){status='中度脱水（>2% BW已损害有氧表现和认知功能，ACSM 2007 A级证据）';color='red';}
+  else{status='显著脱水';color='red';}
+
+  if(bwLoss<0){
+    status='⚠ 体重增加——警惕运动相关低钠血症（EAH）！';
+    color='red';
+  }
+
+  let html=`<table><tr><th>指标</th><th>结果</th></tr>`;
+  html+=`<tr><td>体重变化</td><td>${bwLoss>=0?'−':'+'} ${Math.abs(bwLoss).toFixed(2)} kg</td></tr>`;
+  html+=`<tr><td>%BW损失</td><td><b>${pctLoss.toFixed(2)}%</b></td></tr>`;
+  html+=`<tr><td>汗液丢失量</td><td>${sweatVol.toFixed(0)} mL</td></tr>`;
+  html+=`<tr><td>汗率</td><td><b>${(sweatRate/1000).toFixed(2)} L/h</b></td></tr>`;
+  if(ucolor)html+=`<tr><td>尿液颜色</td><td>${ucolor}（${parseInt(ucolor)<=4?'水合良好':'脱水程度递增'}）</td></tr>`;
+  html+=`</table>`;
+  html+=`<div class="verdict ${color}"><h4>${status}</h4></div>`;
+
+  document.getElementById('s2-verdict').innerHTML=html;
+  document.getElementById('s2-verdict').className='verdict '+color;
+
+  // 补液方案
+  const wtVal=wp;
+  const preLow=(wtVal*5).toFixed(0);
+  const preHigh=(wtVal*10).toFixed(0);
+  document.getElementById('s2-pre').value=`训练前2–4小时饮用${preLow}–${preHigh} mL液体（5–10 mL/kg），根据尿液颜色确认预水合效果。`;
+  document.getElementById('s2-during').value=`目标：预防超过2% BW的体重损失。按汗率${(sweatRate/1000).toFixed(2)} L/h，训练中每15–20分钟补充约${Math.round(sweatRate/4)} mL。${sweatRate>800?'注意：汗率>0.8 L/h时，目标是限制体重损失至可接受范围而非完全补偿（胃排空上限约0.8–1.0 L/h）。':''}`;
+  document.getElementById('s2-post').value=`每丢失1 kg体重补充1.25–1.5 L含钠液体。本例需补充约${postLow.toFixed(1)}–${postHigh.toFixed(1)} L。推荐钠含量50–90 mmol/L。实用方案：口服补液盐（WHO标准）或白水+咸味食物组合。连续监测次日晨起体重确认恢复效果。`;
+});
+
+/* ===== SOP-3 补剂决策 ===== */
+const SUPP_DB={'咖啡因':{g:'A',rec:'推荐'},'一水肌酸':{g:'A',rec:'推荐'},'肌酸':{g:'A',rec:'推荐'},'β-丙氨酸':{g:'A',rec:'推荐'},'甜菜根汁':{g:'A',rec:'推荐'},'硝酸盐':{g:'A',rec:'推荐'},'碳酸氢钠':{g:'A',rec:'推荐'},'乳清蛋白':{g:'A(运动食品)',rec:'条件推荐'},'蛋白粉':{g:'A(运动食品)',rec:'条件推荐'},'BCAA':{g:'C',rec:'不推荐'},'亮氨酸':{g:'C',rec:'不推荐'},'HMB':{g:'C',rec:'不推荐（训练有素者）'},'左旋肉碱':{g:'C',rec:'不推荐'},'谷氨酰胺':{g:'C',rec:'不推荐'},'CLA':{g:'C',rec:'不推荐'},'吡啶甲酸铬':{g:'C',rec:'不推荐'},'鱼油':{g:'B',rec:'可选（设观察窗口）'},'胶原蛋白':{g:'B',rec:'可选'},'酸樱桃':{g:'B',rec:'可选'},'蒺藜':{g:'D',rec:'禁用'},'Tribulus':{g:'D',rec:'禁用'},'SARMs':{g:'D',rec:'禁用'},'DHEA':{g:'D',rec:'禁用'},'减脂胶囊':{g:'高风险',rec:'警惕'},'维生素D':{g:'A(医用)',rec:'条件推荐（需检测确认缺乏）'},'维生素D3':{g:'A(医用)',rec:'条件推荐'},'ZMA':{g:'C',rec:'不推荐'}};
+
+document.getElementById('s3-calc').addEventListener('click',()=>{
+  const protein=parseFloat(document.getElementById('s3-protein').value)||0;
+  const wada=document.getElementById('s3-wada').value;
+  let html='';let warnCount=0;
+
+  for(let i=1;i<=5;i++){
+    const name=document.getElementById('s3-sup'+i).value.trim();
+    const cert=document.getElementById('s3-cert'+i).value;
+    const recEl=document.getElementById('s3-rec'+i);
+    if(!name){recEl.textContent='—';continue;}
+    const info=SUPP_DB[name]||{g:'未知',rec:'需查证'};
+    let gColor=info.g.startsWith('A')?'#1a3a2a':info.g.startsWith('B')?'#8a6d1b':info.g.startsWith('C')?'#8a6d1b':'#8a2a2a';
+    recEl.innerHTML=`<span style="color:${gColor};font-weight:bold;">${info.g}</span> — ${info.rec}`;
+    if(info.g==='D')warnCount++;
+    if(cert==='none'&&info.g.startsWith('A'))warnCount++;
+  }
+
+  if(protein<1.6){
+    html+='<p style="color:#8a6d1b;"><b>⚠ 基础营养未优化</b>：蛋白摄入<1.6 g/kg/d，优先增加食物蛋白而非补剂。</p>';
+  }
+
+  if(warnCount>0){
+    html+=`<div class="verdict red"><h4>⚠ 发现${warnCount}项需关注</h4><ul>`;
+    if(wada==='yes')html+='<li>来访者有兴奋剂检测义务——所有补剂必须经第三方批次检测认证（Informed Sport / NSF Certified for Sport）</li>';
+    html+='<li>Group D品项一律建议停用（执业红线）</li>';
+    html+='<li>Group A品项无第三方认证不推荐使用</li>';
+    html+='</ul></div>';
+  }else{
+    html+='<div class="verdict green"><h4>补剂清单审核通过</h4>未发现高风险品项。确认基础营养已优化、第三方认证完整。</div>';
+  }
+
+  document.getElementById('s3-verdict').innerHTML=html;
+});
+
+/* ===== SOP-4 首次咨询 ===== */
+// BMI auto
+['s4-ht','s4-wt'].forEach(id=>{
+  document.getElementById(id).addEventListener('input',()=>{
+    const ht=parseFloat(document.getElementById('s4-ht').value)/100;
+    const wt=parseFloat(document.getElementById('s4-wt').value);
+    if(ht>0&&wt>0)document.getElementById('s4-bmi').value=(wt/(ht*ht)).toFixed(1);
+  });
+});
+
+document.getElementById('s4-calc').addEventListener('click',()=>{
+  const bmi=parseFloat(document.getElementById('s4-bmi').value)||0;
+  let posCount=0,grayCount=0;
+  for(let i=1;i<=7;i++){
+    const v=document.getElementById('s4-r'+i).value;
+    if(v==='pos')posCount++;
+    if(v==='gray')grayCount++;
+  }
+  let html='';
+  if(posCount>0){
+    html=`<div class="verdict red"><h4>⚠ 触发红线——转介流程</h4>发现${posCount}项红线阳性。停止本咨询，启动转介流程。SCOFF≥2分→转介精神科+临床营养科。</div>`;
+  }else if(grayCount>0){
+    html=`<div class="verdict yellow"><h4>灰色地带——启动三问决策SOP</h4>发现${grayCount}项灰色区域。执行三问决策SOP：Q1医学状态确认→Q2干预影响评估→Q3目标安全性判断。</div>`;
+  }else{
+    html=`<div class="verdict green"><h4>红线筛查全阴</h4>7类红线均阴性。进入评估采集阶段。</div>`;
+  }
+  if(bmi>0&&bmi<17.5)html+='<p class="redline" style="margin-top:8px;">⚠ BMI<17.5——饮食障碍/RED-S高危红线</p>';
+
+  document.getElementById('s4-verdict').innerHTML=html;
+  document.getElementById('s4-verdict').className='verdict '+(posCount>0?'red':grayCount>0?'yellow':'green');
+});
+
+document.getElementById('s4-comb-calc').addEventListener('click',()=>{
+  const c=parseInt(document.getElementById('s4-comc').value);
+  const o=parseInt(document.getElementById('s4-como').value);
+  const m=parseInt(document.getElementById('s4-comm').value);
+  const max=Math.max(c,o,m);
+  let dominant='';
+  if(c===max&&c>0)dominant='能力（C）短板';
+  else if(o===max&&o>0)dominant='机会（O）短板';
+  else if(m===max&&m>0)dominant='动机（M）短板';
+  else dominant='各维度均无明显短板';
+
+  let bct='';
+  if(dominant.includes('能力'))bct='推荐BCT：4.1操作指导、6.1行为示范、5.1健康后果信息';
+  else if(dominant.includes('机会'))bct='推荐BCT：12.1环境重构、12.5添加环境物品、1.4行动计划。注意：对机会短板追加营养教育无法改变行为。';
+  else if(dominant.includes('动机'))bct='推荐BCT：1.1目标设定、1.4行动计划、8.3习惯形成。判别M-reflective vs M-automatic以匹配干预。';
+  else bct='当前各维度均衡，维持现有策略。';
+
+  let html=`<div class="verdict ${max>=2?'yellow':'green'}"><h4>最大短板：${dominant}</h4><p>${bct}</p></div>`;
+  document.getElementById('s4-comb-verdict').innerHTML=html;
+});
+
+/* ===== SOP-5 减脂方案 ===== */
+document.getElementById('s5-calc').addEventListener('click',()=>{
+  const wt=parseFloat(document.getElementById('s5-wt').value);
+  const ht=parseFloat(document.getElementById('s5-ht').value);
+  const age=parseInt(document.getElementById('s5-age').value);
+  const sex=document.getElementById('s5-sex').value;
+  const pal=parseFloat(document.getElementById('s5-pal').value);
+  const bf=parseFloat(document.getElementById('s5-bf').value);
+  const train=document.getElementById('s5-train').value;
+
+  if(isNaN(wt)||isNaN(ht)||isNaN(age)){
+    document.getElementById('s5-verdict').innerHTML='<div class="verdict red">请填写完整的体重、身高和年龄。</div>';return;
+  }
+
+  let rmr;
+  if(sex==='男')rmr=10*wt+6.25*ht-5*age+5;
+  else rmr=10*wt+6.25*ht-5*age-161;
+  const tee=rmr*pal;
+
+  let tier,pct,desc;
+  if(!isNaN(bf)){
+    if(sex==='男'&&bf<15||sex==='女'&&bf<22){tier='保守赤字';pct=0.11;desc='体脂率较低，保守赤字最大化瘦体重保留。';}
+    else if(sex==='男'&&bf<25||sex==='女'&&bf<32){tier='标准赤字';pct=0.15;desc='中等体脂区间，标准启动方案。';}
+    else{tier='激进赤字（限4–6周）';pct=0.225;desc='高体脂快速启动后降至第二层。';}
+  }else{tier='标准赤字';pct=0.15;desc='未提供体脂率，默认标准。';}
+
+  const deficit=tee*pct;
+  const target=tee-deficit;
+
+  // 蛋白靶值
+  let protMin,protMax;
+  if(train==='none'){protMin=1.2;protMax=1.6;}
+  else if(train==='regular'){if(!isNaN(bf)){if(bf>=20){protMin=1.6;protMax=2.0;}else if(bf>=12){protMin=1.8;protMax=2.4;}else{protMin=2.3;protMax=2.7;}}else{protMin=1.6;protMax=2.2;}}
+  else{protMin=2.3;protMax=3.1;}
+  const protMid=(protMin+protMax)/2;
+  const protG=wt*protMid;
+  const protKcal=protG*4;
+
+  // 脂肪
+  const fatKcal=target*0.25;
+  const fatG=fatKcal/9;
+
+  // 碳水
+  const carbKcal=target-protKcal-fatKcal;
+  const carbG=carbKcal/4;
+
+  document.getElementById('s5-prot').value=`${protG.toFixed(0)} g/d（${protMin}–${protMax} g/kg/d）`;
+  document.getElementById('s5-fat').value=`${fatG.toFixed(0)} g/d（${(fatKcal/target*100).toFixed(0)}% TEE）`;
+  document.getElementById('s5-carb').value=`${carbG.toFixed(0)} g/d（${(carbKcal/target*100).toFixed(0)}% TEE）`;
+  document.getElementById('s5-target').value=`${target.toFixed(0)} kcal/d`;
+
+  let html=`<table><tr><th>指标</th><th>结果</th></tr>`;
+  html+=`<tr><td>RMR（Mifflin-St Jeor）</td><td>${rmr.toFixed(0)} kcal/d</td></tr>`;
+  html+=`<tr><td>TEE（×${pal}）</td><td>${tee.toFixed(0)} kcal/d</td></tr>`;
+  html+=`<tr><td>赤字层级</td><td>${tier}（−${pct*100}%）</td></tr>`;
+  html+=`<tr><td>目标摄入</td><td><b>${target.toFixed(0)} kcal/d</b></td></tr>`;
+  html+=`<tr><td>预期减重速度</td><td>${(deficit*7/7700).toFixed(2)} kg/周</td></tr>`;
+  html+=`</table>`;
+  html+=`<div class="verdict ${pct>0.2?'yellow':'green'}"><h4>${tier}</h4>${desc}</div>`;
+  html+=`<p class="disclaimer">Mifflin公式个体偏差±15%–20%。4周后根据实测体重轨迹反推真实TEE并校准。Murphy & Koehler 2022：赤字>500 kcal/d时瘦体重开始净流失。</p>`;
+
+  document.getElementById('s5-verdict').innerHTML=html;
+});
+
+</script>
+</body>
+</html>

@@ -32,7 +32,6 @@ body {
 a { color: var(--accent); text-decoration: none; transition: color 0.2s; }
 a:hover { color: #E8C96E; }
 
-/* Header */
 .page-header {
     border-bottom: 1px solid var(--border);
     padding-bottom: 2rem;
@@ -51,147 +50,119 @@ a:hover { color: #E8C96E; }
     margin-top: 0.5rem;
 }
 
-/* Back link */
-.back-link {
-    display: inline-block;
-    margin-bottom: 2rem;
-    font-size: 0.85rem;
-    color: var(--text-secondary);
-    border: 1px solid var(--border);
-    padding: 0.3rem 0.8rem;
-    border-radius: 4px;
-    transition: all 0.2s;
+.hero {
+    text-align: center;
+    padding: 3rem 0 2rem;
 }
-.back-link:hover {
+.hero h1 {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 2.2rem;
     color: var(--accent);
-    border-color: var(--accent-dim);
+    letter-spacing: 0.05em;
+    margin-bottom: 0.6rem;
+}
+.hero .tagline {
+    font-size: 1rem;
+    color: var(--text-secondary);
+    font-weight: 300;
+}
+.divider {
+    width: 60px;
+    height: 1px;
+    background: var(--accent-dim);
+    margin: 2rem auto;
 }
 
-/* Content typography */
-.content h1 {
+.day-group {
+    margin-bottom: 3rem;
+}
+.day-title {
     font-family: 'Noto Serif SC', serif;
-    font-size: 1.7rem;
+    font-size: 1.3rem;
     color: var(--accent);
-    margin: 2.5rem 0 1rem 0;
+    margin-bottom: 1.2rem;
     padding-bottom: 0.5rem;
     border-bottom: 1px solid var(--border);
 }
-.content h2 {
-    font-family: 'Noto Serif SC', serif;
-    font-size: 1.35rem;
-    color: var(--accent);
-    margin: 2rem 0 0.8rem 0;
-}
-.content h3 {
-    font-size: 1.1rem;
-    color: var(--text-primary);
-    margin: 1.5rem 0 0.6rem 0;
-    font-weight: 600;
-}
-.content h4, .content h5, .content h6 {
-    font-size: 1rem;
+.day-title span {
     color: var(--text-secondary);
-    margin: 1.2rem 0 0.5rem 0;
+    font-size: 0.9rem;
+    font-weight: 400;
 }
-.content p {
-    margin: 0.8rem 0;
-    color: var(--text-primary);
+.module-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1rem;
 }
-.content ul, .content ol {
-    margin: 0.8rem 0;
-    padding-left: 1.5rem;
+.module-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1.2rem 1.4rem;
+    transition: all 0.25s ease;
+    display: block;
 }
-.content li {
-    margin: 0.4rem 0;
-    color: var(--text-primary);
+.module-card:hover {
+    border-color: var(--accent-dim);
+    background: var(--bg-elevated);
+    transform: translateY(-2px);
 }
-.content li::marker {
+.module-card .mod-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
     color: var(--accent-dim);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 0.4rem;
 }
-.content strong {
-    color: var(--accent);
+.module-card .mod-title {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 1rem;
+    color: var(--text-primary);
     font-weight: 600;
+    line-height: 1.5;
 }
-.content em {
-    color: var(--text-secondary);
-    font-style: italic;
+.module-card:hover .mod-title {
+    color: var(--accent);
 }
 
-/* Code blocks */
-.content code {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.85rem;
-    background: var(--bg-elevated);
-    padding: 0.15rem 0.4rem;
-    border-radius: 3px;
-    color: var(--accent);
+/* Teaching materials section */
+.teaching-materials {
+    margin-top: 1.2rem;
+    padding: 1rem 1.2rem;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
 }
-.content pre {
+.tm-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--accent-dim);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    margin-bottom: 0.6rem;
+}
+.tm-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+}
+.tm-link {
+    display: inline-block;
+    font-size: 0.85rem;
+    color: var(--accent);
     background: var(--bg-elevated);
     border: 1px solid var(--border);
     border-radius: 6px;
-    padding: 1rem 1.2rem;
-    overflow-x: auto;
-    margin: 1rem 0;
+    padding: 0.4rem 0.9rem;
+    transition: all 0.2s ease;
 }
-.content pre code {
-    background: none;
-    padding: 0;
-    color: var(--text-primary);
-}
-
-/* Tables */
-.content table {
-    width: 100%;
-    border-collapse: collapse;
-    margin: 1.2rem 0;
-    font-size: 0.9rem;
-}
-.content thead th {
-    background: var(--bg-elevated);
-    color: var(--accent);
-    font-weight: 600;
-    text-align: left;
-    padding: 0.6rem 0.8rem;
-    border-bottom: 2px solid var(--accent-dim);
-}
-.content tbody td {
-    padding: 0.5rem 0.8rem;
-    border-bottom: 1px solid var(--border);
-    color: var(--text-primary);
-}
-.content tbody tr:hover {
-    background: rgba(200, 164, 94, 0.04);
+.tm-link:hover {
+    border-color: var(--accent-dim);
+    background: rgba(200, 164, 94, 0.08);
+    color: #E8C96E;
 }
 
-/* Blockquotes */
-.content blockquote {
-    border-left: 3px solid var(--accent-dim);
-    margin: 1rem 0;
-    padding: 0.6rem 1rem;
-    background: var(--bg-card);
-    border-radius: 0 6px 6px 0;
-    color: var(--text-secondary);
-}
-.content blockquote p {
-    color: var(--text-secondary);
-}
-
-/* Horizontal rule */
-.content hr {
-    border: none;
-    border-top: 1px solid var(--border);
-    margin: 2rem 0;
-}
-
-/* Images */
-.content img {
-    max-width: 100%;
-    border-radius: 6px;
-    margin: 1rem 0;
-}
-
-/* Footer */
 .page-footer {
     margin-top: 4rem;
     padding-top: 1.5rem;
@@ -200,81 +171,6 @@ a:hover { color: #E8C96E; }
     font-size: 0.8rem;
     color: var(--text-secondary);
 }
-
-    .day-group {
-        margin-bottom: 3rem;
-    }
-    .day-title {
-        font-family: 'Noto Serif SC', serif;
-        font-size: 1.3rem;
-        color: var(--accent);
-        margin-bottom: 1.2rem;
-        padding-bottom: 0.5rem;
-        border-bottom: 1px solid var(--border);
-    }
-    .day-title span {
-        color: var(--text-secondary);
-        font-size: 0.9rem;
-        font-weight: 400;
-    }
-    .module-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-        gap: 1rem;
-    }
-    .module-card {
-        background: var(--bg-card);
-        border: 1px solid var(--border);
-        border-radius: 8px;
-        padding: 1.2rem 1.4rem;
-        transition: all 0.25s ease;
-        display: block;
-    }
-    .module-card:hover {
-        border-color: var(--accent-dim);
-        background: var(--bg-elevated);
-        transform: translateY(-2px);
-    }
-    .module-card .mod-num {
-        font-family: 'JetBrains Mono', monospace;
-        font-size: 0.75rem;
-        color: var(--accent-dim);
-        text-transform: uppercase;
-        letter-spacing: 0.1em;
-        margin-bottom: 0.4rem;
-    }
-    .module-card .mod-title {
-        font-family: 'Noto Serif SC', serif;
-        font-size: 1rem;
-        color: var(--text-primary);
-        font-weight: 600;
-        line-height: 1.5;
-    }
-    .module-card:hover .mod-title {
-        color: var(--accent);
-    }
-    .hero {
-        text-align: center;
-        padding: 3rem 0 2rem;
-    }
-    .hero h1 {
-        font-family: 'Noto Serif SC', serif;
-        font-size: 2.2rem;
-        color: var(--accent);
-        letter-spacing: 0.05em;
-        margin-bottom: 0.6rem;
-    }
-    .hero .tagline {
-        font-size: 1rem;
-        color: var(--text-secondary);
-        font-weight: 300;
-    }
-    .divider {
-        width: 60px;
-        height: 1px;
-        background: var(--accent-dim);
-        margin: 2rem auto;
-    }
     </style>
 </head>
 <body>
@@ -288,7 +184,6 @@ a:hover { color: #E8C96E; }
         <div class="day-group">
             <div class="day-title">Day 1 <span>生化基础 · 训练营养 · 能量与评估</span></div>
             <div class="module-grid">
-                
             <a href="M1.html" class="module-card">
                 <div class="mod-num">Module 01</div>
                 <div class="mod-title">教练必知生化基础</div>
@@ -306,12 +201,19 @@ a:hover { color: #E8C96E; }
                 <div class="mod-title">营养评估三板斧</div>
             </a>
             </div>
+            <div class="teaching-materials">
+                <div class="tm-label">教学配套</div>
+                <div class="tm-links">
+                    <a href="Day1_学员手册.html" class="tm-link">📖 学员手册（预习用）</a>
+                    <a href="Day1_学员工具包.html" class="tm-link">🧰 学员工具包</a>
+                    <a href="Day1_SOP_Worksheet.html" class="tm-link">📋 SOP实操工作单</a>
+                </div>
+            </div>
         </div>
         
         <div class="day-group">
-            <div class="day-title">Day 2 <span>微量营养素 · 补剂 · 减脂与平台期</span></div>
+            <div class="day-title">Day 2 <span>微量营养素 · 补剂 · 咨询与减脂</span></div>
             <div class="module-grid">
-                
             <a href="M5.html" class="module-card">
                 <div class="mod-num">Module 05</div>
                 <div class="mod-title">维生素矿物质与水</div>
@@ -328,6 +230,20 @@ a:hover { color: #E8C96E; }
                 <div class="mod-num">Module 08</div>
                 <div class="mod-title">减脂方案专题</div>
             </a>
+            </div>
+            <div class="teaching-materials">
+                <div class="tm-label">教学配套</div>
+                <div class="tm-links">
+                    <a href="Day2_学员手册.html" class="tm-link">📖 学员手册（预习用）</a>
+                    <a href="Day2_学员工具包.html" class="tm-link">🧰 学员工具包</a>
+                    <a href="Day2_SOP_Worksheet.html" class="tm-link">📋 SOP实操工作单</a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="day-group">
+            <div class="day-title">Day 3 <span>增肌 · 平台期 · RED-S · 特殊人群</span></div>
+            <div class="module-grid">
             <a href="M9.html" class="module-card">
                 <div class="mod-num">Module 09</div>
                 <div class="mod-title">增肌方案专题</div>
@@ -336,20 +252,13 @@ a:hover { color: #E8C96E; }
                 <div class="mod-num">Module 10</div>
                 <div class="mod-title">平台期诊断决策树</div>
             </a>
-            </div>
-        </div>
-        
-        <div class="day-group">
-            <div class="day-title">Day 3 <span>RED-S · Recomposition · 方法论与特殊人群</span></div>
-            <div class="module-grid">
-                
             <a href="M11.html" class="module-card">
                 <div class="mod-num">Module 11</div>
                 <div class="mod-title">RED-S识别与转介</div>
             </a>
             <a href="M12.html" class="module-card">
                 <div class="mod-num">Module 12</div>
-                <div class="mod-title">Body_Recomposition专题</div>
+                <div class="mod-title">Body Recomposition专题</div>
             </a>
             <a href="M13.html" class="module-card">
                 <div class="mod-num">Module 13</div>
@@ -360,23 +269,19 @@ a:hover { color: #E8C96E; }
                 <div class="mod-title">特殊人群营养干预</div>
             </a>
             </div>
+            <div class="teaching-materials">
+                <div class="tm-label">教学配套</div>
+                <div class="tm-links">
+                    <a href="Day3_学员手册.html" class="tm-link">📖 学员手册（预习用）</a>
+                    <a href="Day3_学员工具包.html" class="tm-link">🧰 学员工具包</a>
+                    <a href="Day3_SOP_Worksheet.html" class="tm-link">📋 SOP实操工作单</a>
+                </div>
+            </div>
         </div>
         
         <div class="page-footer">
-            Arise · 加五磅三天营养课 · M1-M14
+            Arise · 加五磅三天营养课 · M1-M14 + 教学配套
         </div>
     </div>
-    <script>
-document.addEventListener('DOMContentLoaded', function() {
-    // Smooth scroll
-    document.querySelectorAll('a[href^="#"]').forEach(function(anchor) {
-        anchor.addEventListener('click', function(e) {
-            e.preventDefault();
-            var target = document.querySelector(this.getAttribute('href'));
-            if (target) target.scrollIntoView({ behavior: 'smooth' });
-        });
-    });
-});
-</script>
 </body>
 </html>

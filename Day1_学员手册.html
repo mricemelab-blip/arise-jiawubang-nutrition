@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>加5磅 Day1 学员手册 · 教练必知生化基础至营养评估</title>
+<style>
+:root{
+  --paper:#fffdf8;--bg:#faf8f3;--ink:#2a2925;--ink-soft:#605e57;
+  --brand:#3f6a63;--accent:#9a6a3d;--line:#dcd5c6;
+}
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;background:var(--bg);color:var(--ink);
+  font-family:"Songti SC","STSong","SimSun","Noto Serif CJK SC",serif;
+  font-size:12pt;line-height:1.75;}
+h1,h2,h3,h4,h5,.sans,th,.tag,label,.ftitle,.lab,.chip{
+  font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans CJK SC",sans-serif;}
+.page{width:210mm;min-height:296mm;margin:8mm auto;background:var(--paper);
+  padding:15mm 14mm 16mm;box-shadow:0 2px 16px rgba(60,50,30,.14);position:relative;
+  border-top:3px solid var(--brand);}
+.page h2{font-size:19pt;color:var(--brand);margin:0 0 2mm;letter-spacing:1px;}
+.page .sub{color:var(--ink-soft);font-size:10.5pt;margin:0 0 5mm;font-family:"PingFang SC","Microsoft YaHei",sans-serif;}
+.runhead{position:absolute;top:6mm;right:14mm;font-size:8.5pt;color:var(--ink-soft);
+  font-family:"PingFang SC","Microsoft YaHei",sans-serif;letter-spacing:.5px;}
+p{margin:4px 0 8px;}
+.small{font-size:9.5pt;color:var(--ink-soft);}
+.note{background:#f4f0e4;border-left:4px solid var(--accent);padding:7px 12px;margin:8px 0;font-size:10.5pt;line-height:1.7;}
+.block{margin:7mm 0 5mm;}
+.block h3{font-size:13pt;color:var(--brand);margin:6mm 0 2.5mm;border-left:5px solid var(--brand);padding-left:8px;line-height:1.35;}
+.rh{font-size:10.5pt;color:var(--ink);font-weight:600;margin:3.5mm 0 1.5mm;}
+.rh::before{content:"▸ ";color:var(--accent);}
+ol,ul{margin:3px 0 8px;padding-left:1.6em;}
+li{margin:2px 0;}
+.fill{border:none;border-bottom:1px solid var(--ink-soft);background:transparent;
+  font-family:inherit;font-size:inherit;color:var(--brand);padding:0 4px;min-width:6em;}
+input.fill{height:1.7em;vertical-align:bottom;}
+textarea.write{width:100%;display:block;border:1.4px dashed var(--line);border-radius:5px;
+  background-color:#fffefa;
+  background-image:repeating-linear-gradient(to bottom,transparent 0,transparent 26px,rgba(220,213,198,.85) 26px,rgba(220,213,198,.85) 27px);
+  line-height:27px;padding:2px 9px;font-family:inherit;font-size:11.5pt;color:var(--ink);resize:vertical;overflow:hidden;}
+textarea.write:focus{outline:1.5px solid var(--brand);border-color:var(--brand);}
+textarea.write::placeholder{color:#b3ac9c;}
+.frame{border:1.6px dashed var(--line);border-radius:6px;padding:7px 10px 9px;margin:3mm 0;background:rgba(255,255,255,.55);}
+.frame .ftitle{font-size:10pt;color:var(--brand);font-weight:700;margin-bottom:2mm;letter-spacing:.5px;}
+.frame .ftitle .hint{float:right;font-weight:normal;color:var(--ink-soft);font-size:9pt;}
+.box-row{display:flex;gap:8px;margin:2mm 0;}
+.box-row .box{flex:1;border:1.2px solid var(--line);border-radius:5px;padding:5px 8px;min-height:15mm;background:#fffdf8;}
+.box .bt{font-family:"PingFang SC","Microsoft YaHei",sans-serif;font-size:10pt;font-weight:700;color:var(--ink);margin-bottom:1mm;}
+.box .bt small{color:var(--ink-soft);font-weight:normal;}
+table.grid{width:100%;border-collapse:collapse;margin:2.5mm 0;font-size:10.5pt;}
+table.grid th,table.grid td{border:1px solid var(--line);padding:4px 7px;vertical-align:middle;}
+table.grid th{background:#f1ede2;font-weight:600;text-align:left;line-height:1.45;}
+table.grid td.lab{background:#f7f4ea;font-family:"PingFang SC","Microsoft YaHei",sans-serif;font-weight:600;white-space:nowrap;color:var(--ink);}
+table.grid td input.fill,table.grid td textarea.write{width:100%;}
+table.grid td textarea.write{border:none;background-image:repeating-linear-gradient(to bottom,transparent 0,transparent 25px,rgba(220,213,198,.7) 25px,rgba(220,213,198,.7) 26px);line-height:26px;padding:0 2px;min-height:9mm;}
+table.grid td textarea.write:focus{outline:1.5px solid var(--brand);}
+.cover{min-height:268mm;display:flex;flex-direction:column;}
+.cover .band{margin:14mm 0 6mm;border-top:2px solid var(--brand);border-bottom:2px solid var(--brand);padding:5mm 0;text-align:center;}
+.cover .kicker{font-family:"PingFang SC","Microsoft YaHei",sans-serif;color:var(--accent);letter-spacing:4px;font-size:11pt;}
+.cover h1{font-size:30pt;color:var(--brand);margin:4mm 0 2mm;letter-spacing:2px;}
+.cover .day{font-size:15pt;color:var(--ink);margin-bottom:2mm;}
+.cover .theme{font-size:12.5pt;color:var(--ink-soft);}
+.cover .meta{margin:8mm auto;width:86%;}
+.cover .meta .line{display:flex;gap:8px;margin:4mm 0;align-items:baseline;font-family:"PingFang SC","Microsoft YaHei",sans-serif;font-size:12pt;}
+.cover .meta .line span{white-space:nowrap;color:var(--ink);}
+.cover .meta input.fill{flex:1;border-bottom:1.5px solid var(--ink-soft);height:1.9em;}
+.cover .scope{margin:6mm 0;}
+.cover .scope .chip{display:inline-block;border:1px solid var(--line);border-radius:20px;padding:2px 12px;margin:1.5mm 3px;font-size:10pt;color:var(--brand);background:#f7f4ea;}
+.cover .foot{margin-top:auto;font-size:9.5pt;color:var(--ink-soft);border-top:1px solid var(--line);padding-top:3mm;}
+.pyr{margin:2mm auto;width:88%;}
+.pyr .lvl{margin:0 auto 1.5mm;border:1.2px solid var(--line);border-radius:4px;padding:3px 8px;display:flex;align-items:center;gap:8px;min-height:11mm;background:#fffdf8;}
+.pyr .lvl .lv{font-family:"PingFang SC","Microsoft YaHei",sans-serif;font-weight:700;color:var(--brand);font-size:10.5pt;min-width:5.5em;}
+.pyr .lvl input.fill{flex:1;}
+.timeline{display:flex;gap:6px;margin:2mm 0;flex-wrap:wrap;}
+.timeline .node{flex:1;min-width:26mm;border:1.2px solid var(--line);border-radius:5px;padding:4px 6px;background:#fffdf8;}
+.timeline .node .yr{font-family:"PingFang SC","Microsoft YaHei",sans-serif;font-weight:700;color:var(--accent);font-size:10pt;text-align:center;border-bottom:1px dashed var(--line);padding-bottom:1mm;margin-bottom:1mm;}
+.six{display:grid;grid-template-columns:1fr 1fr;gap:4mm;}
+.six .cell{border:1.4px solid var(--line);border-radius:6px;padding:4px 8px 6px;background:#fffdf8;}
+.six .cell h4{margin:1mm 0 2mm;color:var(--brand);font-size:11pt;border-bottom:1px dashed var(--line);padding-bottom:1mm;}
+.six .cell textarea.write{min-height:34mm;}
+.concl{margin:2.5mm 0 0;}
+.concl .lab{display:block;font-size:10pt;color:var(--accent);font-weight:700;margin-bottom:1mm;}
+.concl .lab::before{content:"◆ ";}
+.opts{margin:2mm 0 3mm;padding-left:2mm;}
+.opts label{display:inline-block;margin:1mm 6mm 1mm 0;font-size:11pt;cursor:pointer;font-family:"Songti SC","SimSun",serif;}
+.opts input[type=radio]{margin-right:5px;accent-color:var(--brand);}
+.qitem{margin:5mm 0;}
+.qitem .qno{font-family:"PingFang SC","Microsoft YaHei",sans-serif;font-weight:700;color:var(--brand);}
+#toolbar{position:sticky;top:0;z-index:9999;background:#fffdf8;border-bottom:1px solid #dcd5c6;
+  box-shadow:0 1px 6px rgba(60,50,30,.12);
+  font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;}
+#toolbar .tb-inner{max-width:210mm;margin:0 auto;display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding:6px 12px;}
+#toolbar .tb-brand{font-weight:700;color:#3f6a63;font-size:12.5px;letter-spacing:.5px;white-space:nowrap;}
+#toolbar .tb-progress{font-size:12px;color:#605e57;white-space:nowrap;}
+#toolbar .tb-progress b{color:#3f6a63;font-size:13px;}
+#toolbar .tb-bar{flex:1;min-width:80px;height:7px;background:#efe9dc;border-radius:4px;overflow:hidden;}
+#toolbar .tb-bar > div{height:100%;width:0;background:#3f6a63;border-radius:4px;transition:width .3s ease;}
+#toolbar .tb-btns{display:flex;gap:6px;flex-wrap:wrap;}
+#toolbar button{font-family:inherit;font-size:11.5px;padding:4px 12px;border-radius:4px;cursor:pointer;border:1px solid #3f6a63;background:#fffdf8;color:#3f6a63;line-height:1.6;white-space:nowrap;}
+#toolbar button:hover:not(:disabled){background:#3f6a63;color:#fffdf8;}
+#toolbar .tb-status{width:100%;font-size:10.5px;color:#9a6a3d;min-height:1.4em;line-height:1.4;}
+@media print{
+  #toolbar{display:none !important;}
+  @page{size:A4;margin:13mm 12mm;}
+  html,body{background:#fff;font-size:11pt;}
+  .page{width:auto;min-height:auto;margin:0;padding:0;box-shadow:none;page-break-after:always;border-top:none;}
+  .page:last-child{page-break-after:auto;}
+  .runhead{top:4mm;right:12mm;}
+  textarea.write{border:1.1pt dashed #b9b1a0;color:#000;-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+  input.fill{border-bottom:0.8pt solid #444;color:#000;}
+  table.grid th,.note,.frame .ftitle,.pyr .lvl,.box,.timeline .node,.six .cell,table.grid td.lab,.cover .chip{-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+  .block,.frame,table.grid,.six .cell{break-inside:avoid-page;}
+  a{color:inherit;text-decoration:none;}
+}
+</style>
+</head>
+<body>
+
+<div id="toolbar">
+<div class="tb-inner">
+  <span class="tb-brand">加5磅 · Day1 学员手册</span>
+  <span class="tb-progress">填写进度 <b id="pctText">0%</b></span>
+  <div class="tb-bar"><div id="pctBar"></div></div>
+  <div class="tb-btns">
+    <button onclick="saveAll()">保存进度</button>
+    <button onclick="window.print()">打印 / 导出PDF</button>
+  </div>
+</div>
+<div class="tb-status" id="saveStatus"></div>
+</div>
+
+<!-- ================= 封面 ================= -->
+<section class="page cover">
+  <div class="runhead">加5磅 · Day1 学员手册</div>
+  <div class="band">
+    <div class="kicker">加5磅 · 力量训练营养教练培养</div>
+    <h1>Day 1 学员手册</h1>
+    <div class="theme">教练必知生化基础 → 训练的营养依据 → 能量与宏量营养素 → 营养评估DAB</div>
+  </div>
+  <div class="meta">
+    <div class="line"><span>姓 名：</span><input class="fill" data-key="name"></div>
+    <div class="line"><span>学习日期：</span><input class="fill" data-key="date"></div>
+    <div class="line"><span>学员编号：</span><input class="fill" data-key="sid"></div>
+  </div>
+  <div class="scope">
+    <p class="small" style="font-family:'PingFang SC','Microsoft YaHei',sans-serif;">今日覆盖模块：</p>
+    <span class="chip">M1 教练必知生化基础</span>
+    <span class="chip">M2 训练的营养依据</span>
+    <span class="chip">M3 能量与宏量营养素</span>
+    <span class="chip">M4 营养评估DAB</span>
+  </div>
+  <div class="foot">
+    本手册为Day1课前预习工作台：所有空白区域供学员课前预习、课中记录与课后复盘填写。
+    手册中的知识点框架与关键概念均对应讲义原文；填写区自动保存在本机浏览器中。
+  </div>
+</section>
+
+<!-- ================= M1 生化基础 ================= -->
+<section class="page">
+  <div class="runhead">M1 教练必知生化基础</div>
+  <h2>M1 教练必知生化基础</h2>
+  <p class="sub">Essential Biochemistry for Strength Coaches ｜ 课前预习 + 课中记录</p>
+
+  <div class="block">
+    <h3>A. 引导问题（课前填写）</h3>
+    <p class="rh">问题 1：三大能量系统分别在什么运动强度下主导供能？一位做1RM深蹲的会员和一位跑马拉松的会员，各自主要用哪个系统？</p>
+    <textarea class="write" rows="3" data-key="m1q1" placeholder="凭现有理解填写……"></textarea>
+    <p class="rh">问题 2：为什么"训练后30分钟内必须喝蛋白粉"这个说法在教练圈广泛流传？从分子层面看，这个窗口真的那么 rigid 吗？</p>
+    <textarea class="write" rows="3" data-key="m1q2" placeholder="凭现有理解填写……"></textarea>
+    <p class="rh">问题 3："有氧训练会掉肌肉"——这个说法的分子基础是什么？AMPK和mTORC1之间到底是什么关系？</p>
+    <textarea class="write" rows="3" data-key="m1q3" placeholder="凭现有理解填写……"></textarea>
+  </div>
+
+  <div class="block">
+    <h3>B. 核心知识点填写区</h3>
+    <p class="rh">1. ATP是细胞内能量传递的 <input class="fill" data-key="m1b1a" placeholder="______"> 。肌细胞内ATP储量约 <input class="fill" data-key="m1b1b" style="width:8em;" placeholder="____"> g，ATP再生速率决定 <input class="fill" data-key="m1b1c" placeholder="______"> 。</p>
+
+    <p class="rh">2. 三大能量系统功率与底物特征</p>
+    <table class="grid">
+      <tr><th style="width:18%;">能量系统</th><th style="width:18%;">底物</th><th style="width:15%;">功率(W/kg)</th><th style="width:15%;">持续时间</th><th>典型训练场景</th></tr>
+      <tr><td class="lab">磷酸原系统</td><td><input class="fill" data-key="m1s1a" placeholder="____"></td><td><input class="fill" data-key="m1s1b" placeholder="____"></td><td><input class="fill" data-key="m1s1c" placeholder="____"></td><td><textarea class="write" rows="1" data-key="m1s1d" placeholder="填写……"></textarea></td></tr>
+      <tr><td class="lab">糖酵解系统</td><td><input class="fill" data-key="m1s2a" placeholder="____"></td><td><input class="fill" data-key="m1s2b" placeholder="____"></td><td><input class="fill" data-key="m1s2c" placeholder="____"></td><td><textarea class="write" rows="1" data-key="m1s2d" placeholder="填写……"></textarea></td></tr>
+      <tr><td class="lab">有氧氧化系统</td><td><input class="fill" data-key="m1s3a" placeholder="____"></td><td><input class="fill" data-key="m1s3b" placeholder="____"></td><td><input class="fill" data-key="m1s3c" placeholder="____"></td><td><textarea class="write" rows="1" data-key="m1s3d" placeholder="填写……"></textarea></td></tr>
+    </table>
+
+    <p class="rh">3. 脂肪-碳水交叉点约在 <input class="fill" data-key="m1cross" style="width:10em;" placeholder="____% VO₂max"> 。低强度运动脂肪供能比例高但 <input class="fill" data-key="m1cross2" placeholder="________"> ，减脂的核心是 <input class="fill" data-key="m1cross3" placeholder="________"> 。</p>
+
+    <p class="rh">4. mTORC1通路关键节点</p>
+    <div class="frame">
+      <div class="ftitle">mTORC1 激活通路填空 <span class="hint">课后核对</span></div>
+      <div class="box-row">
+        <div class="box"><div class="bt">亮氨酸感受器</div><textarea class="write" rows="1" data-key="m1mtor1" placeholder="____"></textarea></div>
+        <div class="box"><div class="bt">精氨酸感受器</div><textarea class="write" rows="1" data-key="m1mtor2" placeholder="____"></textarea></div>
+        <div class="box"><div class="bt">下游靶点①</div><textarea class="write" rows="1" data-key="m1mtor3" placeholder="____"></textarea></div>
+        <div class="box"><div class="bt">下游靶点②</div><textarea class="write" rows="1" data-key="m1mtor4" placeholder="____"></textarea></div>
+      </div>
+    </div>
+
+    <p class="rh">5. 亮氨酸触发MPS的阈值约 <input class="fill" data-key="m1leu1" style="width:6em;" placeholder="____"> g/餐，对应约 <input class="fill" data-key="m1leu2" style="width:8em;" placeholder="____"> g高质量蛋白。超过阈值后MPS不再线性增加的现象称为 <input class="fill" data-key="m1leu3" placeholder="________"> 。</p>
+
+    <p class="rh">6. Areta等（2013）实验：80g乳清蛋白在12h恢复期内分三种模式摄入，其中 <input class="fill" data-key="m1areta" placeholder="________"> 模式的MPS总量显著高于另外两种。</p>
+  </div>
+
+  <div class="block">
+    <h3>C. AMPK-mTORC1拮抗轴概念图</h3>
+    <div class="frame">
+      <div class="ftitle">在下方框中填写AMPK对各通路的磷酸化效应 <span class="hint">课中完成</span></div>
+      <div class="box-row">
+        <div class="box"><div class="bt">AMPK → TSC2</div><textarea class="write" rows="2" data-key="m1ampk1" placeholder="对mTORC1的效应？"></textarea></div>
+        <div class="box"><div class="bt">AMPK → Raptor</div><textarea class="write" rows="2" data-key="m1ampk2" placeholder="磷酸化位点？效应？"></textarea></div>
+        <div class="box"><div class="bt">AMPK → ULK1</div><textarea class="write" rows="2" data-key="m1ampk3" placeholder="启动什么过程？"></textarea></div>
+        <div class="box"><div class="bt">AMPK → ACC</div><textarea class="write" rows="2" data-key="m1ampk4" placeholder="对脂肪酸氧化的效应？"></textarea></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="block">
+    <h3>D. 并发训练干扰效应关键数据</h3>
+    <table class="grid">
+      <tr><th>Meta分析</th><th>纳入研究数</th><th>核心结论</th></tr>
+      <tr><td class="lab">Wilson 2012</td><td><input class="fill" data-key="m1wil1" placeholder="____"></td><td><textarea class="write" rows="2" data-key="m1wil2" placeholder="对肌肥大/力量/爆发力的结论"></textarea></td></tr>
+      <tr><td class="lab">Schumann 2022</td><td><input class="fill" data-key="m1sch1" placeholder="____"></td><td><textarea class="write" rows="2" data-key="m1sch2" placeholder="与Wilson 2012有何差异？"></textarea></td></tr>
+    </table>
+  </div>
+
+  <div class="concl">
+    <span class="lab">M1 模块小结（用自己的话概括3-5个核心结论）</span>
+    <textarea class="write" rows="5" data-key="m1sum" placeholder="1. 三大能量系统按______协同供能……\n2. mTORC1通过______感知亮氨酸……\n3. AMPK-mTORC1拮抗构成______的分子基础……"></textarea>
+  </div>
+</section>
+
+<!-- ================= M2 训练的营养依据 ================= -->
+<section class="page">
+  <div class="runhead">M2 训练的营养依据</div>
+  <h2>M2 训练的营养依据</h2>
+  <p class="sub">Nutritional Basis for Training ｜ 课前预习 + 课中记录</p>
+
+  <div class="block">
+    <h3>A. 引导问题（课前填写）</h3>
+    <p class="rh">问题 1：训练前3-4小时和训练前30分钟的营养策略有什么区别？为什么不能一概而论？</p>
+    <textarea class="write" rows="3" data-key="m2q1" placeholder="凭现有理解填写……"></textarea>
+    <p class="rh">问题 2：一位60分钟常规力量训练的会员，训练中需要补运动饮料吗？什么场景下才需要？</p>
+    <textarea class="write" rows="3" data-key="m2q2" placeholder="凭现有理解填写……"></textarea>
+    <p class="rh">问题 3："合成代谢窗口"到底是30分钟的刚性截止线，还是一个受多重条件调控的连续区间？列出影响窗口宽度的至少4个因素。</p>
+    <textarea class="write" rows="3" data-key="m2q3" placeholder="凭现有理解填写……"></textarea>
+  </div>
+
+  <div class="block">
+    <h3>B. 训练前营养时间梯度</h3>
+    <div class="timeline">
+      <div class="node"><div class="yr">赛前5-7天</div><textarea class="write" rows="2" data-key="m2t1" placeholder="糖原超量恢复方案？"></textarea></div>
+      <div class="node"><div class="yr">训前3-4h</div><textarea class="write" rows="2" data-key="m2t2" placeholder="正餐窗口：碳水量？"></textarea></div>
+      <div class="node"><div class="yr">训前1-2h</div><textarea class="write" rows="2" data-key="m2t3" placeholder="补充窗口：碳水量？"></textarea></div>
+      <div class="node"><div class="yr">训前30-60min</div><textarea class="write" rows="2" data-key="m2t4" placeholder="快速补给：碳水量？"></textarea></div>
+    </div>
+  </div>
+
+  <div class="block">
+    <h3>C. 核心知识点填写区</h3>
+    <p class="rh">1. 训练中碳水补给分级：<input class="fill" data-key="m2c1a" style="width:6em;" placeholder="____"> min以内无需补碳；30-60min补 <input class="fill" data-key="m2c1b" style="width:4em;" placeholder="__"> g/h；1-3h补 <input class="fill" data-key="m2c1c" style="width:4em;" placeholder="__"> g/h；>2.5h补 <input class="fill" data-key="m2c1d" style="width:4em;" placeholder="__"> g/h（多种可转运碳水）。</p>
+
+    <p class="rh">2. 多种可转运碳水的原理：葡萄糖经 <input class="fill" data-key="m2trans1" placeholder="____"> 转运体吸收（约 <input class="fill" data-key="m2trans2" style="width:4em;" placeholder="__"> g/h饱和），果糖经 <input class="fill" data-key="m2trans3" placeholder="____"> 转运。葡萄糖:果糖= <input class="fill" data-key="m2trans4" style="width:4em;" placeholder="__"> 混合可突破吸收上限。</p>
+
+    <p class="rh">3. 训练后营养关键参数</p>
+    <table class="grid">
+      <tr><th>营养素</th><th>推荐量</th><th>核心功能</th><th>条件依赖</th></tr>
+      <tr><td class="lab">蛋白质</td><td><input class="fill" data-key="m2p1" placeholder="____ g/kg"></td><td><input class="fill" data-key="m2p2" placeholder="____"></td><td><textarea class="write" rows="1" data-key="m2p3" placeholder="哪些条件下紧迫性更高？"></textarea></td></tr>
+      <tr><td class="lab">碳水</td><td><input class="fill" data-key="m2c2" placeholder="____ g/kg"></td><td><input class="fill" data-key="m2c3" placeholder="____"></td><td><textarea class="write" rows="1" data-key="m2c4" placeholder="取决于什么？"></textarea></td></tr>
+      <tr><td class="lab">液体</td><td><input class="fill" data-key="m2f1" placeholder="____ 倍体重损失"></td><td><input class="fill" data-key="m2f2" placeholder="____"></td><td><textarea class="write" rows="1" data-key="m2f3" placeholder="补液注意事项"></textarea></td></tr>
+    </table>
+
+    <p class="rh">4. 训练日与休息日差异化</p>
+    <div class="box-row">
+      <div class="box"><div class="bt">训练日碳水</div><textarea class="write" rows="2" data-key="m2d1" placeholder="____ g/kg（按训练量分层）"></textarea></div>
+      <div class="box"><div class="bt">休息日碳水</div><textarea class="write" rows="2" data-key="m2d2" placeholder="____ g/kg"></textarea></div>
+      <div class="box"><div class="bt">蛋白日总量</div><textarea class="write" rows="2" data-key="m2d3" placeholder="训练日 vs 休息日？"></textarea></div>
+    </div>
+  </div>
+
+  <div class="block">
+    <h3>D. "合成代谢窗口"争议的证据层级</h3>
+    <div class="frame">
+      <div class="ftitle">按证据性质填写四个层级 <span class="hint">课中完成</span></div>
+      <div class="pyr">
+        <div class="lvl"><span class="lv">第一层级</span><input class="fill" data-key="m2ev1" placeholder="哪些推荐有Meta分析一致结论？"></div>
+        <div class="lvl"><span class="lv">第二层级</span><input class="fill" data-key="m2ev2" placeholder="哪些推荐仅单项RCT支持？"></div>
+        <div class="lvl"><span class="lv">第三层级</span><input class="fill" data-key="m2ev3" placeholder="哪些推荐基于生理学推理？"></div>
+        <div class="lvl"><span class="lv">第四层级</span><input class="fill" data-key="m2ev4" placeholder="哪些推荐属于实践共识？"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="concl">
+    <span class="lab">M2 模块小结</span>
+    <textarea class="write" rows="4" data-key="m2sum" placeholder="训练前通过____策略实现……\n训练中核心是____和____……\n训练后关键参数为蛋白____、碳水____……\n训练日与休息日差异化遵循____原则……"></textarea>
+  </div>
+</section>
+
+<!-- ================= M3 能量与宏量营养素 ================= -->
+<section class="page">
+  <div class="runhead">M3 能量与宏量营养素</div>
+  <h2>M3 能量与宏量营养素</h2>
+  <p class="sub">Energy and Macronutrients ｜ 课前预习 + 课中记录</p>
+
+  <div class="block">
+    <h3>A. 引导问题（课前填写）</h3>
+    <p class="rh">问题 1：一个80kg男性力量训练者，日蛋白摄入应该多少？为什么不能简单套用RDA 0.8g/kg？</p>
+    <textarea class="write" rows="3" data-key="m3q1" placeholder="凭现有理解填写……"></textarea>
+    <p class="rh">问题 2：为什么宏量营养素的分配顺序是"蛋白质优先→脂肪保底→碳水弹性填充"？能否反过来？</p>
+    <textarea class="write" rows="3" data-key="m3q2" placeholder="凭现有理解填写……"></textarea>
+    <p class="rh">问题 3："代谢损伤"这个概念在健身圈广为流传。从循证角度看，这个概念是否成立？</p>
+    <textarea class="write" rows="3" data-key="m3q3" placeholder="凭现有理解填写……"></textarea>
+  </div>
+
+  <div class="block">
+    <h3>B. TDEE四组分结构</h3>
+    <div class="frame">
+      <div class="ftitle">TDEE = RMR + TEF + EAT + NEAT — 填写各组分的占比范围与特征</div>
+      <table class="grid">
+        <tr><th>组分</th><th>占TDEE比例</th><th>最强预测因子/特征</th><th>对大众训练者的典型范围</th></tr>
+        <tr><td class="lab">RMR</td><td><input class="fill" data-key="m3rmr1" placeholder="____%"></td><td><input class="fill" data-key="m3rmr2" placeholder="____"></td><td><input class="fill" data-key="m3rmr3" placeholder="____ kcal/d"></td></tr>
+        <tr><td class="lab">TEF</td><td><input class="fill" data-key="m3tef1" placeholder="____%"></td><td>受____影响最大</td><td><input class="fill" data-key="m3tef3" placeholder="____ kcal/d"></td></tr>
+        <tr><td class="lab">EAT</td><td colspan="2"><input class="fill" data-key="m3eat1" placeholder="变异性最____的组分" style="width:100%"></td><td><input class="fill" data-key="m3eat2" placeholder="____ kcal/d"></td></tr>
+        <tr><td class="lab">NEAT</td><td colspan="2"><input class="fill" data-key="m3neat1" placeholder="个体间差异可达____" style="width:100%"></td><td><input class="fill" data-key="m3neat2" placeholder="____ kcal/d"></td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="block">
+    <h3>C. RMR预测公式</h3>
+    <table class="grid">
+      <tr><th>公式</th><th>适用条件</th><th>公式内容</th><th>对高肌肉量训练者的偏差</th></tr>
+      <tr><td class="lab">Cunningham 1991</td><td><input class="fill" data-key="m3cun1" placeholder="已知____时首选"></td><td>RMR = <input class="fill" data-key="m3cun2" placeholder="____×FFM+____"></td><td><input class="fill" data-key="m3cun3" placeholder="____"></td></tr>
+      <tr><td class="lab">Mifflin-St Jeor 1990</td><td><input class="fill" data-key="m3msj1" placeholder="无____时首选"></td><td>男：<input class="fill" data-key="m3msj2" placeholder="____" style="width:95%"></td><td>可能低估 <input class="fill" data-key="m3msj3" placeholder="____ kcal/d"></td></tr>
+    </table>
+    <p class="rh">PAL系数的常见陷阱是 <input class="fill" data-key="m3pal1" placeholder="____"> ，实践建议从 <input class="fill" data-key="m3pal2" placeholder="____"> 起算。</p>
+  </div>
+
+  <div class="block">
+    <h3>D. 蛋白质场景化决策</h3>
+    <div class="frame">
+      <div class="ftitle">三项Meta分析横向对比 <span class="hint">课中填写</span></div>
+      <table class="grid">
+        <tr><th>研究</th><th>纳入规模</th><th>平台值</th><th>"平台"的含义</th></tr>
+        <tr><td class="lab">Morton 2018</td><td><input class="fill" data-key="m3mor1" placeholder="____项RCT，____人"></td><td><input class="fill" data-key="m3mor2" placeholder="____ g/kg/d"></td><td><textarea class="write" rows="1" data-key="m3mor3" placeholder="补充增量趋于零的点"></textarea></td></tr>
+        <tr><td class="lab">Tagawa 2020</td><td><input class="fill" data-key="m3tag1" placeholder="____项RCT，____人"></td><td><input class="fill" data-key="m3tag2" placeholder="____ g/kg/d"></td><td><textarea class="write" rows="1" data-key="m3tag3" placeholder="总摄入增幅放缓的点"></textarea></td></tr>
+        <tr><td class="lab">Nunes 2022</td><td><input class="fill" data-key="m3nun1" placeholder="____项RCT"></td><td><input class="fill" data-key="m3nun2" placeholder="____ g/kg/d"></td><td><textarea class="write" rows="1" data-key="m3nun3" placeholder=""></textarea></td></tr>
+      </table>
+    </div>
+    <p class="rh">增肌期蛋白推荐 <input class="fill" data-key="m3bulk" placeholder="____ g/kg/d">；减脂期上调至 <input class="fill" data-key="m3cut" placeholder="____ g/kg/d">；老年训练者下限 <input class="fill" data-key="m3old" placeholder="____ g/kg/d">。</p>
+  </div>
+
+  <div class="block">
+    <h3>E. 宏量营养素分配决策链</h3>
+    <div class="frame">
+      <div class="ftitle">决策链条：估算TDEE → 设定热量目标 → 锚定蛋白质 → 安排碳水 → 填充脂肪</div>
+      <div class="box-row">
+        <div class="box"><div class="bt">蛋白质下限</div><textarea class="write" rows="2" data-key="m3prot" placeholder="功能不可替代性设定下限"></textarea></div>
+        <div class="box"><div class="bt">脂肪下限</div><textarea class="write" rows="2" data-key="m3fat" placeholder="≥____ g/kg/d 激素安全线"></textarea></div>
+        <div class="box"><div class="bt">碳水弹性填充</div><textarea class="write" rows="2" data-key="m3cho" placeholder="填充剩余能量空间"></textarea></div>
+      </div>
+    </div>
+    <p class="rh">减脂缺口标准方案 <input class="fill" data-key="m3def1" placeholder="____至____ kcal/d">；增肌盈余 <input class="fill" data-key="m3sur" placeholder="____至____ kcal/d">。</p>
+    <p class="rh">脂肪安全红线：<input class="fill" data-key="m3fatred" placeholder="≥____ g/kg/d">。极低脂饮食可导致总睾酮下降 <input class="fill" data-key="m3test" placeholder="____%"></p>
+  </div>
+
+  <div class="concl">
+    <span class="lab">M3 模块小结</span>
+    <textarea class="write" rows="4" data-key="m3sum" placeholder="TDEE四组分为____……\n蛋白分配顺序为____……\n碳水核心原则为____……\n脂肪安全红线为____……"></textarea>
+  </div>
+</section>
+
+<!-- ================= M4 营养评估DAB ================= -->
+<section class="page">
+  <div class="runhead">M4 营养评估DAB</div>
+  <h2>M4 营养评估DAB</h2>
+  <p class="sub">Diet · Anthropometry · Behavior ｜ 课前预习 + 课中记录</p>
+
+  <div class="block">
+    <h3>A. 引导问题（课前填写）</h3>
+    <p class="rh">问题 1：让会员记3天饮食日记，最常见的误差来源有哪些？如何识别低报？</p>
+    <textarea class="write" rows="3" data-key="m4q1" placeholder="凭现有理解填写……"></textarea>
+    <p class="rh">问题 2：BIA体脂率两天之间"涨了2%"意味着什么？如何向训练者解释？</p>
+    <textarea class="write" rows="3" data-key="m4q2" placeholder="凭现有理解填写……"></textarea>
+    <p class="rh">问题 3：FFMI 25是"自然极限"——这个结论的方法学局限是什么？</p>
+    <textarea class="write" rows="3" data-key="m4q3" placeholder="凭现有理解填写……"></textarea>
+  </div>
+
+  <div class="block">
+    <h3>B. 饮食记录分析框架</h3>
+    <p class="rh">1. 饮食记录三要素：吃了什么（What）、<input class="fill" data-key="m4d1" placeholder="____">（How Much）、<input class="fill" data-key="m4d2" placeholder="____">（Context）</p>
+    <p class="rh">2. 推荐记录天数：<input class="fill" data-key="m4d3" placeholder="____天"> = <input class="fill" data-key="m4d4" placeholder="____个训练日"> + <input class="fill" data-key="m4d5" placeholder="____个休息日"></p>
+    <p class="rh">3. 低报识别：EI:BMR < <input class="fill" data-key="m4ei" style="width:4em;" placeholder="____"> 提示可疑低报（Black 2000标准）</p>
+    <p class="rh">4. 蛋白质分配分析：每餐应达到 <input class="fill" data-key="m4p1" style="width:6em;" placeholder="____g"> 的MPS触发区间</p>
+
+    <div class="note">
+      所有自我报告的膳食数据均存在系统性低估风险。Capling等（2017）系统综述报告运动员膳食能量摄入经DLW验证后平均低估 <b>19%</b>。
+    </div>
+  </div>
+
+  <div class="block">
+    <h3>C. 体成分评估方法比较</h3>
+    <table class="grid">
+      <tr><th>方法</th><th>精度等级</th><th>核心优势</th><th>关键局限</th><th>教练适用性</th></tr>
+      <tr><td class="lab">DXA</td><td><input class="fill" data-key="m4dxa1" placeholder="____"></td><td><textarea class="write" rows="1" data-key="m4dxa2" placeholder="____"></textarea></td><td><textarea class="write" rows="1" data-key="m4dxa3" placeholder="____"></textarea></td><td><textarea class="write" rows="1" data-key="m4dxa4" placeholder="____"></textarea></td></tr>
+      <tr><td class="lab">BIA</td><td><input class="fill" data-key="m4bia1" placeholder="____"></td><td><textarea class="write" rows="1" data-key="m4bia2" placeholder="____"></textarea></td><td><textarea class="write" rows="1" data-key="m4bia3" placeholder="水合状态影响±____%"></textarea></td><td><textarea class="write" rows="1" data-key="m4bia4" placeholder="仅用于____"></textarea></td></tr>
+      <tr><td class="lab">皮褶法</td><td><input class="fill" data-key="m4skf1" placeholder="____"></td><td><textarea class="write" rows="1" data-key="m4skf2" placeholder="____"></textarea></td><td><textarea class="write" rows="1" data-key="m4skf3" placeholder="需____培训"></textarea></td><td><textarea class="write" rows="1" data-key="m4skf4" placeholder="____"></textarea></td></tr>
+      <tr><td class="lab">围度法</td><td><input class="fill" data-key="m4cir1" placeholder="____"></td><td><textarea class="write" rows="1" data-key="m4cir2" placeholder="____"></textarea></td><td><textarea class="write" rows="1" data-key="m4cir3" placeholder="____"></textarea></td><td><textarea class="write" rows="1" data-key="m4cir4" placeholder="____"></textarea></td></tr>
+    </table>
+  </div>
+
+  <div class="block">
+    <h3>D. FFMI分级参考（男性）</h3>
+    <table class="grid">
+      <tr><th>FFMI范围</th><th>分级</th><th>典型特征</th></tr>
+      <tr><td class="lab">&lt;17</td><td><input class="fill" data-key="m4ffmi1" placeholder="____"></td><td><input class="fill" data-key="m4ffmi2" placeholder="____"></td></tr>
+      <tr><td class="lab">17-20</td><td><input class="fill" data-key="m4ffmi3" placeholder="____"></td><td><input class="fill" data-key="m4ffmi4" placeholder="____"></td></tr>
+      <tr><td class="lab">20-22</td><td><input class="fill" data-key="m4ffmi5" placeholder="____"></td><td><input class="fill" data-key="m4ffmi6" placeholder="____"></td></tr>
+      <tr><td class="lab">22-25</td><td><input class="fill" data-key="m4ffmi7" placeholder="____"></td><td><input class="fill" data-key="m4ffmi8" placeholder="____"></td></tr>
+      <tr><td class="lab">25-27</td><td><input class="fill" data-key="m4ffmi9" placeholder="____"></td><td><input class="fill" data-key="m4ffmi10" placeholder="____"></td></tr>
+      <tr><td class="lab">&gt;27</td><td><input class="fill" data-key="m4ffmi11" placeholder="____"></td><td><input class="fill" data-key="m4ffmi12" placeholder="____"></td></tr>
+    </table>
+    <p class="rh">FFMI的方法学局限：Kouri 1995非使用者样本仅 <input class="fill" data-key="m4ffmiLim" style="width:4em;" placeholder="____"> 人，不足以定义绝对上限。</p>
+  </div>
+
+  <div class="block">
+    <h3>E. 行为评估：跨理论模型(TTM)</h3>
+    <div class="timeline">
+      <div class="node"><div class="yr">前意向</div><textarea class="write" rows="1" data-key="m4ttm1" placeholder="教练策略？"></textarea></div>
+      <div class="node"><div class="yr">意向</div><textarea class="write" rows="1" data-key="m4ttm2" placeholder="教练策略？"></textarea></div>
+      <div class="node"><div class="yr">准备</div><textarea class="write" rows="1" data-key="m4ttm3" placeholder="教练策略？"></textarea></div>
+      <div class="node"><div class="yr">行动</div><textarea class="write" rows="1" data-key="m4ttm4" placeholder="教练策略？"></textarea></div>
+      <div class="node"><div class="yr">维持</div><textarea class="write" rows="1" data-key="m4ttm5" placeholder="教练策略？"></textarea></div>
+    </div>
+  </div>
+
+  <div class="concl">
+    <span class="lab">M4 模块小结</span>
+    <textarea class="write" rows="4" data-key="m4sum" placeholder="饮食记录的价值在于____……\nBIA只能用于____……\nFFMI是____指标，不是____工具……\n教练的角色是____者和____者……"></textarea>
+  </div>
+</section>
+
+<script>
+'use strict';
+const STORAGE_KEY='day1_handbook_v1';
+function saveAll(){
+  const data={};
+  document.querySelectorAll('[data-key]').forEach(el=>{
+    data[el.dataset.key]=el.value;
+  });
+  try{localStorage.setItem(STORAGE_KEY,JSON.stringify(data));}catch(e){}
+  updateProgress();
+  const s=document.getElementById('saveStatus');
+  s.textContent='已保存至本机浏览器 · '+new Date().toLocaleTimeString();
+  setTimeout(()=>{s.textContent='';},3000);
+}
+function loadAll(){
+  try{
+    const raw=localStorage.getItem(STORAGE_KEY);
+    if(!raw)return;
+    const data=JSON.parse(raw);
+    document.querySelectorAll('[data-key]').forEach(el=>{
+      if(data[el.dataset.key]!==undefined)el.value=data[el.dataset.key];
+    });
+  }catch(e){}
+}
+function updateProgress(){
+  const els=document.querySelectorAll('[data-key]');
+  let filled=0;
+  els.forEach(el=>{if(el.value&&el.value.trim())filled++;});
+  const pct=els.length?Math.round(filled/els.length*100):0;
+  document.getElementById('pctText').textContent=pct+'%';
+  document.getElementById('pctBar').style.width=pct+'%';
+}
+document.addEventListener('input',e=>{
+  if(e.target.dataset&&e.target.dataset.key){
+    clearTimeout(window._saveTimer);
+    window._saveTimer=setTimeout(saveAll,1500);
+    updateProgress();
+  }
+});
+loadAll();
+updateProgress();
+</script>
+</body>
+</html>
