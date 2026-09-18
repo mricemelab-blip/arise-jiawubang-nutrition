@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>加五磅 · 三天营养课</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&family=Noto+Sans+SC:wght@300;400;500;600&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+:root {
+    --bg-primary: #070709;
+    --bg-card: #111115;
+    --bg-elevated: #1A1A22;
+    --accent: #C8A45E;
+    --accent-dim: #8A7040;
+    --text-primary: #E8E6E3;
+    --text-secondary: #9A9898;
+    --border: #1E1E24;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: 'Noto Sans SC', 'Inter', sans-serif;
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    line-height: 1.8;
+    min-height: 100vh;
+}
+.container {
+    max-width: 920px;
+    margin: 0 auto;
+    padding: 3rem 2rem;
+}
+a { color: var(--accent); text-decoration: none; transition: color 0.2s; }
+a:hover { color: #E8C96E; }
+
+/* Header */
+.page-header {
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 2rem;
+    margin-bottom: 3rem;
+}
+.page-header h1 {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--accent);
+    letter-spacing: 0.02em;
+}
+.page-header .subtitle {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    margin-top: 0.5rem;
+}
+
+/* Back link */
+.back-link {
+    display: inline-block;
+    margin-bottom: 2rem;
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    border: 1px solid var(--border);
+    padding: 0.3rem 0.8rem;
+    border-radius: 4px;
+    transition: all 0.2s;
+}
+.back-link:hover {
+    color: var(--accent);
+    border-color: var(--accent-dim);
+}
+
+/* Content typography */
+.content h1 {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 1.7rem;
+    color: var(--accent);
+    margin: 2.5rem 0 1rem 0;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--border);
+}
+.content h2 {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 1.35rem;
+    color: var(--accent);
+    margin: 2rem 0 0.8rem 0;
+}
+.content h3 {
+    font-size: 1.1rem;
+    color: var(--text-primary);
+    margin: 1.5rem 0 0.6rem 0;
+    font-weight: 600;
+}
+.content h4, .content h5, .content h6 {
+    font-size: 1rem;
+    color: var(--text-secondary);
+    margin: 1.2rem 0 0.5rem 0;
+}
+.content p {
+    margin: 0.8rem 0;
+    color: var(--text-primary);
+}
+.content ul, .content ol {
+    margin: 0.8rem 0;
+    padding-left: 1.5rem;
+}
+.content li {
+    margin: 0.4rem 0;
+    color: var(--text-primary);
+}
+.content li::marker {
+    color: var(--accent-dim);
+}
+.content strong {
+    color: var(--accent);
+    font-weight: 600;
+}
+.content em {
+    color: var(--text-secondary);
+    font-style: italic;
+}
+
+/* Code blocks */
+.content code {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.85rem;
+    background: var(--bg-elevated);
+    padding: 0.15rem 0.4rem;
+    border-radius: 3px;
+    color: var(--accent);
+}
+.content pre {
+    background: var(--bg-elevated);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 1rem 1.2rem;
+    overflow-x: auto;
+    margin: 1rem 0;
+}
+.content pre code {
+    background: none;
+    padding: 0;
+    color: var(--text-primary);
+}
+
+/* Tables */
+.content table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1.2rem 0;
+    font-size: 0.9rem;
+}
+.content thead th {
+    background: var(--bg-elevated);
+    color: var(--accent);
+    font-weight: 600;
+    text-align: left;
+    padding: 0.6rem 0.8rem;
+    border-bottom: 2px solid var(--accent-dim);
+}
+.content tbody td {
+    padding: 0.5rem 0.8rem;
+    border-bottom: 1px solid var(--border);
+    color: var(--text-primary);
+}
+.content tbody tr:hover {
+    background: rgba(200, 164, 94, 0.04);
+}
+
+/* Blockquotes */
+.content blockquote {
+    border-left: 3px solid var(--accent-dim);
+    margin: 1rem 0;
+    padding: 0.6rem 1rem;
+    background: var(--bg-card);
+    border-radius: 0 6px 6px 0;
+    color: var(--text-secondary);
+}
+.content blockquote p {
+    color: var(--text-secondary);
+}
+
+/* Horizontal rule */
+.content hr {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 2rem 0;
+}
+
+/* Images */
+.content img {
+    max-width: 100%;
+    border-radius: 6px;
+    margin: 1rem 0;
+}
+
+/* Footer */
+.page-footer {
+    margin-top: 4rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border);
+    text-align: center;
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+}
+
+    .day-group {
+        margin-bottom: 3rem;
+    }
+    .day-title {
+        font-family: 'Noto Serif SC', serif;
+        font-size: 1.3rem;
+        color: var(--accent);
+        margin-bottom: 1.2rem;
+        padding-bottom: 0.5rem;
+        border-bottom: 1px solid var(--border);
+    }
+    .day-title span {
+        color: var(--text-secondary);
+        font-size: 0.9rem;
+        font-weight: 400;
+    }
+    .module-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 1rem;
+    }
+    .module-card {
+        background: var(--bg-card);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        padding: 1.2rem 1.4rem;
+        transition: all 0.25s ease;
+        display: block;
+    }
+    .module-card:hover {
+        border-color: var(--accent-dim);
+        background: var(--bg-elevated);
+        transform: translateY(-2px);
+    }
+    .module-card .mod-num {
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 0.75rem;
+        color: var(--accent-dim);
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        margin-bottom: 0.4rem;
+    }
+    .module-card .mod-title {
+        font-family: 'Noto Serif SC', serif;
+        font-size: 1rem;
+        color: var(--text-primary);
+        font-weight: 600;
+        line-height: 1.5;
+    }
+    .module-card:hover .mod-title {
+        color: var(--accent);
+    }
+    .hero {
+        text-align: center;
+        padding: 3rem 0 2rem;
+    }
+    .hero h1 {
+        font-family: 'Noto Serif SC', serif;
+        font-size: 2.2rem;
+        color: var(--accent);
+        letter-spacing: 0.05em;
+        margin-bottom: 0.6rem;
+    }
+    .hero .tagline {
+        font-size: 1rem;
+        color: var(--text-secondary);
+        font-weight: 300;
+    }
+    .divider {
+        width: 60px;
+        height: 1px;
+        background: var(--accent-dim);
+        margin: 2rem auto;
+    }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="hero">
+            <h1>加五磅 · 三天营养课</h1>
+            <div class="tagline">循证营养干预 · 教练实战手册</div>
+        </div>
+        <div class="divider"></div>
+        
+        <div class="day-group">
+            <div class="day-title">Day 1 <span>生化基础 · 训练营养 · 能量与评估</span></div>
+            <div class="module-grid">
+                
+            <a href="M1.html" class="module-card">
+                <div class="mod-num">Module 01</div>
+                <div class="mod-title">教练必知生化基础</div>
+            </a>
+            <a href="M2.html" class="module-card">
+                <div class="mod-num">Module 02</div>
+                <div class="mod-title">训练的营养依据</div>
+            </a>
+            <a href="M3.html" class="module-card">
+                <div class="mod-num">Module 03</div>
+                <div class="mod-title">能量与宏量营养素</div>
+            </a>
+            <a href="M4.html" class="module-card">
+                <div class="mod-num">Module 04</div>
+                <div class="mod-title">营养评估三板斧</div>
+            </a>
+            </div>
+        </div>
+        
+        <div class="day-group">
+            <div class="day-title">Day 2 <span>微量营养素 · 补剂 · 减脂与平台期</span></div>
+            <div class="module-grid">
+                
+            <a href="M5.html" class="module-card">
+                <div class="mod-num">Module 05</div>
+                <div class="mod-title">维生素矿物质与水</div>
+            </a>
+            <a href="M6.html" class="module-card">
+                <div class="mod-num">Module 06</div>
+                <div class="mod-title">补剂决策框架</div>
+            </a>
+            <a href="M7.html" class="module-card">
+                <div class="mod-num">Module 07</div>
+                <div class="mod-title">首次咨询SOP</div>
+            </a>
+            <a href="M8.html" class="module-card">
+                <div class="mod-num">Module 08</div>
+                <div class="mod-title">减脂方案专题</div>
+            </a>
+            <a href="M9.html" class="module-card">
+                <div class="mod-num">Module 09</div>
+                <div class="mod-title">增肌方案专题</div>
+            </a>
+            <a href="M10.html" class="module-card">
+                <div class="mod-num">Module 10</div>
+                <div class="mod-title">平台期诊断决策树</div>
+            </a>
+            </div>
+        </div>
+        
+        <div class="day-group">
+            <div class="day-title">Day 3 <span>RED-S · Recomposition · 方法论与特殊人群</span></div>
+            <div class="module-grid">
+                
+            <a href="M11.html" class="module-card">
+                <div class="mod-num">Module 11</div>
+                <div class="mod-title">RED-S识别与转介</div>
+            </a>
+            <a href="M12.html" class="module-card">
+                <div class="mod-num">Module 12</div>
+                <div class="mod-title">Body_Recomposition专题</div>
+            </a>
+            <a href="M13.html" class="module-card">
+                <div class="mod-num">Module 13</div>
+                <div class="mod-title">循证判断方法论与案例考核</div>
+            </a>
+            <a href="M14.html" class="module-card">
+                <div class="mod-num">Module 14</div>
+                <div class="mod-title">特殊人群营养干预</div>
+            </a>
+            </div>
+        </div>
+        
+        <div class="page-footer">
+            Arise · 加五磅三天营养课 · M1-M14
+        </div>
+    </div>
+    <script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Smooth scroll
+    document.querySelectorAll('a[href^="#"]').forEach(function(anchor) {
+        anchor.addEventListener('click', function(e) {
+            e.preventDefault();
+            var target = document.querySelector(this.getAttribute('href'));
+            if (target) target.scrollIntoView({ behavior: 'smooth' });
+        });
+    });
+});
+</script>
+</body>
+</html>
