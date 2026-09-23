@@ -1,0 +1,2692 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>教练实践补丁 - 加伍磅三天营养课</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&family=Noto+Sans+SC:wght@300;400;500;600&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+:root {
+    --bg-primary: #070709;
+    --bg-card: #111115;
+    --bg-elevated: #1A1A22;
+    --accent: #C8A45E;
+    --accent-dim: #8A7040;
+    --text-primary: #E8E6E3;
+    --text-secondary: #9A9898;
+    --border: #1E1E24;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: 'Noto Sans SC', 'Inter', sans-serif;
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    line-height: 1.8;
+    min-height: 100vh;
+}
+.container {
+    max-width: 920px;
+    margin: 0 auto;
+    padding: 3rem 2rem;
+}
+a { color: var(--accent); text-decoration: none; transition: color 0.2s; }
+a:hover { color: #E8C96E; }
+
+.page-nav {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--border);
+}
+.page-nav .back-link {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+}
+.page-nav .back-link:hover { color: var(--accent); }
+.page-nav .nav-title {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 1.1rem;
+    color: var(--accent);
+}
+.page-nav .nav-subtitle {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    margin-left: auto;
+}
+
+.page-header {
+    text-align: center;
+    padding: 2rem 0 1.5rem;
+    margin-bottom: 2rem;
+}
+.page-header h1 {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--accent);
+    letter-spacing: 0.02em;
+}
+.page-header .subtitle {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    margin-top: 0.5rem;
+}
+
+.declaration {
+    background: var(--bg-card);
+    border: 1px solid var(--accent-dim);
+    border-left: 3px solid var(--accent);
+    border-radius: 6px;
+    padding: 1.2rem 1.5rem;
+    margin-bottom: 3rem;
+    font-size: 0.88rem;
+    color: var(--text-secondary);
+    line-height: 1.7;
+}
+.declaration strong {
+    color: var(--accent);
+    font-weight: 600;
+}
+
+.module-section {
+    margin-bottom: 3rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid var(--border);
+}
+.module-section:last-of-type {
+    border-bottom: none;
+}
+.module-title {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--accent);
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--border);
+}
+.module-title .mod-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--accent-dim);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    display: block;
+    margin-bottom: 0.3rem;
+}
+
+.subsection-title {
+    font-family: 'Noto Sans SC', sans-serif;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin: 1.5rem 0 0.8rem;
+    padding-left: 0.5rem;
+    border-left: 2px solid var(--accent-dim);
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1.2rem 0;
+    font-size: 0.85rem;
+}
+thead th {
+    background: var(--bg-elevated);
+    color: var(--accent);
+    font-weight: 600;
+    text-align: left;
+    padding: 0.7rem 0.8rem;
+    border-bottom: 2px solid var(--accent-dim);
+    white-space: nowrap;
+}
+tbody td {
+    padding: 0.6rem 0.8rem;
+    border-bottom: 1px solid var(--border);
+    vertical-align: top;
+}
+tbody tr:hover {
+    background: rgba(200, 164, 94, 0.04);
+}
+tbody td:first-child {
+    color: var(--text-secondary);
+    font-weight: 500;
+    min-width: 120px;
+}
+tbody td:nth-child(3) {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.78rem;
+    color: var(--text-secondary);
+}
+
+ol {
+    margin: 0.8rem 0;
+    padding-left: 1.5rem;
+}
+ol li {
+    margin-bottom: 0.6rem;
+    line-height: 1.7;
+    font-size: 0.9rem;
+}
+ol li strong {
+    color: var(--accent);
+}
+
+.note {
+    font-size: 0.82rem;
+    color: var(--text-secondary);
+    font-style: italic;
+    margin-top: 1rem;
+    padding: 0.8rem 1rem;
+    border-left: 2px solid var(--border);
+}
+
+.speed-ref {
+    margin-top: 3rem;
+    padding-top: 2rem;
+    border-top: 2px solid var(--border);
+}
+.speed-ref h2 {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 1.3rem;
+    color: var(--accent);
+    margin-bottom: 1.5rem;
+}
+
+.page-footer {
+    margin-top: 4rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border);
+    text-align: center;
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .container { padding: 1.5rem 1rem; }
+    .page-header h1 { font-size: 1.5rem; }
+    .module-title { font-size: 1.2rem; }
+    table { font-size: 0.78rem; }
+    thead th, tbody td { padding: 0.5rem 0.4rem; }
+    .page-nav { flex-wrap: wrap; }
+    .page-nav .nav-subtitle { margin-left: 0; width: 100%; }
+}
+@media (max-width: 480px) {
+    table { display: block; overflow-x: auto; white-space: nowrap; }
+}
+    </style>
+</head>
+<body>
+<div class="container">
+    <nav class="page-nav">
+        <a href="index.html" class="back-link">← 返回主页</a>
+        <span class="nav-title">教练实践补丁</span>
+        <span class="nav-subtitle">M1–M14 实践数值速查</span>
+    </nav>
+
+    <div class="page-header">
+        <h1>教练实践补丁</h1>
+        <div class="subtitle">加伍磅三天营养课 · M1–M14 全模块实践参考数值汇总</div>
+    </div>
+
+    <div class="declaration">
+        <strong>声明：</strong>本文档所有数值均来自教材各章节，仅供教练实践参考，不作为唯一标准，需结合来访者个体情况校准。教材在多数数值处明确声明"不宜写成固定值"，本补丁记录数值的同时标注其性质（参考起点 / 硬数值 / 否定值）。教练应将每个数值理解为"有条件的参考起点"，而非普适硬阈值。
+    </div>
+
+    <section class="module-section">
+        <h2 class="module-title">
+            <span class="mod-tag">M1</span>
+            教练必知生化基础
+        </h2>
+        <div class="subsection-title">实践参考数值</div>
+<table>
+<thead><tr>
+  <th>主题</th>
+  <th>实践参考值</th>
+  <th>教材来源</th>
+  <th>备注</th>
+</tr></thead>
+<tbody>
+<tr>
+  <td>日蛋白摄入（群体估计点）</td>
+  <td>~1.62 g/kg/d（95% CI 1.03–2.20）</td>
+  <td>M1 §1.2.4 [16]</td>
+  <td>群体层面估计点，非个人硬阈值</td>
+</tr>
+<tr>
+  <td>日蛋白摄入（实践参考区间）</td>
+  <td>1.6–2.2 g/kg/d</td>
+  <td>M1 §1.2.4</td>
+  <td>参考起点，需个体化校准</td>
+</tr>
+<tr>
+  <td>单餐蛋白分配参考</td>
+  <td>~0.25–0.4 g/kg/餐</td>
+  <td>M1 §1.2.2 [15]</td>
+  <td>健康年轻训练者急性研究参考，非二元MPS开关</td>
+</tr>
+<tr>
+  <td>单餐蛋白分配常用参考</td>
+  <td>~0.4 g/kg/餐</td>
+  <td>M1 §1.2.2, §1.2.5 教练转化清单</td>
+  <td>Schoenfeld & Aragon 2018提出的分配参考</td>
+</tr>
+<tr>
+  <td>单餐上限（否定值）</td>
+  <td>0.55 g/kg/餐 <strong>不是</strong>经验证的单餐MPS上限</td>
+  <td>M1 §1.2.2, §1.2.5</td>
+  <td>教材明确否定此为硬上限</td>
+</tr>
+<tr>
+  <td>亮氨酸"阈值"（否定值）</td>
+  <td>"2–3 g/餐" <strong>不宜</strong>写成所有训练者的二元MPS开关</td>
+  <td>M1 §1.2.2</td>
+  <td>Sestrin2 Kd ~20 μmol/L描述分子结合亲和力，非人体膳食阈值</td>
+</tr>
+<tr>
+  <td>PCr恢复时间</td>
+  <td>组间1–3分钟大部分恢复</td>
+  <td>M1 §1.1.1 [3]</td>
+  <td>参考起点</td>
+</tr>
+<tr>
+  <td>磷酸原系统功率</td>
+  <td>50–70 W/kg</td>
+  <td>M1 §1.1.1</td>
+  <td>参考值</td>
+</tr>
+<tr>
+  <td>磷酸原系统持续时间</td>
+  <td>5–10秒全力运动</td>
+  <td>M1 §1.1.1</td>
+  <td>参考值</td>
+</tr>
+<tr>
+  <td>糖酵解系统功率</td>
+  <td>25–50 W/kg</td>
+  <td>M1 §1.1.1</td>
+  <td>参考值</td>
+</tr>
+<tr>
+  <td>糖酵解系统持续时间</td>
+  <td>30秒–2分钟</td>
+  <td>M1 §1.1.1</td>
+  <td>参考值</td>
+</tr>
+<tr>
+  <td>有氧氧化系统功率</td>
+  <td>10–25 W/kg</td>
+  <td>M1 §1.1.1</td>
+  <td>参考值</td>
+</tr>
+<tr>
+  <td>脂肪氧化供能比例（低强度）</td>
+  <td><30% VO₂max时约60%–70%</td>
+  <td>M1 §1.1.2 [7]</td>
+  <td>参考起点，受训练状态等影响</td>
+</tr>
+<tr>
+  <td>Fatmax区间</td>
+  <td>30%–65% VO₂max</td>
+  <td>M1 §1.1.2</td>
+  <td>参考起点，个体差异大</td>
+</tr>
+<tr>
+  <td>脂肪-碳水交叉点</td>
+  <td>约50%–65% VO₂max</td>
+  <td>M1 §1.1.2 [3][8]</td>
+  <td>参考起点，受多因素影响</td>
+</tr>
+<tr>
+  <td>RQ底物判断</td>
+  <td>RQ=1.0纯碳水；RQ=0.70纯脂肪；RQ≈0.85混合</td>
+  <td>M1 §1.1.2 [3]</td>
+  <td>硬数值（物理化学定义）</td>
+</tr>
+<tr>
+  <td>耐力运动训练中补碳</td>
+  <td>30–60 g/h（1–2.5h）；可达60–90 g/h（>2.5h）</td>
+  <td>M1 §1.1.3 [3][10]</td>
+  <td>主要来自耐力证据，力量训练不直接平移</td>
+</tr>
+<tr>
+  <td>葡萄糖:果糖配比</td>
+  <td>2:1（多种可转运碳水）</td>
+  <td>M1 §1.3.3, M2 §2.1.2</td>
+  <td>可提升总碳水氧化率至~90 g/h</td>
+</tr>
+<tr>
+  <td>蛋白质供能贡献（静息）</td>
+  <td>不足总ATP再生的5%</td>
+  <td>M1 §1.0.2 [2][3]</td>
+  <td>参考值</td>
+</tr>
+<tr>
+  <td>ATP储量（全身）</td>
+  <td>约80–100 g</td>
+  <td>M1 §1.0.1 [3]</td>
+  <td>参考值</td>
+</tr>
+<tr>
+  <td>并发训练干扰效应量（Wilson 2012）</td>
+  <td>肌肥大ES=0.85 vs 单纯力量ES=1.23；力量ES=1.44 vs 1.76；爆发力ES=0.55 vs 0.91</td>
+  <td>M1 §1.3.2 [26]</td>
+  <td>meta分析群体结果，非个人预测公式</td>
+</tr>
+<tr>
+  <td>并发训练更新结论（Schumann 2022）</td>
+  <td>肌肥大SMD=−0.01（n.s.）；最大力量SMD=−0.06（n.s.）；爆发力SMD=−0.28（显著）</td>
+  <td>M1 §1.3.2 [27]</td>
+  <td>爆发力对同课次疲劳更敏感</td>
+</tr>
+<tr>
+  <td>并发训练"安全剂量"（否定值）</td>
+  <td>"每周2–3次、20–40分钟" <strong>不应</strong>写成统一安全剂量</td>
+  <td>M1 §1.3.2</td>
+  <td>按主要目标与总训练负荷组织</td>
+</tr>
+<tr>
+  <td>训练间隔（否定值）</td>
+  <td>"至少6小时、理想24小时" <strong>不支持</strong>写成所有人统一阈值</td>
+  <td>M1 §1.3.3 [28]</td>
+  <td>主要目标优先，能分开时分开</td>
+</tr>
+<tr>
+  <td>训练后蛋白（否定值）</td>
+  <td>"1–2小时20–40 g" <strong>不能</strong>写成抵消AMPK–mTORC1干扰的固定处方</td>
+  <td>M1 §1.3.3</td>
+  <td>按日总量和恢复窗口安排</td>
+</tr>
+<tr>
+  <td>睡眠不足（否定值）</td>
+  <td>"<6.5小时=训练适应下降10%–20%" <strong>不支持</strong>作为通用定量规则</td>
+  <td>M1 §1.3.3 [29]</td>
+  <td>个体差异大</td>
+</tr>
+</tbody>
+</table>
+        <div class="subsection-title">教练可执行建议</div>
+        <ol>
+            <li><strong>能量系统应用</strong>：力量训练工作组（1–5RM）以磷酸原/糖酵解为主，组间1–3分钟休息让PCr大部分恢复，PCr未充分恢复时下一组表现下降是正常生理现象。</li>
+            <li><strong>蛋白分配</strong>：先确保日总蛋白1.6–2.2 g/kg/d达标，再按~0.4 g/kg/餐分配到多个进食机会；不追求每餐跨过固定亮氨酸阈值。</li>
+            <li><strong>并发训练安排</strong>：主要目标（如肌肥大）优先完成；同日兼顾耐力时优先完成力量课次，条件允许时拉开间隔；爆发力训练时减少不必要的耐力疲劳。</li>
+            <li><strong>底物利用判断</strong>：不把某个VO₂max百分比定义为"燃脂区"；减脂核心是长期能量平衡，非运动中脂肪供能比例。 ---</li>
+        </ol>
+    </section>
+
+    <section class="module-section">
+        <h2 class="module-title">
+            <span class="mod-tag">M2</span>
+            训练的营养依据
+        </h2>
+        <div class="subsection-title">实践参考数值</div>
+<table>
+<thead><tr>
+  <th>主题</th>
+  <th>实践参考值</th>
+  <th>教材来源</th>
+  <th>备注</th>
+</tr></thead>
+<tbody>
+<tr>
+  <td>日总蛋白</td>
+  <td>1.6–2.2 g/kg/d</td>
+  <td>M2 §2.0.2 [10][11]</td>
+  <td>训练适应基础条件</td>
+</tr>
+<tr>
+  <td>单餐蛋白分配参考</td>
+  <td>~0.4 g/kg/餐</td>
+  <td>M2 §2.1.3 [25]</td>
+  <td>常用分配参考</td>
+</tr>
+<tr>
+  <td>单餐蛋白参考范围</td>
+  <td>20–40 g高质量蛋白（或~0.25–0.4 g/kg）</td>
+  <td>M2 §2.1.3 [19]</td>
+  <td>健康年轻训练者参考</td>
+</tr>
+<tr>
+  <td>MPS升高持续时间</td>
+  <td>24–48小时</td>
+  <td>M2 §2.0 学术导言 [1][4]</td>
+  <td>合成代谢致敏状态</td>
+</tr>
+<tr>
+  <td>训练前正餐窗口</td>
+  <td>3–4小时前</td>
+  <td>M2 §2.1.1</td>
+  <td>含碳水+蛋白质的熟悉餐食</td>
+</tr>
+<tr>
+  <td>训练前补加餐（1–2h）</td>
+  <td>碳水0.5–1.0 g/kg + 蛋白质~10–15 g</td>
+  <td>M2 §2.1.1</td>
+  <td>距上次正餐>4h时使用</td>
+</tr>
+<tr>
+  <td>训练前快速补给（30–60min）</td>
+  <td>碳水0.3–0.5 g/kg</td>
+  <td>M2 §2.1.1</td>
+  <td>空腹或距上次进食>6h时使用</td>
+</tr>
+<tr>
+  <td>训练前快速补给蛋白（可选）</td>
+  <td>10–15 g乳清蛋白溶于水</td>
+  <td>M2 §2.1.1</td>
+  <td>胃肠耐受允许时</td>
+</tr>
+<tr>
+  <td>运动中脱水上限</td>
+  <td>体重的2%以内</td>
+  <td>M2 §2.1.2 [86]</td>
+  <td>ACSM框架</td>
+</tr>
+<tr>
+  <td>个体汗率范围</td>
+  <td>0.3–2.4 L/h</td>
+  <td>M2 §2.1.2 [85][86]</td>
+  <td>个体差异极大</td>
+</tr>
+<tr>
+  <td>运动中补碳（耐力<60min）</td>
+  <td>通常不需要</td>
+  <td>M2 §2.1.2</td>
+  <td>—</td>
+</tr>
+<tr>
+  <td>运动中补碳（耐力1–2.5h）</td>
+  <td>30–60 g/h</td>
+  <td>M2 §2.1.2 [85]</td>
+  <td>耐力项目证据最充分</td>
+</tr>
+<tr>
+  <td>运动中补碳（耐力>2.5h）</td>
+  <td>60–90 g/h（多转运体碳水）</td>
+  <td>M2 §2.1.2 [85]</td>
+  <td>需肠道耐受训练</td>
+</tr>
+<tr>
+  <td>运动饮料钠浓度</td>
+  <td>200–500 mg/L</td>
+  <td>M2 §2.1.2 [86]</td>
+  <td>>90min或高温高湿时</td>
+</tr>
+<tr>
+  <td>汗液钠浓度</td>
+  <td>20–80 mmol/L</td>
+  <td>M2 §2.1.2 [86]</td>
+  <td>个体差异大</td>
+</tr>
+<tr>
+  <td>训练后碳水（快速恢复）</td>
+  <td>1.0–1.2 g/kg/h，持续4h，总量4–5 g/kg</td>
+  <td>M2 §2.1.3 [12][28]</td>
+  <td>一日两练、间隔<8h时使用</td>
+</tr>
+<tr>
+  <td>训练后碳水（普通恢复）</td>
+  <td>全天4–6 g/kg/d即可</td>
+  <td>M2 §2.1.3</td>
+  <td>间隔>24h，不需即时补碳</td>
+</tr>
+<tr>
+  <td>训练后补液</td>
+  <td>体重差值的1.2–1.5倍</td>
+  <td>M2 §2.1.3 [86]</td>
+  <td>2–6h内分次摄入</td>
+</tr>
+<tr>
+  <td>训练后补液（示例）</td>
+  <td>体重降1.0 kg → 补液1.2–1.5 L</td>
+  <td>M2 §2.1.3</td>
+  <td>含钠促进潴留</td>
+</tr>
+<tr>
+  <td>糖原恢复高合成速率窗口</td>
+  <td>训练后0–4小时</td>
+  <td>M2 §2.1.3 [84]</td>
+  <td>糖原合酶去磷酸化激活</td>
+</tr>
+<tr>
+  <td>一次抗阻训练糖原消耗</td>
+  <td>24%–40%（取决于容量和肌群）</td>
+  <td>M2 §2.0.1 [1][26]</td>
+  <td>参考范围</td>
+</tr>
+<tr>
+  <td>蛋白质氧化率升高（抗阻训练）</td>
+  <td>15%–30%</td>
+  <td>M2 §2.0.1</td>
+  <td>参考范围</td>
+</tr>
+<tr>
+  <td>时机效应条件（增强场景）</td>
+  <td>①空腹训练距上次进食>8h ②两餐间隔>5h ③一日两练间隔<8h ④老年合成代谢抵抗 ⑤日总蛋白<1.4 g/kg/d</td>
+  <td>M2 §2.3.1</td>
+  <td>不满足时时机优先级降低</td>
+</tr>
+<tr>
+  <td>减脂期蛋白</td>
+  <td>2.0–2.4 g/kg/d</td>
+  <td>M2 §2.2.3 [9][32]</td>
+  <td>对抗能量缺口下FFM损失</td>
+</tr>
+<tr>
+  <td>蛋白时机Meta效应量（Schoenfeld 2013）</td>
+  <td>肌力ES=0.14（n.s.）；肌肥大ES=0.03（n.s.）</td>
+  <td>M2 §2.3.1 [87]</td>
+  <td>日总量充足时时机效应不显著</td>
+</tr>
+<tr>
+  <td>糖原超量恢复（否定值）</td>
+  <td>默认"腿训前2–3天执行6–8 g/kg/d"耐力式加载 <strong>不必要</strong></td>
+  <td>M2 §2.1.1</td>
+  <td>大众力量训练者按训练量提高碳水可用性即可</td>
+</tr>
+<tr>
+  <td>训练日/休息日碳水模板（否定值）</td>
+  <td>"训练日5–8 vs 休息日3–5 g/kg" <strong>不应</strong>作为统一模板</td>
+  <td>M2 §2.0.2 [12][88]</td>
+  <td>按训练任务配置</td>
+</tr>
+</tbody>
+</table>
+        <div class="subsection-title">教练可执行建议</div>
+        <ol>
+            <li><strong>训练前时间梯度</strong>：训练前3–4h安排正餐（含碳水+蛋白质）；距上次进食>4h时训练前1–2h加餐（碳水0.5–1.0 g/kg + 蛋白质10–15 g）；空腹训练时训练前30–60min补碳水0.3–0.5 g/kg。</li>
+            <li><strong>训练中液体</strong>：以口渴为引导，结合个人汗率校准；短时常规力量训练以水即可；>90min或高温高湿考虑含电解质/碳水补给。</li>
+            <li><strong>训练后恢复分层</strong>：日总蛋白1.6–2.2 g/kg/d优先；一日两练间隔<8h时训练后快速补碳1.0–1.2 g/kg/h×4h；一日一练间隔>24h则全天碳水总量足够。</li>
+            <li><strong>补液计算</strong>：训练前后称重，体重每降1 kg补液1.2–1.5 L，2–6h内分次摄入，含钠食物/饮料促进潴留。</li>
+            <li><strong>空腹训练判断</strong>：若增肌/保肌为主要目标，减少长时间无氨基酸暴露；若出现头晕、低血糖症状、表现下降，停止空腹作为默认策略。 ---</li>
+        </ol>
+    </section>
+
+    <section class="module-section">
+        <h2 class="module-title">
+            <span class="mod-tag">M3</span>
+            能量与宏量营养素
+        </h2>
+        <div class="subsection-title">实践参考数值</div>
+<table>
+<thead><tr>
+  <th>主题</th>
+  <th>实践参考值</th>
+  <th>教材来源</th>
+  <th>备注</th>
+</tr></thead>
+<tbody>
+<tr>
+  <td>蛋白质RDA（不适用于训练者）</td>
+  <td>0.8 g/kg/d</td>
+  <td>M3 §3.2.1 [3]</td>
+  <td>静坐/低活动量人群数据</td>
+</tr>
+<tr>
+  <td>ISSN抗阻训练者蛋白范围</td>
+  <td>1.4–2.0 g/kg/d</td>
+  <td>M3 §3.2.1 [18]</td>
+  <td>立场声明建议</td>
+</tr>
+<tr>
+  <td>Morton 2018蛋白拐点</td>
+  <td>~1.62 g/kg/d（95% CI 1.03–2.20）</td>
+  <td>M3 §3.2.2 [4]</td>
+  <td>群体模型估计点</td>
+</tr>
+<tr>
+  <td>Tagawa 2020拐点</td>
+  <td>~1.3 g/kg/d以上增幅放缓</td>
+  <td>M3 §3.2.2 [20]</td>
+  <td>样条模型，含更广泛人群</td>
+</tr>
+<tr>
+  <td>增肌期蛋白起点</td>
+  <td>~1.6 g/kg/d</td>
+  <td>M3 §3.2.3 [4][18]</td>
+  <td>实用起点，可个体化调整</td>
+</tr>
+<tr>
+  <td>减脂期蛋白</td>
+  <td>2.0–2.4 g/kg/d</td>
+  <td>M3 §3.2.3 [3][14][21]</td>
+  <td>能量缺口越大/体脂越低/训练量越高越向上限</td>
+</tr>
+<tr>
+  <td>较高龄训练者单餐蛋白参考</td>
+  <td>~25–30 g高质量蛋白/餐</td>
+  <td>M3 §3.2.3 [22]</td>
+  <td>研究背景参考，非二元开关</td>
+</tr>
+<tr>
+  <td>女性训练者蛋白需求拐点（Malowany 2019）</td>
+  <td>~1.49–1.53 g/kg/d</td>
+  <td>M3 §3.2.3 [23]</td>
+  <td>IAAO方法，运动日估计</td>
+</tr>
+<tr>
+  <td>蛋白安全上限观察范围</td>
+  <td>≤2.4 g/kg/d</td>
+  <td>M3 §3.2.2 [19]</td>
+  <td>肾功能正常者未见不良关联</td>
+</tr>
+<tr>
+  <td>减脂热量缺口起点</td>
+  <td>低于校准TEE的10%–20%，或约250–500 kcal/d</td>
+  <td>M3 §3.1.3 [1][14]</td>
+  <td>参考起点，2–4周校准</td>
+</tr>
+<tr>
+  <td>增肌热量盈余起点</td>
+  <td>高于校准TEE的5%–10%，或约150–300 kcal/d</td>
+  <td>M3 §3.1.3 [14][15]</td>
+  <td>参考起点，越有经验越保守</td>
+</tr>
+<tr>
+  <td>热量校准周期</td>
+  <td>2–4周</td>
+  <td>M3 §3.1.3</td>
+  <td>用体重趋势/腰围/表现/恢复判断</td>
+</tr>
+<tr>
+  <td>能量密度</td>
+  <td>蛋白4 kcal/g；碳水4 kcal/g；脂肪9 kcal/g；乙醇7 kcal/g</td>
+  <td>M3 §3.0.1 [1][2]</td>
+  <td>硬数值（Atwater近似值）</td>
+</tr>
+<tr>
+  <td>肌糖原储备</td>
+  <td>约300–500 g</td>
+  <td>M3 §3.0.2 [2]</td>
+  <td>参考值</td>
+</tr>
+<tr>
+  <td>肝糖原储备</td>
+  <td>约70–120 g</td>
+  <td>M3 §3.0.2 [2]</td>
+  <td>参考值</td>
+</tr>
+<tr>
+  <td>单次抗阻训练糖原消耗</td>
+  <td>约200–300 g</td>
+  <td>M3 §3.3.3 [5][9]</td>
+  <td>取决于训练量和肌群大小</td>
+</tr>
+<tr>
+  <td>SFA上限</td>
+  <td>总能量10%以下</td>
+  <td>M3 §3.4.1 [6][7]</td>
+  <td>健康指南推荐</td>
+</tr>
+<tr>
+  <td>脂肪总能量比例参考</td>
+  <td>20%–35%总能量</td>
+  <td>M3 §3.4.4 [5][7]</td>
+  <td>成年人实践起点</td>
+</tr>
+<tr>
+  <td>脂肪"激素安全下限"（否定值）</td>
+  <td>0.5 g/kg <strong>不是</strong>跨人群统一阈值</td>
+  <td>M3 §3.4.3</td>
+  <td>总能量、体脂、训练负荷等多因素影响</td>
+</tr>
+<tr>
+  <td>EPA+DHA参考剂量</td>
+  <td>1–3 g/d</td>
+  <td>M3 §3.4.2 [6][7]</td>
+  <td>不把此值写成所有训练者统一靶值</td>
+</tr>
+<tr>
+  <td>EPA+DHA食物来源</td>
+  <td>每周2–3次深海鱼（三文鱼/鲭鱼/沙丁鱼），每次150–200 g</td>
+  <td>M3 §3.4.2</td>
+  <td>食物优先</td>
+</tr>
+<tr>
+  <td>膳食纤维</td>
+  <td>25–38 g/d</td>
+  <td>M3 §3.3.2 [29][30]</td>
+  <td>一般健康推荐</td>
+</tr>
+<tr>
+  <td>游离糖上限</td>
+  <td>总能量10%以下</td>
+  <td>M3 §3.1.3 [9]</td>
+  <td>WHO建议</td>
+</tr>
+<tr>
+  <td>耐力分层碳水框架</td>
+  <td>低强度3–5；中等6–10；极端8–12 g/kg/d</td>
+  <td>M3 §3.3.3 [5]</td>
+  <td>以耐力训练为锚点，力量训练不直接套用</td>
+</tr>
+<tr>
+  <td>力量训练统一碳水下限（否定值）</td>
+  <td>3 g/kg <strong>不是</strong>所有力量训练者统一实操下限</td>
+  <td>M3 §3.3.3 [5][9][31]</td>
+  <td>按训练任务、总能量配置</td>
+</tr>
+<tr>
+  <td>植物蛋白增加量（否定值）</td>
+  <td>统一"增加30%–50%" <strong>不适用</strong></td>
+  <td>M3 §3.2.4 [24][25]</td>
+  <td>需结合氨基酸组成、消化率、总量调整</td>
+</tr>
+<tr>
+  <td>蛋白质TEF差异</td>
+  <td>蛋白质TEF通常高于碳水和脂肪</td>
+  <td>M3 §3.1.1 [1][2]</td>
+  <td>不能机械换算为固定减脂优势</td>
+</tr>
+<tr>
+  <td>计算示例（TEE 2600 kcal/d）</td>
+  <td>减脂~2100–2350 kcal/d；增肌~2730–2860 kcal/d</td>
+  <td>M3 §3.1.3</td>
+  <td>示例参考，非精确值</td>
+</tr>
+<tr>
+  <td>大体重/高体脂者蛋白计算基准</td>
+  <td>以目标体重或FFM为计算基准</td>
+  <td>M3 §3.2.3 [14]</td>
+  <td>更精确</td>
+</tr>
+<tr>
+  <td>Diet Break/refeed（否定值）</td>
+  <td>无适用于所有减脂者的固定最佳持续时间/频率/碳水量</td>
+  <td>M3 §3.1.3</td>
+  <td>个体化安排</td>
+</tr>
+<tr>
+  <td>"lean bulk"标准盈余（否定值）</td>
+  <td>"+200–300 kcal/d" <strong>不应</strong>写成所有人标准值</td>
+  <td>M3 §3.1.3 [14][15]</td>
+  <td>参考起点</td>
+</tr>
+<tr>
+  <td>碳水周期化模板（否定值）</td>
+  <td>"腿/背日5–7、肩/臂日4–5、休息日3–4 g/kg" <strong>无证据</strong>支持为通用模板</td>
+  <td>M3 §3.3.4</td>
+  <td>按训练任务个体化</td>
+</tr>
+<tr>
+  <td>Refeed通用处方（否定值）</td>
+  <td>"8–12 g/kg、每7–10天一次" <strong>不是</strong>通用处方</td>
+  <td>M3 §3.3.4</td>
+  <td>个体化安排</td>
+</tr>
+</tbody>
+</table>
+        <div class="subsection-title">教练可执行建议</div>
+        <ol>
+            <li><strong>蛋白质决策</strong>：增肌期从~1.6 g/kg/d起步，减脂期上调至2.0–2.4 g/kg/d；大体重/高体脂者以FFM或目标体重计算。</li>
+            <li><strong>热量目标</strong>：减脂从TEE的10%–20%缺口（或250–500 kcal/d）起步；增肌从5%–10%盈余（或150–300 kcal/d）起步；执行2–4周后用体重/腰围/表现/恢复校准。</li>
+            <li><strong>宏量分配顺序</strong>：先锚定蛋白（满足必需氨基酸需求）→ 确保脂肪（必需脂肪酸+总能量比例20%–35%）→ 碳水填充剩余能量。</li>
+            <li><strong>碳水按任务配置</strong>：高容量下肢/综合体能日提高碳水可用性；中等容量上肢日按训练表现和总日结构调整；休息日可减少但非必须降到固定g/kg。</li>
+            <li><strong>脂肪管理</strong>：优先不饱和脂肪来源（橄榄油、牛油果、坚果、深海鱼）；限制SFA<10%总能量；反式脂肪零摄入；不设置0.5 g/kg"激素红线"。</li>
+            <li><strong>EPA/DHA</strong>：每周2–3次深海鱼（每次150–200 g）；饮食不足时补剂1–3 g/d，结合膳食和个人情况决定。 ---</li>
+        </ol>
+    </section>
+
+    <section class="module-section">
+        <h2 class="module-title">
+            <span class="mod-tag">M4</span>
+            营养评估 DAB
+        </h2>
+        <div class="subsection-title">实践参考数值</div>
+<table>
+<thead><tr>
+  <th>主题</th>
+  <th>实践参考值</th>
+  <th>教材来源</th>
+  <th>备注</th>
+</tr></thead>
+<tbody>
+<tr>
+  <td>饮食能量低报幅度（DLW验证）</td>
+  <td>平均低估19%（Cohen's d = −1.006）</td>
+  <td>M4 §4.0 学术导言 [1]</td>
+  <td>Capling 2017系统综述</td>
+</tr>
+<tr>
+  <td>FFQ能量低估幅度</td>
+  <td>24%–33%</td>
+  <td>M4 §4.1.2 [1]</td>
+  <td>高于24h膳食回顾</td>
+</tr>
+<tr>
+  <td>BIA体脂率波动</td>
+  <td>2%–5%</td>
+  <td>M4 §4.0/§4.2.1 [3][15]</td>
+  <td>受水合状态影响，机型与条件不同误差不同</td>
+</tr>
+<tr>
+  <td>饮食记录天数（蛋白均值估计）</td>
+  <td>3–4天</td>
+  <td>M4 §4.1.4 [10]</td>
+  <td>Basiotis 1987</td>
+</tr>
+<tr>
+  <td>饮食记录天数（能量均值估计-群体）</td>
+  <td>3天</td>
+  <td>M4 §4.1.4 [10]</td>
+  <td>群体水平</td>
+</tr>
+<tr>
+  <td>饮食记录天数（能量均值估计-个体）</td>
+  <td>~31天</td>
+  <td>M4 §4.1.4 [10]</td>
+  <td>个体水平要求更高</td>
+</tr>
+<tr>
+  <td>Goldberg低报阈值</td>
+  <td>EI:BMR比值低于PAL对应阈值</td>
+  <td>M4 §4.1.5 [11][12]</td>
+  <td>PAL 1.55单一阈值时灵敏度~0.50、特异度~1.00</td>
+</tr>
+<tr>
+  <td>中国成人中心性肥胖标准</td>
+  <td>男性腰围≥90 cm；女性≥85 cm</td>
+  <td>M4 §4.2.1 [4]</td>
+  <td>硬数值（国家标准）</td>
+</tr>
+<tr>
+  <td>DXA辐射剂量</td>
+  <td>约1–10 μSv（胸片的1/10–1/40）</td>
+  <td>M4 §4.2.1 [3][14]</td>
+  <td>参考值</td>
+</tr>
+<tr>
+  <td>DXA扫描床限制</td>
+  <td>身高>192 cm或体重>120 kg可能超出</td>
+  <td>M4 §4.2.1</td>
+  <td>参考值</td>
+</tr>
+<tr>
+  <td>FFMI"25"讨论背景</td>
+  <td>非使用者中无人超过FFMI 25.0（身高标准化）</td>
+  <td>M4 §4.2.2 [17]</td>
+  <td>Kouri 1995，74人非使用者样本，不定义"自然极限"</td>
+</tr>
+<tr>
+  <td>类固醇前代Mr. America FFMI均值</td>
+  <td>25.4</td>
+  <td>M4 §4.2.2 [17]</td>
+  <td>1939–1959年20人估算值</td>
+</tr>
+<tr>
+  <td>FFMI公式</td>
+  <td>FFMI = FFM(kg) / 身高(m)²</td>
+  <td>M4 §4.2.2</td>
+  <td>硬公式</td>
+</tr>
+<tr>
+  <td>身高标准化FFMI</td>
+  <td>= FFMI + 6.1 × (1.80 − 身高(m))</td>
+  <td>M4 §4.2.2</td>
+  <td>硬公式</td>
+</tr>
+<tr>
+  <td>体重周均值变化意义</td>
+  <td>>0.5 kg/周提示能量平衡方向改变</td>
+  <td>M4 §4.2.4</td>
+  <td>参考阈值</td>
+</tr>
+<tr>
+  <td>体脂率单次变化意义</td>
+  <td><2%不具生理学意义</td>
+  <td>M4 §4.2.4</td>
+  <td>参考阈值</td>
+</tr>
+<tr>
+  <td>腰围测量精度</td>
+  <td>连续2次差值≤0.5 cm取均值</td>
+  <td>M4 §4.4.2</td>
+  <td>SOP标准</td>
+</tr>
+<tr>
+  <td>身高测量精度</td>
+  <td>连续2次差值≤0.5 cm取均值</td>
+  <td>M4 §4.4.2</td>
+  <td>SOP标准</td>
+</tr>
+<tr>
+  <td>体重测量精度</td>
+  <td>读取至0.1 kg</td>
+  <td>M4 §4.4.2</td>
+  <td>SOP标准</td>
+</tr>
+<tr>
+  <td>饮食依从性基本标准</td>
+  <td>3天记录完成≥2天；每周体重记录完成率>80%</td>
+  <td>M4 §4.3.2 [4]</td>
+  <td>参考标准</td>
+</tr>
+<tr>
+  <td>自评记录分数阈值</td>
+  <td><7分需进一步了解偏差</td>
+  <td>M4 §4.3.2 [4]</td>
+  <td>参考阈值</td>
+</tr>
+<tr>
+  <td>EI:BMR案例值</td>
+  <td>~1.04（接近BMR）</td>
+  <td>M4 §4.4.1 案例B</td>
+  <td>教学示意数据</td>
+</tr>
+<tr>
+  <td>人体测量腰围位点</td>
+  <td>髂前上棘与第12肋下缘连线中点</td>
+  <td>M4 §4.4.2</td>
+  <td>标准化位点</td>
+</tr>
+</tbody>
+</table>
+        <div class="subsection-title">教练可执行建议</div>
+        <ol>
+            <li><strong>饮食记录布置</strong>：3天记录（建议含训练日和休息日）；必须记录所有正餐、加餐、饮品、补剂、调味品、酒精；强调"不改变日常饮食"原则。</li>
+            <li><strong>低报识别</strong>：将饮食记录总能量与体重变化趋势交叉验证；体重稳定但记录能量接近BMR提示低报可能；以非评判方式了解情况。</li>
+            <li><strong>体成分监测</strong>：BIA仅用于纵向趋势监测（同一设备、同一时间、同一条件）；体脂率变化以4–6周纵向趋势为准；单次<2%波动无生理学意义，向训练者解释水合/糖原/月经周期影响。</li>
+            <li><strong>围度监测体系</strong>：基线评估（全套围度+体成分+FFMI）→ 周评估（每日晨起空腹体重取周均值+腰围）→ 月评估（全套围度+BIA+训练表现回顾）。</li>
+            <li><strong>蛋白分配分析</strong>：先看日总蛋白是否与目标匹配，再按餐次拆分识别是否过度集中；~0.4 g/kg/餐可作分配参考，不设置20–40 g"触发区间"。</li>
+            <li><strong>微量营养素信号</strong>：饮食记录连续3天以上未见乳制品、红色肉类、深色蔬菜，即为缺口提示信号。</li>
+            <li><strong>行为评估</strong>：依从性低的原因几乎不是"不自律"，而是方案与生活不匹配/目标过高/缺乏反馈；使用TTM五阶段模型识别训练者所处阶段，调整沟通策略。 --- ## 跨模块高频数值速查表 | 数值 | 出现模块 | 性质 | |------|---------|------| | 1.6–2.2 g/kg/d | M1/M2/M3/M4 | 日总蛋白实践参考区间 | | ~1.62 g/kg/d | M1/M2/M3/M4 | Morton 2018群体估计点 | | ~0.4 g/kg/餐 | M1/M2/M3/M4 | 单餐蛋白分配参考 | | 2.0–2.4 g/kg/d | M2/M3 | 减脂期蛋白上调范围 | | 24–48 h | M2 | MPS升高持续时间 | | 1.0–1.2 g/kg/h × 4h | M2 | 快速糖原恢复（一日两练） | | 体重差值 × 1.2–1.5 | M2 | 训练后补液 | | 250–500 kcal/d | M3 | 减脂缺口参考起点 | | 150–300 kcal/d | M3 | 增肌盈余参考起点 | | 20%–35%总能量 | M3 | 脂肪比例参考起点 | | 1–3 g/d EPA+DHA | M3 | Omega-3参考剂量 | | 3–4天饮食记录 | M4 | 蛋白均值估计所需天数 | | 低估19% | M4 | 饮食能量低报平均幅度 | | 2%–5%体脂率波动 | M4 | BIA水合状态影响范围 | --- *注：本补丁提取的是教材中所有可操作的实践参考数值。教材v2.1在多数数值处明确声明"不宜写成固定值""参考起点，需个体化校准"。教练内训时应同时理解每个数值的适用条件和否定值（教材明确否定的固定处方），避免将参考起点误用为硬阈值。* # Day2 教练实践补丁（M5–M8） > 提取说明：所有数值均来自教材v2.1第758–1561行。教材v2.1对大量实践数值做了"不宜写成固定阈值"的弱化处理，本补丁将教材中所有可操作数字集中提取，并标注其性质。 ---</li>
+        </ol>
+    </section>
+
+    <section class="module-section">
+        <h2 class="module-title">
+            <span class="mod-tag">M5</span>
+            维生素、矿物质与水
+        </h2>
+        <div class="subsection-title">实践参考数值</div>
+<table>
+<thead><tr>
+  <th>主题</th>
+  <th>实践参考值</th>
+  <th>教材来源</th>
+  <th>备注</th>
+</tr></thead>
+<tbody>
+<tr>
+  <td>维生素D流行病学不足率</td>
+  <td>37%–68%训练者25(OH)D不足</td>
+  <td>§5.1.1 [7]</td>
+  <td>Willis等数据</td>
+</tr>
+<tr>
+  <td>女子体操训练者缺乏率</td>
+  <td>18名中15名25(OH)D < 50 nmol/L</td>
+  <td>§5.1.1 [8]</td>
+  <td>Lovell报道</td>
+</tr>
+<tr>
+  <td>维生素D检测阈值</td>
+  <td>不设统一"充足线"；历史文献曾用50/75 nmol/L</td>
+  <td>§5.1.1 [27]</td>
+  <td>2024 Endocrine Society指南不推荐普适阈值，需个体化</td>
+</tr>
+<tr>
+  <td>高剂量抗氧化剂干扰训练适应</td>
+  <td>维生素C ≥ 1000 mg/d、维生素E ≥ 400 IU/d</td>
+  <td>§5.1.5 [17]</td>
+  <td>Ristow等实验证明阻断PGC-1α和胰岛素敏感性改善</td>
+</tr>
+<tr>
+  <td>镁需求可能增加幅度</td>
+  <td>10%–20%</td>
+  <td>§5.0.4 [10]</td>
+  <td>Nielsen与Lukaski估算，参考起点</td>
+</tr>
+<tr>
+  <td>氧化镁生物利用度</td>
+  <td>仅约4%</td>
+  <td>§5.1.2 [9]</td>
+  <td>"高含量"是营销陷阱</td>
+</tr>
+<tr>
+  <td>铁丢失量（训练者）</td>
+  <td>男性1.5–1.7 mg/d，女性2.2–2.3 mg/d</td>
+  <td>§5.1.3 [12]</td>
+  <td>Haymes与Lamanca估算，约为未训基准的2倍</td>
+</tr>
+<tr>
+  <td>未训练成人铁丢失基准</td>
+  <td>男性0.9–1.0 mg/d，女性0.7–0.8 mg/d</td>
+  <td>§5.1.3 [12]</td>
+  <td>对比基准</td>
+</tr>
+<tr>
+  <td>运动后hepcidin升高</td>
+  <td>运动后3–6h升高至安静时4–27倍，约24h回归基线</td>
+  <td>§5.1.3/§5.4.3 [12][13]</td>
+  <td>Peeling等研究</td>
+</tr>
+<tr>
+  <td>女性运动员SF < 30 μg/L比例</td>
+  <td>19%（vs男性3.3%）</td>
+  <td>§5.2.2 [12]</td>
+  <td>Fallon 303男+273女调查</td>
+</tr>
+<tr>
+  <td>女性耐力运动员SF < 20 μg/L</td>
+  <td>26%</td>
+  <td>§5.2.2 [12]</td>
+  <td>Malczewska等</td>
+</tr>
+<tr>
+  <td>脱水 > 2% BW</td>
+  <td>降低有氧表现和认知功能（证据A/B级）</td>
+  <td>§5.3.1 [4]</td>
+  <td>ACSM 2007立场声明</td>
+</tr>
+<tr>
+  <td>脱水3%–5% BW</td>
+  <td>不降低无氧运动表现或肌肉力量</td>
+  <td>§5.3.1 [4]</td>
+  <td>ACSM 2007证据A/B</td>
+</tr>
+<tr>
+  <td>尿液颜色评估</td>
+  <td>1–4色=水合良好（USG约<1.020），5–8色=脱水递增</td>
+  <td>§5.3.2 [4]</td>
+  <td>Armstrong尿色表</td>
+</tr>
+<tr>
+  <td>预水合（训练前）</td>
+  <td>训练前2–4h饮5–10 mL/kg；前20–30min可再加3–5 mL/kg</td>
+  <td>§5.3.4 [4]</td>
+  <td>ACSM 2007</td>
+</tr>
+<tr>
+  <td>训练后补液量</td>
+  <td>每丢失1 kg体重补充1.25–1.5 L液体（含钠）</td>
+  <td>§5.3.4/§5.3.5 [4][21]</td>
+  <td>因尿液持续丢失，需超量补偿</td>
+</tr>
+<tr>
+  <td>恢复饮料推荐钠含量</td>
+  <td>约50–90 mmol/L（≈每L食盐2.9–5.3 g）</td>
+  <td>§5.3.5 [21]</td>
+  <td>Maughan与Leiper</td>
+</tr>
+<tr>
+  <td>商业运动饮料钠含量</td>
+  <td>通常仅10–25 mmol/L</td>
+  <td>§5.3.5 [4][21]</td>
+  <td>不足以支持显著脱水的快速恢复</td>
+</tr>
+<tr>
+  <td>每丢失500 mL汗液补钠</td>
+  <td>约300–500 mg钠</td>
+  <td>§5.3.4 [4]</td>
+  <td>实用"双轨原则"</td>
+</tr>
+<tr>
+  <td>运动饮料推荐钠浓度</td>
+  <td>30–50 mmol/L</td>
+  <td>§5.3.4 [4]</td>
+  <td>或咸味食物替代</td>
+</tr>
+<tr>
+  <td>EAH定义</td>
+  <td>血钠 < 135 mmol/L</td>
+  <td>§5.3.6 [4]</td>
+  <td>运动相关低钠血症</td>
+</tr>
+<tr>
+  <td>WHO口服补液盐配方</td>
+  <td>冲1 L水，钠含量约75 mmol/L</td>
+  <td>§5.3.5 [21]</td>
+  <td>实用恢复方案</td>
+</tr>
+<tr>
+  <td>自制补液方案</td>
+  <td>1 L白水 + 1.5 g食盐 + 果汁（钠约25 mmol/L，偏低，建议配合咸食）</td>
+  <td>§5.3.5 [21]</td>
+  <td>参考</td>
+</tr>
+<tr>
+  <td>血红素铁吸收率</td>
+  <td>15%–35%</td>
+  <td>§5.4.4 [12]</td>
+  <td>来自动物性食物</td>
+</tr>
+<tr>
+  <td>非血红素铁吸收率</td>
+  <td>2%–15%</td>
+  <td>§5.4.4 [12]</td>
+  <td>来自植物性食物</td>
+</tr>
+<tr>
+  <td>植酸对非血红素铁吸收的抑制</td>
+  <td>降低50%–80%</td>
+  <td>§5.4.4 [12]</td>
+  <td>Hallberg等</td>
+</tr>
+<tr>
+  <td>维生素C促进铁吸收</td>
+  <td>100 mg与主餐同食，非血红素铁吸收率提高约85%</td>
+  <td>§5.4.4 [12]</td>
+  <td></td>
+</tr>
+<tr>
+  <td>锌铜比例实践参考</td>
+  <td>10:1至15:1</td>
+  <td>§5.1.4 [14]</td>
+  <td></td>
+</tr>
+<tr>
+  <td>高剂量锌补充风险</td>
+  <td>> 25 mg/d元素锌可竞争性抑制铜吸收</td>
+  <td>§5.1.4 [14]</td>
+  <td>长期可致铜边缘缺乏</td>
+</tr>
+<tr>
+  <td>锌耗竭实验</td>
+  <td>< 0.5 mg/d，持续33–41天</td>
+  <td>§5.1.4 [14]</td>
+  <td>Van Loan等，锌缺乏损害肌耐力的直接证据</td>
+</tr>
+<tr>
+  <td>线粒体ROS产生</td>
+  <td>约2%–5%分子氧转化为超氧阴离子</td>
+  <td>§5.1.5 [3]</td>
+  <td>生理背景</td>
+</tr>
+<tr>
+  <td>食物来源抗氧化剂</td>
+  <td>一个中等橙子约70 mg维C；一杯草莓约85 mg</td>
+  <td>§5.1.5 [3]</td>
+  <td>远低于干扰阈值</td>
+</tr>
+<tr>
+  <td>RDA维生素C</td>
+  <td>75–90 mg/d</td>
+  <td>§5.1.5 [3]</td>
+  <td></td>
+</tr>
+<tr>
+  <td>多酚（浓茶/咖啡）抑制非血红素铁吸收</td>
+  <td>60%–75%</td>
+  <td>教练转化清单 [12]</td>
+  <td>避免主餐时饮用</td>
+</tr>
+<tr>
+  <td>少量动物蛋白促铁吸收</td>
+  <td>约50 g可使非血红素铁吸收率提高2–4倍</td>
+  <td>教练转化清单 [12]</td>
+  <td></td>
+</tr>
+<tr>
+  <td>每餐维C增强铁吸收</td>
+  <td>约50 mg（柑橘、草莓、甜椒）</td>
+  <td>教练转化清单 [12]</td>
+  <td></td>
+</tr>
+<tr>
+  <td>BIA体成分测量变异系数</td>
+  <td>3%–8%</td>
+  <td>§7.1.3 [8]</td>
+  <td>水合状态影响</td>
+</tr>
+</tbody>
+</table>
+        <div class="subsection-title">教练可执行建议</div>
+        <ol>
+            <li><strong>怎么吃</strong>：每餐加入约50 mg维生素C增强非血红素铁吸收；避免主餐时饮浓茶咖啡；少量动物蛋白（约50 g）即可大幅提升铁吸收。通过蔬果获取抗氧化剂（一个橙子约70 mg维C，一把坚果约5–8 mg维E），不建议高剂量抗氧化补剂。</li>
+            <li><strong>怎么练</strong>：90分钟以下常规训练白水即可，无需运动饮料。训练前后称重计算%BW损失，连续4周记录，若超过2% BW引入预设补水。</li>
+            <li><strong>怎么识别</strong>：铁缺乏红旗信号——无法解释的持续疲劳、面色苍白/指甲改变、月经过多、限制性饮食、既往缺铁史。维生素D红旗——长期室内训练、深肤色、高纬度冬季、骨密度异常/应力骨折史。训练后补液：每丢失1 kg体重补1.25–1.5 L含钠液体。 ---</li>
+        </ol>
+    </section>
+
+    <section class="module-section">
+        <h2 class="module-title">
+            <span class="mod-tag">M6</span>
+            补剂决策框架
+        </h2>
+        <div class="subsection-title">实践参考数值</div>
+<table>
+<thead><tr>
+  <th>主题</th>
+  <th>实践参考值</th>
+  <th>教材来源</th>
+  <th>备注</th>
+</tr></thead>
+<tbody>
+<tr>
+  <td>肌酸加载期</td>
+  <td>20 g/d，分4次，持续5–7天</td>
+  <td>§6.2.1 [1][7]</td>
+  <td></td>
+</tr>
+<tr>
+  <td>肌酸维持期</td>
+  <td>3–5 g/d 单次</td>
+  <td>§6.2.1 [1][7]</td>
+  <td></td>
+</tr>
+<tr>
+  <td>肌酸跳过加载期</td>
+  <td>3–5 g/d，约28天达饱和</td>
+  <td>§6.2.1 [7]</td>
+  <td></td>
+</tr>
+<tr>
+  <td>肌酸促储存共服</td>
+  <td>约50 g碳水 + 50 g蛋白</td>
+  <td>§6.2.1 [1][7]</td>
+  <td>胰岛素介导转运，非常规必要</td>
+</tr>
+<tr>
+  <td>肌酸加载期上限</td>
+  <td>超过7天无额外收益且增加排泄</td>
+  <td>§6.2.1 [1]</td>
+  <td></td>
+</tr>
+<tr>
+  <td>肌酸安全性</td>
+  <td>高达30 g/d连续5年无严重不良反应</td>
+  <td>§6.2.1 [7]</td>
+  <td>ISSN立场声明</td>
+</tr>
+<tr>
+  <td>肌酸瘦体重增加</td>
+  <td>加载期后7–14天增加1%–3%（主要来自水分）</td>
+  <td>§6.2.1 [7][8]</td>
+  <td></td>
+</tr>
+<tr>
+  <td>肌酸力量提升</td>
+  <td>5%–10%</td>
+  <td>§6.2.1 [7][8]</td>
+  <td></td>
+</tr>
+<tr>
+  <td>肌内PCr储备增加</td>
+  <td>约20%–40%</td>
+  <td>§6.2.1 [7]</td>
+  <td>外源肌酸补充</td>
+</tr>
+<tr>
+  <td>肌酸加载期体重增加</td>
+  <td>1–2 kg（水分潴留）</td>
+  <td>§6.2.1 [7]</td>
+  <td>主要副作用</td>
+</tr>
+<tr>
+  <td>肌酸非响应者</td>
+  <td>约20%–30%人群（教材标注不应承诺固定比例）</td>
+  <td>§6.2.1 [1][7]</td>
+  <td>参考起点，需个体化观察</td>
+</tr>
+<tr>
+  <td>咖啡因有效剂量</td>
+  <td>3–6 mg/kg，运动前约60 min</td>
+  <td>§6.2.2 [1][10]</td>
+  <td></td>
+</tr>
+<tr>
+  <td>咖啡因低剂量方案</td>
+  <td>< 3 mg/kg（约200 mg），运动前和运动中分次</td>
+  <td>§6.2.2 [1]</td>
+  <td></td>
+</tr>
+<tr>
+  <td>咖啡因无效/有害剂量</td>
+  <td>≥ 9 mg/kg 不增加效益，副作用风险显著升高</td>
+  <td>§6.2.2 [1][10]</td>
+  <td></td>
+</tr>
+<tr>
+  <td>咖啡因半衰期</td>
+  <td>约4–6 h（个体差异大）</td>
+  <td>§6.2.2 [1]</td>
+  <td></td>
+</tr>
+<tr>
+  <td>CYP1A2慢代谢者半衰期</td>
+  <td>延长至8–10 h</td>
+  <td>§6.2.2 [10]</td>
+  <td>约占人群10%–15%</td>
+</tr>
+<tr>
+  <td>咖啡因不习惯者起始</td>
+  <td>从1–2 mg/kg开始测试耐受性</td>
+  <td>§6.2.2 [1]</td>
+  <td></td>
+</tr>
+<tr>
+  <td>咖啡因表现增益（耐力）</td>
+  <td>提升2%–7%</td>
+  <td>§6.2.2 [10]</td>
+  <td></td>
+</tr>
+<tr>
+  <td>咖啡因表现增益（间歇团队运动）</td>
+  <td>提升1%–8%</td>
+  <td>§6.2.2 [10]</td>
+  <td></td>
+</tr>
+<tr>
+  <td>咖啡因表现增益（短时超最大努力）</td>
+  <td>提升 > 3%</td>
+  <td>§6.2.2 [10]</td>
+  <td>1–2 min</td>
+</tr>
+<tr>
+  <td>孕妇咖啡因上限</td>
+  <td>< 300 mg/d</td>
+  <td>§6.2.2 [1]</td>
+  <td>WHO建议</td>
+</tr>
+<tr>
+  <td>β-丙氨酸日剂量</td>
+  <td>4–6 g/d（约65 mg/kg/d）</td>
+  <td>§6.2.3 [1][14]</td>
+  <td></td>
+</tr>
+<tr>
+  <td>β-丙氨酸分次方案</td>
+  <td>每3–4 h摄入0.8–1.6 g，随餐</td>
+  <td>§6.2.3 [1][14]</td>
+  <td>减轻感觉异常</td>
+</tr>
+<tr>
+  <td>β-丙氨酸持续周期</td>
+  <td>需持续10–12周</td>
+  <td>§6.2.3 [1][14]</td>
+  <td>肌肽浓度4周后开始可测，10–12周达平台</td>
+</tr>
+<tr>
+  <td>β-丙氨酸肌肽提升</td>
+  <td>40%–80%</td>
+  <td>§6.2.3 [14]</td>
+  <td></td>
+</tr>
+<tr>
+  <td>β-丙氨酸停用后半衰期</td>
+  <td>肌肽浓度半衰期约4–6周</td>
+  <td>§6.2.3 [1]</td>
+  <td>缓慢下降</td>
+</tr>
+<tr>
+  <td>β-丙氨酸适用场景</td>
+  <td>30秒至10分钟持续或间歇高强度运动</td>
+  <td>§6.2.3 [1][14]</td>
+  <td></td>
+</tr>
+<tr>
+  <td>β-丙氨酸总体效应量</td>
+  <td>约0.18（95% CI 0.08–0.28）</td>
+  <td>§6.2.3 [13]</td>
+  <td>Saunders等meta分析</td>
+</tr>
+<tr>
+  <td>硝酸盐剂量</td>
+  <td>6–8 mmol（约372–496 mg）NO₃⁻</td>
+  <td>§6.2.4 [1]</td>
+  <td></td>
+</tr>
+<tr>
+  <td>硝酸盐时机</td>
+  <td>运动前2–2.5 h</td>
+  <td>§6.2.4 [1]</td>
+  <td></td>
+</tr>
+<tr>
+  <td>甜菜根汁浓缩液</td>
+  <td>约70 mL shot，含约6–8 mmol NO₃⁻</td>
+  <td>§6.2.4 [1]</td>
+  <td></td>
+</tr>
+<tr>
+  <td>硝酸盐连续摄入</td>
+  <td>连续3天以上每天摄入对高水平运动员可能更稳定</td>
+  <td>§6.2.4 [1]</td>
+  <td></td>
+</tr>
+<tr>
+  <td>硝酸盐计时赛增益</td>
+  <td>4–30 min计时赛提升1%–3%</td>
+  <td>§6.2.4 [16]</td>
+  <td>Senefeld等</td>
+</tr>
+<tr>
+  <td>硝酸盐间歇团队运动增益</td>
+  <td>12–40 min提升3%–5%</td>
+  <td>§6.2.4 [16]</td>
+  <td></td>
+</tr>
+<tr>
+  <td>硝酸盐力竭时间提升</td>
+  <td>4%–25%</td>
+  <td>§6.2.4 [16]</td>
+  <td></td>
+</tr>
+<tr>
+  <td>硝酸盐效应最佳强度</td>
+  <td>约65% VO₂max</td>
+  <td>§6.2.4 [15]</td>
+  <td>Jones</td>
+</tr>
+<tr>
+  <td>抗菌漱口水影响</td>
+  <td>完全消除硝酸盐增效作用</td>
+  <td>§6.2.4 [1][15]</td>
+  <td>训练日禁用</td>
+</tr>
+<tr>
+  <td>蛋白摄入达标线（BCAA判断前提）</td>
+  <td>≥ 1.6 g/kg/d 且来源为完全蛋白时BCAA冗余</td>
+  <td>§6.3.1 [17]</td>
+  <td></td>
+</tr>
+<tr>
+  <td>BCAA有限作用场景</td>
+  <td>蛋白摄入 < 1.0 g/kg/d 或长时间耐力运动</td>
+  <td>§6.3.1 [17]</td>
+  <td></td>
+</tr>
+<tr>
+  <td>HMB推荐剂量</td>
+  <td>38 mg/kg/d（约3 g/d）</td>
+  <td>§6.3.2 [19]</td>
+  <td>ISSN立场声明</td>
+</tr>
+<tr>
+  <td>乳清蛋白亮氨酸含量</td>
+  <td>约10%–12%</td>
+  <td>§6.3.2 [19]</td>
+  <td></td>
+</tr>
+<tr>
+  <td>肌肉肉碱补充后增幅</td>
+  <td>仅微增1%–2%</td>
+  <td>§6.3.3 [4]</td>
+  <td>转运系统已近饱和</td>
+</tr>
+<tr>
+  <td>补剂污染率（Geyer等）</td>
+  <td>634个样品中14.8%含未声明合成代谢类固醇前体</td>
+  <td>§6.4.1 [8]</td>
+  <td>IOC资助多国研究</td>
+</tr>
+<tr>
+  <td>前体激素公司产品销售污染率</td>
+  <td>21.1%</td>
+  <td>§6.4.1 [8]</td>
+  <td></td>
+</tr>
+<tr>
+  <td>非前体激素公司产品销售污染率</td>
+  <td>9.6%</td>
+  <td>§6.4.1 [8]</td>
+  <td></td>
+</tr>
+<tr>
+  <td>极低剂量即可检出</td>
+  <td>摄入0.8 µg 19-去甲雄烯二酮即可2h后WADA检出</td>
+  <td>§6.4.1 [8]</td>
+  <td></td>
+</tr>
+<tr>
+  <td>系统综述污染率</td>
+  <td>50项研究3132个样品中27.9%含未声明物质</td>
+  <td>§6.4.1 [23]</td>
+  <td>Martínez-Sanz等</td>
+</tr>
+<tr>
+  <td>蛋白粉类</td>
+  <td>类固醇污染率最高的补剂类别</td>
+  <td>§6.4.1 [8]</td>
+  <td></td>
+</tr>
+</tbody>
+</table>
+        <div class="subsection-title">教练可执行建议</div>
+        <ol>
+            <li><strong>怎么吃</strong>：基础营养未优化前不用补剂。蛋白先算食物是否达1.6 g/kg/d，未达标先补食物。蛋白粉是便利来源之一，是否需要取决于全天饮食。</li>
+            <li><strong>怎么练</strong>：肌酸维持期3–5 g/d，可与碳水+蛋白共服。咖啡因3–6 mg/kg运动前60 min，不习惯者从1–2 mg/kg起。β-丙氨酸4–6 g/d分3–4次随餐，需坚持10–12周。硝酸盐6–8 mmol运动前2–2.5 h，训练日禁用抗菌漱口水。</li>
+            <li><strong>怎么识别</strong>：AIS ABCD 5分钟扫描——A组（有证据）=咖啡因/肌酸/β-丙氨酸/碳酸氢钠/硝酸盐/甘油；C组（不支持）=BCAA/HMB/谷氨酰胺；D组（禁用）=蒺藜/SARMs/前体激素/"睾酮增强剂"。拒绝专有配方产品。任何补剂前确认第三方认证（Informed Sport/NSF Certified for Sport），现场查批号。减脂胶囊默认警惕。 ---</li>
+        </ol>
+    </section>
+
+    <section class="module-section">
+        <h2 class="module-title">
+            <span class="mod-tag">M7</span>
+            首次咨询SOP与行为改变干预框架
+        </h2>
+        <div class="subsection-title">实践参考数值</div>
+<table>
+<thead><tr>
+  <th>主题</th>
+  <th>实践参考值</th>
+  <th>教材来源</th>
+  <th>备注</th>
+</tr></thead>
+<tbody>
+<tr>
+  <td>首次咨询总时长</td>
+  <td>60 min</td>
+  <td>§7.1 [5]</td>
+  <td>六段式</td>
+</tr>
+<tr>
+  <td>破冰与知情同意</td>
+  <td>0–5 min</td>
+  <td>§7.1.1 [5]</td>
+  <td></td>
+</tr>
+<tr>
+  <td>目标设定与红线筛查</td>
+  <td>5–15 min</td>
+  <td>§7.1.2 [5]</td>
+  <td>红线筛查在详细问诊之前</td>
+</tr>
+<tr>
+  <td>评估数据采集</td>
+  <td>15–30 min</td>
+  <td>§7.1.3 [5]</td>
+  <td></td>
+</tr>
+<tr>
+  <td>方案框架讲解</td>
+  <td>30–45 min</td>
+  <td>§7.1.4 [5]</td>
+  <td>不输出完整方案</td>
+</tr>
+<tr>
+  <td>答疑与签约</td>
+  <td>45–55 min</td>
+  <td>§7.1.5 [5]</td>
+  <td></td>
+</tr>
+<tr>
+  <td>后续安排</td>
+  <td>55–60 min</td>
+  <td>§7.1.6 [5]</td>
+  <td></td>
+</tr>
+<tr>
+  <td>身高测量精度</td>
+  <td>连续2次差值 ≤ 0.5 cm取均值</td>
+  <td>§7.1.3 [9]</td>
+  <td>ISAK标准</td>
+</tr>
+<tr>
+  <td>体重测量精度</td>
+  <td>连续2次差值 ≤ 0.2 kg取均值</td>
+  <td>§7.1.3 [9]</td>
+  <td>ISAK标准</td>
+</tr>
+<tr>
+  <td>腰围定位</td>
+  <td>髂前上棘与第12肋中点</td>
+  <td>§7.1.3 [9]</td>
+  <td>ISAK标准</td>
+</tr>
+<tr>
+  <td>BIA变异系数</td>
+  <td>3%–8%</td>
+  <td>§7.1.3 [8]</td>
+  <td>水合状态影响</td>
+</tr>
+<tr>
+  <td>饮食记录布置</td>
+  <td>3日（2个训练日 + 1个休息日）</td>
+  <td>§7.1.3 [8]</td>
+  <td>拍照+称重</td>
+</tr>
+<tr>
+  <td>拍照称重培训</td>
+  <td>10 min</td>
+  <td>§7.1.3</td>
+  <td>首诊评估阶段</td>
+</tr>
+<tr>
+  <td>采集体重史</td>
+  <td>近12个月最高/最低/当前</td>
+  <td>§7.1.3</td>
+  <td></td>
+</tr>
+<tr>
+  <td>复评频率建议</td>
+  <td>每2–4周一次</td>
+  <td>§7.1.5 [5]</td>
+  <td>根据风险等级调整</td>
+</tr>
+<tr>
+  <td>蛋白需求方向性参考</td>
+  <td>1.6–2.2 g/kg/d</td>
+  <td>§7.1.4 [11]</td>
+  <td>方向性区间，需个体化</td>
+</tr>
+<tr>
+  <td>BCTTv1技术总数</td>
+  <td>93项，聚类为16组</td>
+  <td>§7.2.2 [12]</td>
+  <td>健身场景高频使用约20项</td>
+</tr>
+<tr>
+  <td>行为维持阶段进入时间</td>
+  <td>行为持续超过6个月</td>
+  <td>§7.2.3 [3]</td>
+  <td>TTM</td>
+</tr>
+</tbody>
+</table>
+        <div class="subsection-title">教练可执行建议</div>
+        <ol>
+            <li><strong>怎么执行首诊</strong>：60分钟六段式流程严格执行。红线筛查在详细问诊之前完成。首次咨询不输出完整饮食方案，等3日饮食记录收齐后第二次咨询给出。</li>
+            <li><strong>怎么做行为诊断</strong>：COM-B三格（能力/机会/动机）快速定位最大短板。对机会短板追加营养教育无法改变行为，需环境重构。对前意向阶段来访者派发行动计划属于阶段错配。</li>
+            <li><strong>怎么识别转介</strong>：七类高风险入口逐项核对。灰色地带三问SOP：Q1医学状态是否已由医师确认→Q2干预是否影响在用药→Q3目标在当前医学状态下是否安全。任一不满足即转介。SCOFF/PHQ-9/GAD-7是筛查工具不替代诊断。 ---</li>
+        </ol>
+    </section>
+
+    <section class="module-section">
+        <h2 class="module-title">
+            <span class="mod-tag">M8</span>
+            减脂方案专题
+        </h2>
+        <div class="subsection-title">实践参考数值</div>
+<table>
+<thead><tr>
+  <th>主题</th>
+  <th>实践参考值</th>
+  <th>教材来源</th>
+  <th>备注</th>
+</tr></thead>
+<tbody>
+<tr>
+  <td>大众减脂起始能量缺口</td>
+  <td>约10%–20% TEE 或约250–500 kcal/d</td>
+  <td>§8.1.1 [1][2][6][11]</td>
+  <td>参考起点，需个体化校准</td>
+</tr>
+<tr>
+  <td>500 kcal占TEE比例示例</td>
+  <td>占TEE 1800 kcal的28%，占TEE 3200 kcal的16%</td>
+  <td>§8.1.1</td>
+  <td>算术示例，非固定分级</td>
+</tr>
+<tr>
+  <td>TEE校准示例</td>
+  <td>TEE≈2400 kcal/d时，从约2000–2150 kcal/d起步</td>
+  <td>§8.1.1</td>
+  <td>参考起点</td>
+</tr>
+<tr>
+  <td>TEE估算误差</td>
+  <td>个体误差存在，不宜固定±15%–20%</td>
+  <td>§8.1.1 [9][10]</td>
+  <td>参考起点，需校准</td>
+</tr>
+<tr>
+  <td>组织能量密度</td>
+  <td>约7700 kcal/kg体重</td>
+  <td>§8.1.5 [24]</td>
+  <td>TEE校准用</td>
+</tr>
+<tr>
+  <td>TEE校准公式</td>
+  <td>实测日均赤字 = 实际减重(kg) × 7700 ÷ 天数；真实TEE ≈ 实际摄入 + 实测日均赤字</td>
+  <td>§8.1.5 [19]</td>
+  <td>仅用于4周尺度粗略校准</td>
+</tr>
+<tr>
+  <td>Helms蛋白范围（热量限制+抗阻训练）</td>
+  <td>2.3–3.1 g/kg FFM/d</td>
+  <td>§8.1.2 [4]</td>
+  <td>需求随赤字深度和体脂下降而上调</td>
+</tr>
+<tr>
+  <td>ISSN蛋白范围（等热量/微盈余）</td>
+  <td>1.6–2.2 g/kg/d</td>
+  <td>§8.1.2 [3]</td>
+  <td>主要基于非热量限制研究</td>
+</tr>
+<tr>
+  <td>Refalo 2026剂量-反应</td>
+  <td>β约0.07（95% HDI −0.01至0.14）</td>
+  <td>§8.1.2 [5]</td>
+  <td>探索性群体证据，非个人处方精确斜率</td>
+</tr>
+<tr>
+  <td>Longland RCT（高蛋白减脂）</td>
+  <td>2.4 g/kg/d组：4周瘦体重+1.2 kg、脂肪−4.8 kg；1.2 g/kg/d组：瘦体重+0.1 kg、脂肪−3.5 kg</td>
+  <td>§8.1.2 [14]</td>
+  <td>年轻超重男性，短期高强度受控方案，不可外推</td>
+</tr>
+<tr>
+  <td>蛋白分配参考</td>
+  <td>约0.3–0.4 g/kg/餐</td>
+  <td>§8.1.2 [15][16][17]</td>
+  <td>部分人群参考，非硬门槛</td>
+</tr>
+<tr>
+  <td>亮氨酸每餐参考</td>
+  <td>2.5–3.0 g不是所有人的硬门槛</td>
+  <td>§8.1.2 [15][16][17]</td>
+  <td>参考起点</td>
+</tr>
+<tr>
+  <td>餐次频率参考</td>
+  <td>4–5餐或每3小时一次不是所有人的硬门槛</td>
+  <td>§8.1.2 [15][16][17]</td>
+  <td>参考起点</td>
+</tr>
+<tr>
+  <td>FFM损失占总体重损失比例（Hall模型）</td>
+  <td>高体脂者约10%–15%，低体脂者约25%–35%</td>
+  <td>§8.1.3 [19]</td>
+  <td>模型假设</td>
+</tr>
+<tr>
+  <td>FFM损失对RMR影响</td>
+  <td>每损失1 kg FFM，RMR约下降20–30 kcal/d</td>
+  <td>§8.1.3 [19][20]</td>
+  <td></td>
+</tr>
+<tr>
+  <td>瘦素下降时间窗</td>
+  <td>能量缺口48–72 h内开始下降</td>
+  <td>§8.1.3 [7]</td>
+  <td></td>
+</tr>
+<tr>
+  <td>瘦素下降幅度</td>
+  <td>可达30%–50%</td>
+  <td>§8.1.3 [7]</td>
+  <td></td>
+</tr>
+<tr>
+  <td>Diet Break定义</td>
+  <td>提高至维持水平，持续1天至2周</td>
+  <td>§8.1.4 [7]</td>
+  <td></td>
+</tr>
+<tr>
+  <td>Poon等meta分析RMR差异</td>
+  <td>间歇休整组代偿性RMR下降平均少约47.31 kcal/d（95% CI 21.11–73.51）</td>
+  <td>§8.1.4 [23]</td>
+  <td>组间RMR变化差，非直接代谢收益</td>
+</tr>
+<tr>
+  <td>糖原负荷剂量（比赛场景）</td>
+  <td>8–12 g/kg</td>
+  <td>§8.1.4</td>
+  <td>仅比赛/极高耐力需求，不用于普通refeed</td>
+</tr>
+<tr>
+  <td>睡眠推荐</td>
+  <td>每晚7–9 h</td>
+  <td>§8.1.5 [25]</td>
+  <td></td>
+</tr>
+<tr>
+  <td>Tasali睡眠延长RCT</td>
+  <td>睡眠时间平均延长约1.2 h/晚，2周内能量摄入减少约270 kcal/d</td>
+  <td>§8.1.5 [25]</td>
+  <td>短期RCT，不可外推为通用热量差</td>
+</tr>
+<tr>
+  <td>习惯睡眠不足定义</td>
+  <td>通常 < 6.5 h/晚</td>
+  <td>§8.1.5 [25]</td>
+  <td></td>
+</tr>
+<tr>
+  <td>监测频率——晨起体重</td>
+  <td>每日</td>
+  <td>§8.1.5</td>
+  <td>7天滚动均值</td>
+</tr>
+<tr>
+  <td>监测频率——腰围</td>
+  <td>每2周</td>
+  <td>§8.1.5</td>
+  <td>精确到0.1 cm</td>
+</tr>
+<tr>
+  <td>监测频率——体成分</td>
+  <td>每4周</td>
+  <td>§8.1.5</td>
+  <td>同一设备同一条件</td>
+</tr>
+<tr>
+  <td>监测频率——力量表现</td>
+  <td>每1–2周</td>
+  <td>§8.1.5</td>
+  <td></td>
+</tr>
+<tr>
+  <td>监测频率——主观状态</td>
+  <td>每周（饥饿/精力/情绪1–10分）</td>
+  <td>§8.1.5</td>
+  <td></td>
+</tr>
+<tr>
+  <td>复评节点</td>
+  <td>W2简短随访→W4到店复评→W8复评→W12终评</td>
+  <td>§8.1.5 [1][2]</td>
+  <td></td>
+</tr>
+<tr>
+  <td>12周模板结构</td>
+  <td>W1–2建立基线→W3–8主阶段→W9–11微调→W12复评</td>
+  <td>§8.3.1</td>
+  <td></td>
+</tr>
+<tr>
+  <td>减脂持续上限参考</td>
+  <td>教练转化清单提及20–24周</td>
+  <td>教练转化清单</td>
+  <td>出现月经停止/持续力量下降/严重疲劳立即终止转介</td>
+</tr>
+<tr>
+  <td>蛋白靶值范围（教练转化清单）</td>
+  <td>1.6–2.7 g/kgBM/d</td>
+  <td>教练转化清单</td>
+  <td>按训练状态和体脂率分层，蛋白是刚性底线</td>
+</tr>
+</tbody>
+</table>
+        <div class="subsection-title">教练可执行建议</div>
+        <ol>
+            <li><strong>怎么设定赤字</strong>：大众减脂起始约250–500 kcal/d或10%–20% TEE，保守起步。体脂较低/体型较小/训练量较高→向低端靠拢；体脂较高/恢复良好→可选择更大起点。4周后用体重轨迹校准TEE（7700 kcal/kg法）。</li>
+            <li><strong>怎么设蛋白</strong>：减脂期蛋白是刚性底线。ISSN 1.6–2.2 g/kg/d（等热量证据）；Helms 2.3–3.1 g/kg FFM/d（热量限制+抗阻训练场景）。较高体脂/较大体重用FFM或较保守分母避免机械放大。每餐约0.3–0.4 g/kg作为分配参考。</li>
+            <li><strong>怎么管理平台期</strong>：先核查称重条件、摄入记录完整性、NEAT/步数趋势、训练恢复、睡眠、生理周期。排除以上因素后才考虑小幅调能量。Diet Break可作为依从性/恢复工具，不是代谢治疗。</li>
+            <li><strong>怎么恢复饮食</strong>：赛后采用Recovery Diet原则（立即回到维持热量），不执行Reverse Diet。预先解释糖原/体液/肠内容物造成的短期体重回升。保持蛋白和训练刺激，用数周趋势判断是否接近新维持状态。</li>
+            <li><strong>怎么识别红线</strong>：月经/生殖功能异常、反复晕厥或低血糖症状、疑似进食障碍、应力性骨损伤、持续显著疲劳或快速恶化→暂停加深缺口并转介。利尿剂是绝对红线。Peak Week脱水方案不得用于大众减脂。 # Day3 教练实践补丁（M9–M14） 从教材v2.1 Day3（M9–M14）中提取的所有可操作实践参考数值。标注来源章节，并说明数值性质。 ---</li>
+        </ol>
+    </section>
+
+    <section class="module-section">
+        <h2 class="module-title">
+            <span class="mod-tag">M9</span>
+            增肌方案专题
+        </h2>
+        <div class="subsection-title">实践参考数值</div>
+<table>
+<thead><tr>
+  <th>主题</th>
+  <th>实践参考值</th>
+  <th>教材来源</th>
+  <th>备注</th>
+</tr></thead>
+<tbody>
+<tr>
+  <td>增肌热量盈余起点</td>
+  <td>约5%–10% TEE；对普通健身客户常相当于约150–300 kcal/d</td>
+  <td>§9.0.3</td>
+  <td>参考起点，需个体化校准</td>
+</tr>
+<tr>
+  <td>热量校准执行周期</td>
+  <td>2–4周后评估趋势，再决定是否调整</td>
+  <td>§9.0.3</td>
+  <td>先复核摄入和训练刺激</td>
+</tr>
+<tr>
+  <td>热量校准示例</td>
+  <td>TEE约2800 kcal/d → 从2940–3080 kcal/d起步</td>
+  <td>§9.0.3</td>
+  <td>具体示例</td>
+</tr>
+<tr>
+  <td>全天蛋白总量锚点</td>
+  <td>1.6–2.2 g/kg BM/d</td>
+  <td>§9.2.1 表格</td>
+  <td>Morton 2018 + ISSN 2017</td>
+</tr>
+<tr>
+  <td>单餐蛋白分配参考</td>
+  <td>约0.4 g/kg/餐</td>
+  <td>§9.2.1–9.2.2</td>
+  <td>常用起点，不是必须跨过的亮氨酸/MPS开关</td>
+</tr>
+<tr>
+  <td>更高单餐摄入</td>
+  <td>0.55 g/kg不是已验证的单餐MPS上限</td>
+  <td>§9.2.2 表格</td>
+  <td>可按日总量和个体耐受安排</td>
+</tr>
+<tr>
+  <td>每日餐数</td>
+  <td>4–6餐/d</td>
+  <td>§9.2.2 表格</td>
+  <td>Iraki 2019</td>
+</tr>
+<tr>
+  <td>餐间隔</td>
+  <td>3–5 h</td>
+  <td>§9.2.2 表格</td>
+  <td>Iraki 2019；Areta 2013</td>
+</tr>
+<tr>
+  <td>训练后窗口</td>
+  <td>不是30 min硬窗口也不是固定≥4 h开关；取决于训前进食、日总量和下次进食安排</td>
+  <td>§9.2.2 表格</td>
+  <td>条件依赖的优化变量</td>
+</tr>
+<tr>
+  <td>体重监测频率</td>
+  <td>每日晨起空腹</td>
+  <td>§9.3.2 表格</td>
+  <td>取7天移动平均；单天波动±0.5 kg属正常</td>
+</tr>
+<tr>
+  <td>体脂率复测</td>
+  <td>W0/W4/W8/W12</td>
+  <td>§9.3.2 表格</td>
+  <td>皮褶卡尺7点法或4频BIA</td>
+</tr>
+<tr>
+  <td>围度复测</td>
+  <td>W0/W4/W8/W12</td>
+  <td>§9.3.2 表格</td>
+  <td>胸围、腰围、臂围、大腿围</td>
+</tr>
+<tr>
+  <td>主观恢复评分</td>
+  <td>W4/W8/W12，1–10分</td>
+  <td>§9.3.2 表格</td>
+  <td>恢复感下降提示盈余过大或睡眠不足</td>
+</tr>
+<tr>
+  <td>12周模板四阶段</td>
+  <td>适应期W1–W2、主增期W3–W8、微调期W9–W11、评估期W12</td>
+  <td>§9.4.2</td>
+  <td>教学节奏示例</td>
+</tr>
+<tr>
+  <td>W4/W8复评时长</td>
+  <td>60–90 min</td>
+  <td>§9.4.2</td>
+  <td>BCA复测+1RM+行为评估</td>
+</tr>
+<tr>
+  <td>W12终评时长</td>
+  <td>90–120 min</td>
+  <td>§9.4.2</td>
+  <td>对称W0首诊</td>
+</tr>
+<tr>
+  <td>W13–W16过渡期</td>
+  <td>维持期方案执行或mini-cut</td>
+  <td>§9.4.4</td>
+  <td>体重±1 kg区间监测</td>
+</tr>
+</tbody>
+</table>
+        <div class="subsection-title">教练可执行建议</div>
+        <ol>
+            <li><strong>怎么吃（增肌热量）</strong>：校准TEE后，从约5%–10% TEE（常见150–300 kcal/d）的保守盈余开始，2–4周后用体重趋势+腰围+训练表现校准</li>
+            <li><strong>怎么吃（蛋白）</strong>：先确保日总蛋白1.6–2.2 g/kg/d，再按约0.4 g/kg/餐分散到4–6餐，间隔3–5 h</li>
+            <li><strong>怎么练</strong>：维持并核查当前抗阻训练刺激是否足够且可恢复；周总量、强度、接近力竭与频率综合判断</li>
+            <li><strong>怎么识别（W4复评决策）</strong>：体重缓慢上升+训练改善+脂肪成本可接受→维持；数周无上升但训练仍进步→可小幅增能；腰围增长明显快于训练收益→小幅下调盈余</li>
+            <li><strong>碳水周期化条件</strong>：仅当训练计划稳定（每周训练日位置固定）且客户执行能力足够时才引入 ---</li>
+        </ol>
+    </section>
+
+    <section class="module-section">
+        <h2 class="module-title">
+            <span class="mod-tag">M10</span>
+            平台期诊断决策树
+        </h2>
+        <div class="subsection-title">实践参考数值</div>
+<table>
+<thead><tr>
+  <th>主题</th>
+  <th>实践参考值</th>
+  <th>教材来源</th>
+  <th>备注</th>
+</tr></thead>
+<tbody>
+<tr>
+  <td>体重测量标准化</td>
+  <td>晨起、空腹、排尿后、同衣物、同秤（五项条件）</td>
+  <td>§10.1.4</td>
+  <td>不满足则重新采集2周数据</td>
+</tr>
+<tr>
+  <td>水钠波动排除等待期</td>
+  <td>1–2周恢复正常饮食后再评估</td>
+  <td>§10.1.4</td>
+  <td>高盐/外食/经期后</td>
+</tr>
+<tr>
+  <td>隐藏热量：蛋黄酱</td>
+  <td>15 mL ≈ 90–100 kcal</td>
+  <td>§10.2.2</td>
+  <td>常见隐藏热量源</td>
+</tr>
+<tr>
+  <td>隐藏热量：花生酱</td>
+  <td>1汤匙 ≈ 95 kcal</td>
+  <td>§10.2.2</td>
+  <td></td>
+</tr>
+<tr>
+  <td>隐藏热量：油醋汁</td>
+  <td>30 mL ≈ 120–150 kcal</td>
+  <td>§10.2.2</td>
+  <td></td>
+</tr>
+<tr>
+  <td>隐藏热量：酱料累积</td>
+  <td>可达200–400 kcal/d</td>
+  <td>§10.2.2</td>
+  <td></td>
+</tr>
+<tr>
+  <td>隐藏热量：全糖拿铁</td>
+  <td>480 mL ≈ 250–300 kcal</td>
+  <td>§10.2.2</td>
+  <td></td>
+</tr>
+<tr>
+  <td>隐藏热量：啤酒</td>
+  <td>330 mL ≈ 140–150 kcal</td>
+  <td>§10.2.2</td>
+  <td></td>
+</tr>
+<tr>
+  <td>隐藏热量：零食累积</td>
+  <td>300–600 kcal/d（单次50–150 kcal，每日3–6次）</td>
+  <td>§10.2.2</td>
+  <td>遗漏率最高</td>
+</tr>
+<tr>
+  <td>隐藏热量：烹饪用油</td>
+  <td>15–30 mL ≈ 135–270 kcal</td>
+  <td>§10.2.2</td>
+  <td>中餐普遍偏高</td>
+</tr>
+<tr>
+  <td>隐藏热量：牛油果</td>
+  <td>100 g ≈ 160 kcal</td>
+  <td>§10.2.2</td>
+  <td></td>
+</tr>
+<tr>
+  <td>隐藏热量：混合坚果</td>
+  <td>30 g ≈ 170–200 kcal</td>
+  <td>§10.2.2</td>
+  <td></td>
+</tr>
+<tr>
+  <td>热量缺口被抵消示例</td>
+  <td>计划缺口300 kcal/d + 实际漏记300 kcal/d = 缺口归零</td>
+  <td>§10.2.1</td>
+  <td>解释模型，非诊断工具</td>
+</tr>
+<tr>
+  <td>NEAT步数教学示例</td>
+  <td>下降约2000步/日可作为"值得追问"的例子</td>
+  <td>§10.4.2</td>
+  <td>不是经验证的NEAT异常阈值</td>
+</tr>
+<tr>
+  <td>NEAT提升：步行目标</td>
+  <td>每日增加2000–4000步</td>
+  <td>§10.4.3</td>
+  <td>嵌入日常行为模式（通勤/午间/电话步行）</td>
+</tr>
+<tr>
+  <td>站立替代久坐</td>
+  <td>每60 min久坐起身活动3–5 min</td>
+  <td>§10.4.3</td>
+  <td>每小时至少一次姿态转换</td>
+</tr>
+<tr>
+  <td>Refeed常见起点</td>
+  <td>1–2个较高碳水/接近维持能量日</td>
+  <td>§10.5.1</td>
+  <td>可调整，不代表最优时长</td>
+</tr>
+<tr>
+  <td>Diet Break常见起点</td>
+  <td>约1–2周接近维持能量</td>
+  <td>§10.5.1</td>
+  <td>可调整，不代表最优时长</td>
+</tr>
+<tr>
+  <td>Diet Break的RMR差异</td>
+  <td>间歇休整组代偿性RMR下降平均少约47.31 kcal/d（组间差）</td>
+  <td>§10.5.1</td>
+  <td>Poon等更正；不等于直接"增加47 kcal代谢"</td>
+</tr>
+<tr>
+  <td>五路径排查优先级</td>
+  <td>前置假平台排除 → 路径一饮食精度 → 路径二训练变量 → 路径三NEAT → 可选策略Refeed/Diet Break</td>
+  <td>§10.5.4</td>
+  <td>四条排查路径均无法解释后才考虑热量调整</td>
+</tr>
+</tbody>
+</table>
+        <div class="subsection-title">教练可执行建议</div>
+        <ol>
+            <li><strong>平台期标准回应</strong>：先问"体重怎么称的"→再问"饮食记录完整吗"→最后看训练数据。禁止第一个反应是"砍热量"</li>
+            <li><strong>怎么识别（六类隐藏热量）</strong>：酱料、饮品、零食、烹饪油、"健康食物"、周末/外食——复评时逐项询问</li>
+            <li><strong>NEAT基线建立</strong>：W0时要求佩戴智能手表连续7天记录日均步数；复评时对比当前步数与基线</li>
+            <li><strong>怎么识别（Refeed vs Diet Break选择）</strong>：短期支持关键训练→较短refeed；持续饮食疲劳→更完整Diet Break ---</li>
+        </ol>
+    </section>
+
+    <section class="module-section">
+        <h2 class="module-title">
+            <span class="mod-tag">M11</span>
+            RED-S 识别与转介
+        </h2>
+        <div class="subsection-title">实践参考数值</div>
+<table>
+<thead><tr>
+  <th>主题</th>
+  <th>实践参考值</th>
+  <th>教材来源</th>
+  <th>备注</th>
+</tr></thead>
+<tbody>
+<tr>
+  <td>EA计算公式</td>
+  <td>EA = (EI − ExEE) / FFM (kg)，单位 kcal·kg FFM⁻¹·d⁻¹</td>
+  <td>§11.1.1</td>
+  <td>Loucks团队定义</td>
+</tr>
+<tr>
+  <td>EA历史研究参照：充足</td>
+  <td>约45或更高</td>
+  <td>§11.1.1 表格</td>
+  <td>参考值，不是所有人的固定治疗目标</td>
+</tr>
+<tr>
+  <td>EA历史研究参照：中间</td>
+  <td>约30–45</td>
+  <td>§11.1.1 表格</td>
+  <td>个体差异大，需结合暴露时间、症状和功能结局</td>
+</tr>
+<tr>
+  <td>EA历史研究参照：高风险</td>
+  <td><30</td>
+  <td>§11.1.1 表格</td>
+  <td>部分受控研究可见不利生理变化</td>
+</tr>
+<tr>
+  <td>T3下降幅度</td>
+  <td>LEA早期可下降15%–25%</td>
+  <td>§11.1.2</td>
+  <td>HPT轴变化</td>
+</tr>
+<tr>
+  <td>心动过缓临床范围</td>
+  <td>白天清醒静息心率低于50次/分；偶可低于40次/分</td>
+  <td>§11.1.4</td>
+  <td>LEA心血管信号</td>
+</tr>
+<tr>
+  <td>月经异常信号</td>
+  <td>周期延长超过35天、缩短至21天以下或完全停经</td>
+  <td>§11.3.1</td>
+  <td>教练可观察</td>
+</tr>
+<tr>
+  <td>信号累积评估频率</td>
+  <td>每4周评估一次</td>
+  <td>§11.3 教练转化清单</td>
+  <td>两项或以上信号同时出现需关注</td>
+</tr>
+<tr>
+  <td>女性月经周期参考</td>
+  <td>正常周期21–35天</td>
+  <td>§11.3.1</td>
+  <td>偏离即需关注</td>
+</tr>
+</tbody>
+</table>
+        <div class="subsection-title">教练可执行建议</div>
+        <ol>
+            <li><strong>怎么识别（每课观察）</strong>：记录疲劳感异常升高、反复应力性损伤、强迫性称重行为、女性月经偏离基线、男性晨勃减少</li>
+            <li><strong>怎么识别（红色信号触发即转介）</strong>：明显低体重/快速减重伴能量不足→运动医学；持续闭经→妇科/内分泌；催吐/泻药滥用→进食障碍团队；骨应力损伤→运动医学；晕厥/症状性心动过缓→急诊</li>
+            <li><strong>转介话术四步</strong>：①陈述观察→②表达关切+建议转介→③明确教练角色边界→④提供具体支持（整理训练记录/饮食日志）</li>
+            <li><strong>执业边界</strong>：不诊断、不判读生化报告、不制定能量恢复方案、不替代进食障碍干预、不推荐"修复代谢"补剂 ---</li>
+        </ol>
+    </section>
+
+    <section class="module-section">
+        <h2 class="module-title">
+            <span class="mod-tag">M12</span>
+            Body Recomposition 专题
+        </h2>
+        <div class="subsection-title">实践参考数值</div>
+<table>
+<thead><tr>
+  <th>主题</th>
+  <th>实践参考值</th>
+  <th>教材来源</th>
+  <th>备注</th>
+</tr></thead>
+<tbody>
+<tr>
+  <td>BR热量起点</td>
+  <td>接近维持到约10%以内的轻度缺口</td>
+  <td>§12.3.1</td>
+  <td>实务试验区间，非BR"有效区间"</td>
+</tr>
+<tr>
+  <td>热量计算例</td>
+  <td>TEE约2500 kcal/d → 可在约2250–2500 kcal/d之间选起点</td>
+  <td>§12.3.1</td>
+  <td>按目标优先级选择</td>
+</tr>
+<tr>
+  <td>12周BR三阶段</td>
+  <td>基线建立W1–W4、执行调整W5–W8、巩固W9–W12</td>
+  <td>§12.6.1</td>
+  <td>教学示例</td>
+</tr>
+<tr>
+  <td>蛋白分配参考</td>
+  <td>约0.4 g/kg/餐</td>
+  <td>§12.4.3</td>
+  <td>沿用M9原则</td>
+</tr>
+<tr>
+  <td>周训练量参考</td>
+  <td>10–20 sets可作部分训练者参考</td>
+  <td>§12.5.2 表格</td>
+  <td>不是BR硬阈值</td>
+</tr>
+<tr>
+  <td>蛋白计算分母</td>
+  <td>体脂较高时可考虑FFM/LBM或保守体重分母</td>
+  <td>§12.4.3</td>
+  <td>不用固定体脂百分比决定</td>
+</tr>
+<tr>
+  <td>1 kg脂肪组织能量</td>
+  <td>约7700 kcal</td>
+  <td>§12.1.1</td>
+  <td>能量守恒参考</td>
+</tr>
+<tr>
+  <td>BR适用人群（方向性参考）</td>
+  <td>训练新手、停训回归者、较高体脂/未训练人群更易观察明显BR</td>
+  <td>§12.2.1</td>
+  <td>不是排他性入组标准</td>
+</tr>
+</tbody>
+</table>
+        <div class="subsection-title">教练可执行建议</div>
+        <ol>
+            <li><strong>怎么识别（BR适合谁）</strong>：按训练史（连续解释不设硬cut-off）+初始体成分+停训/复训史+目标优先级四维度评估</li>
+            <li><strong>怎么吃（BR热量）</strong>：估计TEE后，从维持附近到约10%轻度缺口之间选择起点，数周后按腰围/训练表现趋势校准</li>
+            <li><strong>怎么识别（W4复评决策）</strong>：训练改善+脂肪稳定→维持；脂肪下降但力量不理想→核查缺口/蛋白/训练刺激；多项无变化→共享决策是否继续或改路径</li>
+            <li><strong>结果预期管理</strong>：不承诺固定12周LBM或体脂变化，用个体趋势与测量误差解释 ---</li>
+        </ol>
+    </section>
+
+    <section class="module-section">
+        <h2 class="module-title">
+            <span class="mod-tag">M13</span>
+            循证判断方法论与案例考核演练
+        </h2>
+        <div class="subsection-title">实践参考数值</div>
+<table>
+<thead><tr>
+  <th>主题</th>
+  <th>实践参考值</th>
+  <th>教材来源</th>
+  <th>备注</th>
+</tr></thead>
+<tbody>
+<tr>
+  <td>快速评估五问清单</td>
+  <td>①信息源层级 ②设计是否匹配问题 ③样本量与效应量 ④利益冲突 ⑤可推广性</td>
+  <td>§13.2.2</td>
+  <td>教练场景快速分诊工具</td>
+</tr>
+<tr>
+  <td>争议话题四层分析</td>
+  <td>①整体图谱→②方法学批判→③适用边界→④全量结论</td>
+  <td>§13.3</td>
+  <td>禁单篇定性</td>
+</tr>
+<tr>
+  <td>16:8 TRF+RT结论</td>
+  <td>短中期群体平均瘦体重/力量常与对照相近，但研究有限</td>
+  <td>§13.3案例1</td>
+  <td>蛋白和训练是重要调节变量</td>
+</tr>
+<tr>
+  <td>补剂评估红旗</td>
+  <td>proprietary blend不公开剂量=规避剂量核查</td>
+  <td>§13.3案例2</td>
+  <td>无法判断有效成分是否达到研究剂量</td>
+</tr>
+<tr>
+  <td>皮质醇-脂肪叙事</td>
+  <td>病理性糖皮质激素过量≠日常压力生理波动（量级错误）</td>
+  <td>§13.3案例3</td>
+  <td>多通道机制，非单一因果</td>
+</tr>
+<tr>
+  <td>回应话术结构</td>
+  <td>"目前证据表明……但存在以下局限……"</td>
+  <td>§13.4</td>
+  <td>替代"研究证明了……"的绝对化表述</td>
+</tr>
+</tbody>
+</table>
+        <div class="subsection-title">教练可执行建议</div>
+        <ol>
+            <li><strong>怎么识别（面对声称）</strong>：把举证责任交还声称方，不需要自己去证伪；问"证据来源是什么？证据等级如何？"</li>
+            <li><strong>怎么识别（操纵手法）</strong>：产业资助偏倚、proprietary blend规避剂量核查、预印本冒充同行评审、动物实验直接外推人体</li>
+            <li><strong>四层分析法</strong>：任何争议话题必须走完四层再下结论，禁单篇定性 ---</li>
+        </ol>
+    </section>
+
+    <section class="module-section">
+        <h2 class="module-title">
+            <span class="mod-tag">M14</span>
+            特殊人群营养干预
+        </h2>
+        <div class="subsection-title">实践参考数值</div>
+<table>
+<thead><tr>
+  <th>主题</th>
+  <th>实践参考值</th>
+  <th>教材来源</th>
+  <th>备注</th>
+</tr></thead>
+<tbody>
+<tr>
+  <td><strong>高血压</strong></td>
+  <td></td>
+  <td></td>
+  <td></td>
+</tr>
+<tr>
+  <td>ACC/AHA高血压定义</td>
+  <td>SBP≥130或DBP≥80 mmHg（1期130–139/80–89；2期≥140/90）</td>
+  <td>§14.1.1</td>
+  <td>ACC/AHA 2017</td>
+</tr>
+<tr>
+  <td>ESC"血压升高"分类</td>
+  <td>SBP 120–139或DBP 70–89 mmHg</td>
+  <td>§14.1.1</td>
+  <td>ESC 2024</td>
+</tr>
+<tr>
+  <td>ESC降压目标</td>
+  <td>SBP 120–129 mmHg</td>
+  <td>§14.1.1</td>
+  <td>ESC 2024</td>
+</tr>
+<tr>
+  <td>DASH降压幅度</td>
+  <td>SBP约−3.2 mmHg、DBP约−2.5 mmHg</td>
+  <td>§14.1.1</td>
+  <td>Filippou 2020 meta分析，30项RCT</td>
+</tr>
+<tr>
+  <td>限钠降压（总体）</td>
+  <td>减盐约4.4 g/d → SBP/DBP约−4.18/−2.06 mmHg</td>
+  <td>§14.1.1</td>
+  <td>He 2013 BMJ</td>
+</tr>
+<tr>
+  <td>限钠降压（高血压亚组）</td>
+  <td>SBP/DBP约−5.39/−2.82 mmHg</td>
+  <td>§14.1.1</td>
+  <td>He 2013 高血压亚组</td>
+</tr>
+<tr>
+  <td>限钠目标</td>
+  <td>2000 mg/d（1期高血压+钠摄入偏高者）</td>
+  <td>§14.1.1</td>
+  <td>参考起点，需结合用药</td>
+</tr>
+<tr>
+  <td>耐力训练降压</td>
+  <td>SBP/DBP −8.3/−5.2 mmHg</td>
+  <td>§14.1.1</td>
+  <td>Cornelissen 2013</td>
+</tr>
+<tr>
+  <td>动态抗阻降压</td>
+  <td>SBP/DBP −3.0/−2.1 mmHg</td>
+  <td>§14.1.1</td>
+  <td>Cornelissen 2013</td>
+</tr>
+<tr>
+  <td>等长抗阻降压</td>
+  <td>SBP/DBP −10.0/−6.2 mmHg</td>
+  <td>§14.1.1</td>
+  <td>Cornelissen 2013</td>
+</tr>
+<tr>
+  <td><strong>血脂异常</strong></td>
+  <td></td>
+  <td></td>
+  <td></td>
+</tr>
+<tr>
+  <td>LDL-C极高危目标</td>
+  <td><1.4 mmol/L</td>
+  <td>§14.1.2</td>
+  <td>ESC/EAS 2019</td>
+</tr>
+<tr>
+  <td>LDL-C高危目标</td>
+  <td><1.8 mmol/L</td>
+  <td>§14.1.2</td>
+  <td>ESC/EAS 2019</td>
+</tr>
+<tr>
+  <td>LDL-C中危目标</td>
+  <td><2.6 mmol/L</td>
+  <td>§14.1.2</td>
+  <td>ESC/EAS 2019</td>
+</tr>
+<tr>
+  <td>饱和脂肪限制</td>
+  <td><10%总能量</td>
+  <td>§14.1.2</td>
+  <td>多指南一致</td>
+</tr>
+<tr>
+  <td>反式脂肪</td>
+  <td>趋零</td>
+  <td>§14.1.2</td>
+  <td>多指南一致</td>
+</tr>
+<tr>
+  <td>低GI/GL降HbA1c</td>
+  <td>约−0.31个百分点（群体平均）</td>
+  <td>§14.1.2</td>
+  <td>Chiavaroli 2021 BMJ</td>
+</tr>
+<tr>
+  <td><strong>高血糖/T2DM</strong></td>
+  <td></td>
+  <td></td>
+  <td></td>
+</tr>
+<tr>
+  <td>运动提升胰岛素敏感性</td>
+  <td>单次运动可持续24–72 h</td>
+  <td>§14.1.3</td>
+  <td>ADA 2026</td>
+</tr>
+<tr>
+  <td>最佳血糖效应运动</td>
+  <td>中等强度有氧30–45 min后最显著</td>
+  <td>§14.1.3</td>
+  <td></td>
+</tr>
+<tr>
+  <td>二甲双胍+B12风险</td>
+  <td>长期使用（≥4年）与B12下降相关</td>
+  <td>§14.1.3</td>
+  <td>ADA 2026建议定期监测</td>
+</tr>
+<tr>
+  <td><strong>代谢综合征</strong></td>
+  <td></td>
+  <td></td>
+  <td></td>
+</tr>
+<tr>
+  <td>诊断标准</td>
+  <td>5项中≥3项</td>
+  <td>§14.1.4</td>
+  <td>2009 harmonized criteria</td>
+</tr>
+<tr>
+  <td>代谢综合征指标</td>
+  <td>TG≥1.7 mmol/L；HDL-C男<1.0/女<1.3；BP≥130/85；空腹血糖≥5.6</td>
+  <td>§14.1.4</td>
+  <td>教练不自行诊断</td>
+</tr>
+<tr>
+  <td>减重与血压</td>
+  <td>平均净减重约5.1 kg → SBP约−4.44/DBP约−3.57</td>
+  <td>§14.1.4</td>
+  <td>Neter 2003</td>
+</tr>
+<tr>
+  <td><strong>50+训练者</strong></td>
+  <td></td>
+  <td></td>
+  <td></td>
+</tr>
+<tr>
+  <td>健康老年人蛋白建议</td>
+  <td>约1.0–1.2 g/kg/d</td>
+  <td>§14.2.2</td>
+  <td>PROT-AGE；参考起点</td>
+</tr>
+<tr>
+  <td>单餐高质量蛋白参考</td>
+  <td>约25–40 g</td>
+  <td>§14.2.1</td>
+  <td>部分研究/共识人群参考</td>
+</tr>
+<tr>
+  <td>老年MPS剂量-反应</td>
+  <td>年轻约0.24 g/kg vs 老年约0.40 g/kg</td>
+  <td>§14.2.1</td>
+  <td>Moore 2015特定实验条件</td>
+</tr>
+<tr>
+  <td>蛋白范围（综合参考）</td>
+  <td>1.0–1.6 g/kg/d</td>
+  <td>§14.2 章末小结</td>
+  <td>不同健康/训练情境参考</td>
+</tr>
+<tr>
+  <td><strong>更年期/绝经后女性</strong></td>
+  <td></td>
+  <td></td>
+  <td></td>
+</tr>
+<tr>
+  <td>减脂蛋白</td>
+  <td>可根据缺口和训练提高，不设统一1.6–2.0 g/kg/d</td>
+  <td>§14.3.2</td>
+  <td>个体化</td>
+</tr>
+<tr>
+  <td>能量缺口</td>
+  <td>不设1200 kcal/d或300–500 kcal/d统一安全线</td>
+  <td>§14.3.2–14.3.3</td>
+  <td>保守起点+趋势校准</td>
+</tr>
+</tbody>
+</table>
+        <div class="subsection-title">教练可执行建议</div>
+        <ol>
+            <li><strong>怎么识别（三高首诊）</strong>：优先了解已知诊断、症状、当前用药、已有医疗指标和腰围/体重趋势</li>
+            <li><strong>怎么吃（DASH模式）</strong>：富水果/蔬菜/全谷物/低脂乳/坚果，限饱和脂肪（<10%总能量）、钠和含糖饮料</li>
+            <li><strong>怎么练（β阻滞剂客户）</strong>：心率反应被改变，更多依赖RPE/症状评估强度</li>
+            <li><strong>怎么吃（50+蛋白）</strong>：先确保日总量充足（1.0–1.6 g/kg/d视情境），每餐25–40 g高质量蛋白可作参考，重视抗阻训练协同</li>
+            <li><strong>怎么识别（更年期女性）</strong>：同时关注体脂分布+肌肉+骨健康+症状管理；BR可选但非默认优先方案</li>
+            <li><strong>执业红线</strong>：不诊断、不调药、不替代MNT；急性症状走医疗路径 --- ## 跨模块通用参考值速查 | 参数 | 数值 | 适用模块 | 性质 | |------|------|---------|------| | 全天蛋白总量 | 1.6–2.2 g/kg/d | M9/M12 | Morton 2018 + ISSN 2017；参考起点 | | 单餐蛋白分配 | 约0.4 g/kg/餐 | M9/M12/M14 | 常用参考，非MPS硬阈值 | | 餐数/间隔 | 4–6餐/d，间隔3–5 h | M9 | Iraki 2019 | | 50+蛋白范围 | 1.0–1.6 g/kg/d | M14 | PROT-AGE + 训练情境 | | 50+单餐蛋白 | 约25–40 g | M14 | 参考范围 | | 周训练量参考 | 10–20 sets/肌群 | M9/M12 | 部分训练者参考，非硬阈值 | | 体重测量标准化 | 晨起空腹排尿后同衣物同秤 | M9/M10 | 五项条件 | | 7天移动平均体重 | 单天波动±0.5 kg属正常 | M9 | 信噪比管理 | | BCA复测节奏 | W0/W4/W8/W12 | M9/M12 | 教学示例节点 | | 保守盈余起点 | 5%–10% TEE（约150–300 kcal/d） | M9 | 需趋势校准 | | BR热量区间 | 维持至约10%轻度缺口 | M12 | 实务试验区间 | | NEAT步行提升 | +2000–4000步/d | M10 | 嵌入日常模式 | | Refeed | 1–2日高碳/接近维持 | M10 | 可选工具 | | Diet Break | 约1–2周接近维持 | M10 | 可选工具 | | DASH降压 | SBP约−3.2/DBP约−2.5 mmHg | M14 | Filippou 2020 | | 限钠降压（高血压亚组） | SBP约−5.39/DBP约−2.82 | M14 | He 2013 | | 代谢综合征诊断 | 5项≥3项 | M14 | 教练不自行诊断 | | LDL-C极高危目标 | <1.4 mmol/L | M14 | ESC/EAS 2019；临床目标 | | 运动降压（耐力） | SBP/DBP −8.3/−5.2 mmHg | M14 | Cornelissen 2013 | | 运动降压（等长抗阻） | SBP/DBP −10.0/−6.2 mmHg | M14 | Cornelissen 2013 | | 运动降压（动态抗阻） | SBP/DBP −3.0/−2.1 mmHg | M14 | Cornelissen 2013 | | EA历史参照水平 | ≥45充足/30–45中间/<30高风险 | M11 | IOC 2023不以单一EA切点诊断 | | 12周增肌模板 | 适应W1–2→主增W3–8→微调W9–11→评估W12 | M9 | 教学节奏示例 | | 12周BR模板 | 基线W1–4→执行W5–8→巩固W9–12 | M12 | 教学节奏示例 |</li>
+        </ol>
+    </section>
+
+    <div class="note">
+        注：本补丁提取的是教材中所有可操作的实践参考数值。教材v2.1在多数数值处明确声明"不宜写成固定值""参考起点，需个体化校准"。教练内训时应同时理解每个数值的适用条件和否定值（教材明确否定的固定处方），避免将参考起点误用为硬阈值。
+    </div>
+
+    <div class="speed-ref">
+        <h2>跨模块高频数值速查表</h2>
+
+        <h3 style="font-family:'Noto Sans SC',sans-serif;font-size:0.95rem;color:var(--text-primary);margin:1.2rem 0 0.5rem;">Day 1（M1–M4）</h3>
+        <table>
+        <thead><tr><th>数值</th><th>出现模块</th><th>性质</th></tr></thead>
+        <tbody>
+        <tr><td>1.6–2.2 g/kg/d</td><td>M1/M2/M3/M4</td><td>日总蛋白实践参考区间</td></tr>
+        <tr><td>~1.62 g/kg/d</td><td>M1/M2/M3/M4</td><td>Morton 2018群体估计点</td></tr>
+        <tr><td>~0.4 g/kg/餐</td><td>M1/M2/M3/M4</td><td>单餐蛋白分配参考</td></tr>
+        <tr><td>2.0–2.4 g/kg/d</td><td>M2/M3</td><td>减脂期蛋白上调范围</td></tr>
+        <tr><td>24–48 h</td><td>M2</td><td>MPS升高持续时间</td></tr>
+        <tr><td>1.0–1.2 g/kg/h × 4h</td><td>M2</td><td>快速糖原恢复（一日两练）</td></tr>
+        <tr><td>体重差值 × 1.2–1.5</td><td>M2</td><td>训练后补液</td></tr>
+        <tr><td>250–500 kcal/d</td><td>M3</td><td>减脂缺口参考起点</td></tr>
+        <tr><td>150–300 kcal/d</td><td>M3</td><td>增肌盈余参考起点</td></tr>
+        <tr><td>20%–35%总能量</td><td>M3</td><td>脂肪比例参考起点</td></tr>
+        <tr><td>1–3 g/d EPA+DHA</td><td>M3</td><td>Omega-3参考剂量</td></tr>
+        <tr><td>3–4天饮食记录</td><td>M4</td><td>蛋白均值估计所需天数</td></tr>
+        <tr><td>低估19%</td><td>M4</td><td>饮食能量低报平均幅度</td></tr>
+        <tr><td>2%–5%体脂率波动</td><td>M4</td><td>BIA水合状态影响范围</td></tr>
+        </tbody>
+        </table>
+
+        <h3 style="font-family:'Noto Sans SC',sans-serif;font-size:0.95rem;color:var(--text-primary);margin:1.5rem 0 0.5rem;">Day 3（M9–M14）跨模块通用参考值</h3>
+        <table>
+        <thead><tr><th>参数</th><th>数值</th><th>适用模块</th><th>性质</th></tr></thead>
+        <tbody>
+        <tr><td>全天蛋白总量</td><td>1.6–2.2 g/kg/d</td><td>M9/M12</td><td>Morton 2018 + ISSN 2017；参考起点</td></tr>
+        <tr><td>单餐蛋白分配</td><td>约0.4 g/kg/餐</td><td>M9/M12/M14</td><td>常用参考，非MPS硬阈值</td></tr>
+        <tr><td>餐数/间隔</td><td>4–6餐/d，间隔3–5 h</td><td>M9</td><td>Iraki 2019</td></tr>
+        <tr><td>50+蛋白范围</td><td>1.0–1.6 g/kg/d</td><td>M14</td><td>PROT-AGE + 训练情境</td></tr>
+        <tr><td>50+单餐蛋白</td><td>约25–40 g</td><td>M14</td><td>参考范围</td></tr>
+        <tr><td>周训练量参考</td><td>10–20 sets/肌群</td><td>M9/M12</td><td>部分训练者参考，非硬阈值</td></tr>
+        <tr><td>体重测量标准化</td><td>晨起空腹排尿后同衣物同秤</td><td>M9/M10</td><td>五项条件</td></tr>
+        <tr><td>7天移动平均体重</td><td>单天波动±0.5 kg属正常</td><td>M9</td><td>信噪比管理</td></tr>
+        <tr><td>BCA复测节奏</td><td>W0/W4/W8/W12</td><td>M9/M12</td><td>教学示例节点</td></tr>
+        <tr><td>保守盈余起点</td><td>5%–10% TEE（约150–300 kcal/d）</td><td>M9</td><td>需趋势校准</td></tr>
+        <tr><td>BR热量区间</td><td>维持至约10%轻度缺口</td><td>M12</td><td>实务试验区间</td></tr>
+        <tr><td>NEAT步行提升</td><td>+2000–4000步/d</td><td>M10</td><td>嵌入日常模式</td></tr>
+        <tr><td>Refeed</td><td>1–2日高碳/接近维持</td><td>M10</td><td>可选工具</td></tr>
+        <tr><td>Diet Break</td><td>约1–2周接近维持</td><td>M10</td><td>可选工具</td></tr>
+        <tr><td>DASH降压</td><td>SBP约−3.2/DBP约−2.5 mmHg</td><td>M14</td><td>Filippou 2020</td></tr>
+        <tr><td>限钠降压（高血压亚组）</td><td>SBP约−5.39/DBP约−2.82</td><td>M14</td><td>He 2013</td></tr>
+        <tr><td>代谢综合征诊断</td><td>5项≥3项</td><td>M14</td><td>教练不自行诊断</td></tr>
+        <tr><td>LDL-C极高危目标</td><td><1.4 mmol/L</td><td>M14</td><td>ESC/EAS 2019；临床目标</td></tr>
+        <tr><td>运动降压（耐力）</td><td>SBP/DBP −8.3/−5.2 mmHg</td><td>M14</td><td>Cornelissen 2013</td></tr>
+        <tr><td>运动降压（等长抗阻）</td><td>SBP/DBP −10.0/−6.2 mmHg</td><td>M14</td><td>Cornelissen 2013</td></tr>
+        <tr><td>运动降压（动态抗阻）</td><td>SBP/DBP −3.0/−2.1 mmHg</td><td>M14</td><td>Cornelissen 2013</td></tr>
+        <tr><td>EA历史参照水平</td><td>≥45充足/30–45中间/<30高风险</td><td>M11</td><td>IOC 2023不以单一EA切点诊断</td></tr>
+        <tr><td>12周增肌模板</td><td>适应W1–2→主增W3–8→微调W9–11→评估W12</td><td>M9</td><td>教学节奏示例</td></tr>
+        <tr><td>12周BR模板</td><td>基线W1–4→执行W5–8→巩固W9–12</td><td>M12</td><td>教学节奏示例</td></tr>
+        </tbody>
+        </table>
+
+    </div>
+
+    <div class="page-footer">
+        Arise · 加伍磅三天营养课 · 教练实践补丁（M1–M14）
+    </div>
+</div>
+</body>
+</html>
