@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>加伍磅·三天营养课 — 知识树考试</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg-dark:#0a1628;--bg-mid:#1a2a4a;
+  --trunk:#5a3a1a;--trunk-light:#7a5a3a;--branch:#6a4a2a;
+  --blue:#4A90D9;--green:#5CB85C;--purple:#9B59B6;--orange:#F0AD4E;--red:#D9534F;
+  --gold:#FFD700;--glow-correct:#2ecc71;--glow-wrong:#e74c3c;
+  --text:#e8e8e8;--text-dim:#8899aa;--panel-bg:rgba(15,25,45,0.96);
+  --card-bg:rgba(25,40,65,0.9);--border:rgba(100,140,200,0.2);
+}
+html,body{height:100%;font-family:'Segoe UI','PingFang SC','Microsoft YaHei',sans-serif;background:var(--bg-dark);color:var(--text);overflow-x:hidden}
+body{display:flex;flex-direction:column;min-height:100vh}
+.header{background:linear-gradient(135deg,rgba(10,22,40,0.95),rgba(20,40,70,0.95));padding:16px 24px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--border);position:sticky;top:0;z-index:100;backdrop-filter:blur(10px)}
+.header h1{font-size:1.3em;font-weight:600;background:linear-gradient(135deg,var(--gold),#ffaa00);-webkit-background-clip:text;-webkit-text-fill-color:transparent;letter-spacing:1px}
+.header-stats{display:flex;gap:20px;align-items:center}
+.stat-item{display:flex;flex-direction:column;align-items:center;gap:2px}
+.stat-value{font-size:1.4em;font-weight:700;color:var(--gold)}
+.stat-label{font-size:.75em;color:var(--text-dim);text-transform:uppercase;letter-spacing:1px}
+.tree-container{flex:1;display:flex;justify-content:center;align-items:center;padding:20px;position:relative;overflow:hidden}
+.tree-bg{position:absolute;inset:0;background:linear-gradient(180deg,#0d1f3c 0%,#162d4a 30%,#1a3a3a 60%,#1a2e1a 85%,#0f1f0f 100%)}
+.tree-bg::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 20%,rgba(100,180,255,0.05) 0%,transparent 60%)}
+.tree-svg{position:relative;z-index:1;max-width:100%;max-height:calc(100vh - 160px)}
+.stars{position:absolute;inset:0;overflow:hidden;pointer-events:none}
+.star{position:absolute;width:2px;height:2px;background:#fff;border-radius:50%;animation:twinkle 3s infinite}
+@keyframes twinkle{0%,100%{opacity:.2}50%{opacity:.8}}
+.module-node{cursor:pointer;transition:all .3s ease}
+.module-node:hover .node-circle{filter:brightness(1.3) drop-shadow(0 0 8px currentColor)}
+.node-circle{transition:all .3s ease}
+.node-label{font-size:11px;fill:var(--text-dim);text-anchor:middle;pointer-events:none;font-weight:500}
+.node-id{font-size:14px;fill:#fff;text-anchor:middle;pointer-events:none;font-weight:700}
+.node-name{font-size:10px;fill:var(--text-dim);text-anchor:middle;pointer-events:none}
+.node-inactive{opacity:.45;filter:grayscale(0.5)}
+.node-partial{opacity:.8}
+.node-complete{animation:glow 2s ease-in-out infinite alternate}
+@keyframes glow{from{filter:drop-shadow(0 0 4px currentColor)}to{filter:drop-shadow(0 0 14px currentColor)}}
+.progress-ring{transition:stroke-dashoffset .5s ease}
+.bottom-bar{background:linear-gradient(135deg,rgba(10,22,40,0.95),rgba(20,40,70,0.95));padding:12px 24px;display:flex;justify-content:center;gap:16px;border-top:1px solid var(--border);position:sticky;bottom:0;z-index:100}
+.btn{padding:10px 24px;border:none;border-radius:8px;font-size:.9em;font-weight:600;cursor:pointer;transition:all .2s;letter-spacing:.5px}
+.btn-primary{background:linear-gradient(135deg,var(--gold),#e6a800);color:#1a1a1a}
+.btn-primary:hover{transform:translateY(-1px);box-shadow:0 4px 15px rgba(255,215,0,.3)}
+.btn-primary:disabled{opacity:.4;cursor:not-allowed;transform:none;box-shadow:none}
+.btn-secondary{background:rgba(100,140,200,.15);color:var(--text);border:1px solid var(--border)}
+.btn-secondary:hover{background:rgba(100,140,200,.25)}
+.btn-danger{background:rgba(231,76,60,.15);color:#e74c3c;border:1px solid rgba(231,76,60,.3)}
+.btn-danger:hover{background:rgba(231,76,60,.25)}
+.panel-overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:200;opacity:0;pointer-events:none;transition:opacity .3s}
+.panel-overlay.active{opacity:1;pointer-events:all}
+.quiz-panel{position:fixed;top:0;right:-500px;width:480px;max-width:92vw;height:100vh;background:var(--panel-bg);z-index:201;transition:right .35s cubic-bezier(.4,0,.2,1);display:flex;flex-direction:column;border-left:1px solid var(--border);backdrop-filter:blur(20px)}
+.quiz-panel.active{right:0}
+.panel-header{padding:20px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center}
+.panel-title{font-size:1.05em;font-weight:600}
+.panel-close{background:none;border:none;color:var(--text-dim);font-size:1.5em;cursor:pointer;padding:4px 8px;border-radius:4px;line-height:1}
+.panel-close:hover{color:var(--text);background:rgba(255,255,255,.1)}
+.panel-progress{padding:12px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:12px}
+.progress-bar{flex:1;height:6px;background:rgba(255,255,255,.1);border-radius:3px;overflow:hidden}
+.progress-fill{height:100%;border-radius:3px;transition:width .3s;background:linear-gradient(90deg,var(--gold),#ffaa00)}
+.progress-text{font-size:.8em;color:var(--text-dim);white-space:nowrap}
+.question-area{flex:1;overflow-y:auto;padding:20px}
+.question-text{font-size:.95em;line-height:1.7;margin-bottom:20px;color:var(--text)}
+.question-type-badge{display:inline-block;padding:2px 8px;border-radius:4px;font-size:.7em;margin-bottom:10px;font-weight:600;letter-spacing:.5px}
+.badge-single{background:rgba(74,144,217,.2);color:var(--blue)}
+.badge-multiple{background:rgba(155,89,182,.2);color:var(--purple)}
+.badge-truefalse{background:rgba(240,173,78,.2);color:var(--orange)}
+.options-list{display:flex;flex-direction:column;gap:10px}
+.option-item{padding:14px 16px;border:1px solid var(--border);border-radius:10px;cursor:pointer;transition:all .2s;display:flex;align-items:flex-start;gap:10px;line-height:1.5;font-size:.9em}
+.option-item:hover{background:rgba(100,140,200,.1);border-color:rgba(100,140,200,.4)}
+.option-item.selected{background:rgba(74,144,217,.15);border-color:var(--blue)}
+.option-item.correct{background:rgba(46,204,113,.15);border-color:var(--glow-correct)}
+.option-item.wrong{background:rgba(231,76,60,.15);border-color:var(--glow-wrong)}
+.option-radio{width:18px;height:18px;border:2px solid var(--text-dim);border-radius:50%;flex-shrink:0;margin-top:2px;display:flex;align-items:center;justify-content:center;transition:all .2s}
+.option-item.selected .option-radio{border-color:var(--blue);background:var(--blue)}
+.option-item.correct .option-radio{border-color:var(--glow-correct);background:var(--glow-correct)}
+.option-item.wrong .option-radio{border-color:var(--glow-wrong);background:var(--glow-wrong)}
+.option-radio::after{content:'';width:6px;height:6px;background:#fff;border-radius:50%;opacity:0;transition:opacity .2s}
+.option-item.selected .option-radio::after,.option-item.correct .option-radio::after,.option-item.wrong .option-radio::after{opacity:1}
+.option-checkbox{width:18px;height:18px;border:2px solid var(--text-dim);border-radius:4px;flex-shrink:0;margin-top:2px;display:flex;align-items:center;justify-content:center;transition:all .2s}
+.option-item.selected .option-checkbox{border-color:var(--purple);background:var(--purple)}
+.option-item.correct .option-checkbox{border-color:var(--glow-correct);background:var(--glow-correct)}
+.option-item.wrong .option-checkbox{border-color:var(--glow-wrong);background:var(--glow-wrong)}
+.option-checkbox::after{content:'\2713';color:#fff;font-size:11px;font-weight:700;opacity:0;transition:opacity .2s}
+.option-item.selected .option-checkbox::after,.option-item.correct .option-checkbox::after,.option-item.wrong .option-checkbox::after{opacity:1}
+.tf-buttons{display:flex;gap:12px}
+.tf-btn{flex:1;padding:20px;border:2px solid var(--border);border-radius:12px;background:transparent;color:var(--text);font-size:1.05em;font-weight:600;cursor:pointer;transition:all .2s;text-align:center}
+.tf-btn:hover{background:rgba(100,140,200,.1)}
+.tf-btn.selected{border-color:var(--blue);background:rgba(74,144,217,.15)}
+.tf-btn.correct{border-color:var(--glow-correct);background:rgba(46,204,113,.15);color:var(--glow-correct)}
+.tf-btn.wrong{border-color:var(--glow-wrong);background:rgba(231,76,60,.15);color:var(--glow-wrong)}
+.feedback{margin-top:16px;padding:14px;border-radius:10px;line-height:1.6;font-size:.9em}
+.feedback.correct{background:rgba(46,204,113,.1);border:1px solid rgba(46,204,113,.3)}
+.feedback.wrong{background:rgba(231,76,60,.1);border:1px solid rgba(231,76,60,.3)}
+.feedback-icon{font-weight:700;margin-right:6px}
+.feedback.correct .feedback-icon{color:var(--glow-correct)}
+.feedback.wrong .feedback-icon{color:var(--glow-wrong)}
+.explanation{margin-top:10px;padding:12px;background:rgba(255,255,255,.03);border-radius:8px;font-size:.85em;color:var(--text-dim);line-height:1.6;border-left:3px solid var(--gold)}
+.panel-footer{padding:16px 20px;border-top:1px solid var(--border)}
+.btn-submit{width:100%;padding:14px;border:none;border-radius:10px;font-size:1em;font-weight:600;cursor:pointer;transition:all .2s}
+.btn-submit.answering{background:linear-gradient(135deg,var(--blue),#3a7bc8);color:#fff}
+.btn-submit.answering:hover{transform:translateY(-1px);box-shadow:0 4px 15px rgba(74,144,217,.3)}
+.btn-submit.answering:disabled{opacity:.4;cursor:not-allowed;transform:none;box-shadow:none}
+.btn-submit.next{background:linear-gradient(135deg,var(--gold),#e6a800);color:#1a1a1a}
+.btn-submit.next:hover{transform:translateY(-1px);box-shadow:0 4px 15px rgba(255,215,0,.3)}
+.module-complete{padding:10px;text-align:center}
+.module-score{font-size:3em;font-weight:700;color:var(--gold);margin:10px 0}
+.module-score-label{color:var(--text-dim);font-size:.9em;margin-bottom:20px}
+.wrong-list{text-align:left;margin-top:20px}
+.wrong-item{padding:12px;margin-bottom:10px;background:rgba(231,76,60,.05);border:1px solid rgba(231,76,60,.2);border-radius:8px;font-size:.85em;line-height:1.5}
+.wrong-item-q{font-weight:600;margin-bottom:6px}
+.wrong-item-detail{color:var(--text-dim)}
+.complete-overlay{position:fixed;inset:0;background:rgba(0,0,0,.8);z-index:300;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .5s}
+.complete-overlay.active{opacity:1;pointer-events:all}
+.complete-card{background:var(--panel-bg);border:1px solid var(--border);border-radius:20px;padding:40px;max-width:600px;width:90%;max-height:85vh;overflow-y:auto;text-align:center}
+.complete-title{font-size:1.8em;font-weight:700;background:linear-gradient(135deg,var(--gold),#ffaa00);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:8px}
+.complete-subtitle{color:var(--text-dim);margin-bottom:24px}
+.complete-score{font-size:4em;font-weight:700;color:var(--gold);margin:10px 0}
+.complete-accuracy{font-size:1.2em;color:var(--text-dim);margin-bottom:24px}
+.module-scores-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:20px 0;text-align:left}
+.module-score-row{display:flex;justify-content:space-between;padding:8px 12px;background:rgba(255,255,255,.03);border-radius:6px;font-size:.85em}
+.student-input{margin:20px 0;display:flex;gap:10px;justify-content:center;align-items:center}
+.student-input input{padding:10px 14px;border:1px solid var(--border);border-radius:8px;background:rgba(255,255,255,.05);color:var(--text);font-size:.9em;width:200px;outline:none}
+.student-input input:focus{border-color:var(--gold)}
+.report-code{margin:20px 0;padding:12px;background:rgba(0,0,0,.3);border:1px solid var(--border);border-radius:8px;font-family:'Courier New',monospace;font-size:.7em;word-break:break-all;max-height:100px;overflow-y:auto;color:var(--text-dim);text-align:left}
+.btn-group{display:flex;gap:10px;justify-content:center;margin-top:20px;flex-wrap:wrap}
+.particles{position:fixed;inset:0;pointer-events:none;z-index:301;overflow:hidden}
+.particle{position:absolute;width:6px;height:6px;border-radius:50%;animation:particleFall 3s linear forwards}
+@keyframes particleFall{0%{transform:translateY(-20px) rotate(0deg);opacity:1}100%{transform:translateY(100vh) rotate(720deg);opacity:0}}
+@media(max-width:768px){
+  .header h1{font-size:1em}
+  .header-stats{gap:12px}
+  .stat-value{font-size:1.1em}
+  .quiz-panel{width:100%;max-width:100vw}
+  .module-scores-grid{grid-template-columns:1fr}
+  .tree-svg{max-height:calc(100vh - 140px)}
+  .complete-card{padding:24px}
+}
+</style>
+</head>
+<body>
+<div class="header">
+  <h1>加伍磅 · 三天营养课 — 知识树考试</h1>
+  <div class="header-stats">
+    <div class="stat-item"><span class="stat-value" id="stat-modules">0/14</span><span class="stat-label">模块完成</span></div>
+    <div class="stat-item"><span class="stat-value" id="stat-score">0/106</span><span class="stat-label">总得分</span></div>
+  </div>
+</div>
+<div class="tree-container">
+  <div class="tree-bg"><div class="stars" id="stars"></div></div>
+  <svg class="tree-svg" viewBox="0 0 1200 800" xmlns="http://www.w3.org/2000/svg" id="treeSvg"></svg>
+</div>
+<div class="bottom-bar">
+  <button class="btn btn-primary" id="btn-submit-all" disabled onclick="showFinalReport()">提交成绩</button>
+  <button class="btn btn-danger" onclick="resetProgress()">重置进度</button>
+</div>
+<div class="panel-overlay" id="panelOverlay" onclick="closePanel()"></div>
+<div class="quiz-panel" id="quizPanel">
+  <div class="panel-header">
+    <span class="panel-title" id="panelTitle">模块</span>
+    <button class="panel-close" onclick="closePanel()">&times;</button>
+  </div>
+  <div class="panel-progress">
+    <div class="progress-bar"><div class="progress-fill" id="panelProgressFill"></div></div>
+    <span class="progress-text" id="panelProgressText">1/8</span>
+  </div>
+  <div class="question-area" id="questionArea"></div>
+  <div class="panel-footer" id="panelFooter"></div>
+</div>
+<div class="complete-overlay" id="completeOverlay">
+  <div class="complete-card" id="completeCard"></div>
+</div>
+<div class="particles" id="particles"></div>
+
+<script>
+const EXAM_DATA = {"modules": [{"id": "M1", "name": "教练必知生化基础", "questions": [{"id": "M1_Q1", "type": "single", "question": "关于亮氨酸与mTORC1通路的關係，以下说法正确的是：", "options": ["A. 每餐必须摄入2-3g亮氨酸才能启动MPS，低于此值合成完全不发生", "B. Sestrin2与亮氨酸结合的Kd约20μmol/L可直接换算为人体每餐最低亮氨酸需求", "C. 亮氨酸是mTORC1营养感应的重要信号之一，但不存在适用于所有人的固定'2-3g/餐'二元MPS开关", "D. 亮氨酸对MPS的效应在不同年龄和训练水平人群中完全一致"], "answer": "C", "explanation": "亮氨酸通过结合Sestrin2促进Rag通路激活、募集mTORC1至溶酶体表面，但Kd是体外结合参数，不能换算为人体阈值。实践上先保证日总蛋白，再按年龄、蛋白质量、训练时点分配。"}, {"id": "M1_Q2", "type": "single", "question": "关于脂肪-碳水交叉点（Crossover Concept），以下哪项描述最准确？", "options": ["A. 存在一个适用于所有人的固定交叉点，约在50%-65% VO₂max", "B. FATmax与crossover point是同一概念，可以互换使用", "C. 随运动强度升高碳水贡献逐渐增加，但交叉点位置受训练状态、饮食、糖原可用性等多因素影响", "D. 低强度运动中脂肪供能比例高，因此低强度运动的减脂效果优于高强度运动"], "answer": "C", "explanation": "Crossover concept描述随强度升高碳水贡献增加的趋势，但交叉点位置因人而异。FATmax（最大脂肪氧化率对应强度）与crossover point是不同概念。底物利用比例不等于长期减脂效果。"}, {"id": "M1_Q3", "type": "truefalse", "question": "乳酸是造成运动性肌肉酸化和DOMS（延迟性肌肉酸痛）的直接原因，因此是代谢废物。", "options": ["A. 正确", "B. 错误"], "answer": "B", "explanation": "乳酸脱氢酶反应（丙酮酸→乳酸）本身消耗一个H⁺，乳酸并非运动性酸化的直接来源。乳酸是可被氧化和穿梭利用的代谢中间体，不是废物。DOMS主要与肌纤维微损伤和炎症反应有关。"}, {"id": "M1_Q4", "type": "multiple", "question": "关于mTORC1通路的信号整合功能，以下哪些说法正确？", "options": ["A. 机械负荷可通过costamere/整合素/FAK等候选机制激活mTORC1，且不完全依赖IGF-1→PI3K→Akt通路", "B. Rag GTPases的主要作用是直接催化mTORC1激酶活性", "C. AMPK通过促进TSC2的Rheb-GAP作用和直接磷酸化Raptor等机制对mTORC1形成制约", "D. 4E-BP/eIF4E与LARP1/5'TOP是mTORC1下游翻译调控的重要主线"], "answer": "ACD", "explanation": "Rag的主要作用是控制mTORC1向溶酶体表面的募集/定位（定位许可），而非直接催化激酶活性。Rheb-GTP才是直接促进mTORC1激酶活性的关键小GTP酶。"}, {"id": "M1_Q5", "type": "single", "question": "关于AMPK与mTORC1的关系，以下哪项判断最符合教材立场？", "options": ["A. AMPK一升高，肌肥大就被完全关闭，因此有氧训练必然导致肌肉流失", "B. AMPK对mTORC1的制约是能量状态的调节机制之一，但不能据此推出'有氧训练是否影响增肌'的长期人体结论", "C. AMPK只在饥饿状态下激活，运动中不参与能量调节", "D. AMPK与mTORC1完全独立运作，互不影响"], "answer": "B", "explanation": "AMPK通过TSC2-Rheb和直接磷酸化Raptor等机制调节mTORC1，但训练适应取决于信号幅度、时序、组织特异性、总训练量、能量可用性和恢复等多因素。不能简单推出'AMPK升高=肌肥大关闭'。"}, {"id": "M1_Q6", "type": "truefalse", "question": "三大能量系统在运动中按顺序依次激活，磷酸原系统完全耗竭后才切换到糖酵解系统。", "options": ["A. 正确", "B. 错误"], "answer": "B", "explanation": "三大能量系统在任何运动中都会同时参与，只是相对贡献随强度和持续时间不断变化。不存在'磷酸原耗竭后才切换到糖酵解'的开关式接力。"}, {"id": "M1_Q7", "type": "single", "question": "Morton等（2018）纳入49项RCT的meta分析中，蛋白质-FFM剂量-反应断点约1.62 g/kg/d的正确解读是：", "options": ["A. 所有训练者每日必须精确摄入1.62 g/kg蛋白质，低于此值无法增肌", "B. 这是群体层面的估计拐点，95% CI约为1.03-2.20 g/kg/d，不能直接作为个人精确阈值", "C. 超过1.62 g/kg后蛋白质完全无额外收益", "D. 该数值仅适用于女性训练者"], "answer": "B", "explanation": "1.62 g/kg/d是群体剂量-反应模型的估计点，置信区间反映群体估计的不确定性，不宜解释为个人精确最优值或'低于即不足'的诊断线。"}, {"id": "M1_Q8", "type": "multiple", "question": "关于三大能量系统的特征，以下哪些说法正确？", "options": ["A. 磷酸原系统供能速度最快但储量最少，约3-5秒最大功率后显著下降", "B. 糖酵解系统是唯一不依赖氧气的能量系统", "C. 有氧氧化系统产能效率最高但启动较慢", "D. 三大系统在运动中同时参与，只是相对贡献比例随强度和持续时间变化"], "answer": "ACD", "explanation": "糖酵解也无需氧气（糖酵解本身不依赖氧气），但说它是'唯一'不依赖氧气的能量系统不准确，因为磷酸原系统同样不依赖氧气。"}]}, {"id": "M2", "name": "训练的营养依据", "questions": [{"id": "M2_Q1", "type": "single", "question": "关于'合成代谢窗口'（anabolic window），以下哪项最符合当前循证立场？", "options": ["A. 训练后30分钟内必须摄入蛋白质，否则该次训练的所有合成刺激全部浪费", "B. 合成代谢窗口是一个受训练前营养状态、全天蛋白分配、训练量和年龄调控的连续区间，而非30分钟刚性截止线", "C. 训练后蛋白质时机对所有人都不重要，何时摄入效果完全相同", "D. 只有在训练后5分钟内摄入乳清蛋白才能激活MPS"], "answer": "B", "explanation": "Schoenfeld与Aragon 2018的系统综述指出，对日总蛋白充足的训练者，训练后即时补充的额外增益有限；但对空腹训练者、训练后长时间无法进食者等，营养时机更有价值。"}, {"id": "M2_Q2", "type": "multiple", "question": "关于训练后碳水的价值和适用条件，以下哪些说法正确？", "options": ["A. 碳水在抗阻训练中的核心价值是维护训练输出质量和组间恢复效率", "B. 所有力量训练者训练后都必须立即按1.0-1.2 g/kg/h补充碳水", "C. 若下一次高糖原需求训练在数小时内，早期较高碳水可明显提高糖原再合成速率", "D. 在足量碳水条件下，添加蛋白质不进一步增强肌糖原合成速率"], "answer": "ACD", "explanation": "训练后碳水是否需要'快'取决于恢复窗口。一日一练且恢复时间充足的普通训练者不需要追求1.0-1.2 g/kg/h的速率。蛋白质对糖原再合成无额外增益，其价值在MPS。"}, {"id": "M2_Q3", "type": "truefalse", "question": "当全天蛋白质总量充足（≥1.6 g/kg/d）时，训练后蛋白质摄入时机的长期效应在现有研究中未显示显著优势。", "options": ["A. 正确", "B. 错误"], "answer": "A", "explanation": "Schoenfeld与Aragon 2018的系统综述指出，对日总蛋白充足的训练者，训练后即时补充的额外增益有限。时机窗口本身的长期效应在日总量充足条件下最弱。"}, {"id": "M2_Q4", "type": "single", "question": "关于'燃料为训练服务'（fuel for the work required）原则，以下哪项理解最准确？", "options": ["A. 所有训练者统一执行训练日5-8 g/kg、休息日3-5 g/kg的碳水模板", "B. 碳水可用性应匹配具体课次的训练量和恢复需求，而非一刀切地低碳或高碳", "C. 休息日必须将碳水降至3 g/kg以下以促进脂肪氧化", "D. 该原则仅适用于耐力运动员"], "answer": "B", "explanation": "燃料为训练服务的核心是让碳水可用性与具体课次匹配。是否差异化、差异化幅度取决于训练量、恢复间隔、总能量目标和个体偏好。"}, {"id": "M2_Q5", "type": "single", "question": "关于运动中蛋白质补充的长期效应，以下哪项最符合现有证据？", "options": ["A. 运动中补充蛋白质对长期肌肥大产生独立于日总量的显著额外收益", "B. 当全天蛋白质总量充足时，运动中蛋白质补充的边际价值有限", "C. 所有训练者每次训练都必须补充支链氨基酸", "D. 运动中蛋白质是增肌的必要条件"], "answer": "B", "explanation": "ISSN 2017立场声明认为，当全天蛋白质总量充足时，运动中蛋白质补充的边际价值有限。Bird等的12周训练研究中，蛋白质+碳水组的瘦体重增量不显著优于碳水单独组。"}, {"id": "M2_Q6", "type": "truefalse", "question": "轻度脱水（约2%体重下降）可短暂升高生长激素和皮质醇，但同时可能降低重复次数和总做功量。", "options": ["A. 正确", "B. 错误"], "answer": "A", "explanation": "轻度脱水可短暂升高GH和皮质醇，但液体管理的目标是个体化校准而非统一公式。约2%体重下降可作为风险提示点，但不是所有训练者的统一性能断点。"}, {"id": "M2_Q7", "type": "multiple", "question": "关于训练营养金字塔的层级结构，以下哪些说法正确？", "options": ["A. 第一层（基座）是日常能量与宏量营养素是否足以支持健康和训练", "B. 膳食补剂位于金字塔第二层", "C. 微量营养素充足是第二层", "D. 跳过基础直接优化训练营养策略，效果有限"], "answer": "ACD", "explanation": "金字塔四层：基座=日常能量与宏量营养素；第二层=微量营养素充足；第三层=训练营养策略；第四层（顶端）=膳食补剂。补剂位于最顶层而非第二层。"}, {"id": "M2_Q8", "type": "multiple", "question": "关于训练前营养策略，以下哪些说法正确？", "options": ["A. 训练前2-3小时含蛋白和碳水的完整餐食可提供持续底物供应", "B. 训练前餐的核心功能是维持训练过程中的能量可用性和认知集中", "C. 训练前0-60分钟的加餐需要大体积、高纤维以确保饱腹感", "D. 训练前加餐的蛋白和碳水组合可维持训练过程中氨基酸和糖的可用性"], "answer": "ABD", "explanation": "训练前0-60分钟的加餐应选择体积小、易消化、低纤维的食物，以避免训练中的胃肠不适。"}]}, {"id": "M3", "name": "能量与宏量营养素", "questions": [{"id": "M3_Q1", "type": "single", "question": "关于TDEE（总能量消耗）的组成，以下哪项描述正确？", "options": ["A. TDEE = RMR + TEF + EAT，不包括NEAT", "B. RMR通常构成TDEE的最大部分，去脂体重（FFM）是其重要预测因子之一", "C. TEF在三大营养素中，碳水的食物热效应最高", "D. NEAT在不同个体间差异极小，可忽略不计"], "answer": "B", "explanation": "TDEE = RMR + TEF + EAT + NEAT。RMR通常是最大组分，FFM是其重要预测因子。蛋白质的TEF通常高于碳水和脂肪。NEAT高度个体化。"}, {"id": "M3_Q2", "type": "truefalse", "question": "根据Hall等的住院代谢病房严格控制试验，等热量条件下宏量营养素构成对体脂变化的影响远小于总能量差异。", "options": ["A. 正确", "B. 错误"], "answer": "A", "explanation": "Hall等的严格控制试验表明，等热量下宏量营养素构成对体脂的影响远小于总能量差异。总能量平衡决定体重变化的方向和幅度，激素环境影响组分分配和食欲调节。"}, {"id": "M3_Q3", "type": "single", "question": "关于蛋白质质量评估，DIAAS相对于PDCAAS的核心优势是：", "options": ["A. DIAAS使用粪便消化率，更简单", "B. DIAAS使用回肠消化率，以不同年龄段EAA需求为参照，不设上限截断", "C. DIAAS的结果总是低于PDCAAS", "D. DIAAS只适用于植物蛋白评估"], "answer": "B", "explanation": "DIAAS（FAO 2013推荐）使用回肠消化率，以不同年龄段EAA需求为参照，不设上限截断为1.0，更好解释了动物蛋白与植物蛋白在MPS效应上的实测差异。"}, {"id": "M3_Q4", "type": "multiple", "question": "关于宏量营养素分配的逻辑顺序，以下哪些说法正确？", "options": ["A. 先确定满足蛋白质下限的绝对量", "B. 脂肪的激素合成与细胞膜功能设定脂肪下限", "C. 碳水填充剩余能量空间", "D. 三大营养素可以任意顺序分配，不影响结果"], "answer": "ABC", "explanation": "分配顺序由功能不可替代性决定：蛋白质必需氨基酸和结构功能设定下限→脂肪激素合成与细胞膜功能设定下限→碳水填充剩余能量空间。"}, {"id": "M3_Q5", "type": "truefalse", "question": "Devries等（2018）系统综述确认，在肾功能正常的健康成年人中，较高蛋白摄入（≤2.4 g/kg/d）与肾功能不良变化之间不存在显著关联。", "options": ["A. 正确", "B. 错误"], "answer": "A", "explanation": "eGFR可能轻微升高可能源于肌肉量增加导致的血肌酐生成增加而非肾功能损害。但既往CKD、eGFR异常等应转介医疗评估。"}, {"id": "M3_Q6", "type": "single", "question": "关于减脂期蛋白质需求，以下哪项判断最准确？", "options": ["A. 减脂期蛋白质需求与增肌期完全相同", "B. 减脂期蛋白质需求可能高于增肌期，因为能量限制下氨基酸氧化增加和肌肉蛋白分解加速", "C. 减脂期应降低蛋白质以减轻肾脏负担", "D. 所有减脂者统一使用2.3-3.1 g/kg/d"], "answer": "B", "explanation": "能量限制下氨基酸氧化增加、MPB加速，较高蛋白有助于保留瘦体重。但2.3-3.1 g/kg FFM来自Helms等的较瘦抗阻训练者证据，不能机械外推为所有减脂者的统一处方。"}, {"id": "M3_Q7", "type": "single", "question": "关于GI（血糖生成指数）在运动场景下的应用，以下哪项最符合教材立场？", "options": ["A. 日常膳食中应始终追求最低GI食物", "B. GI仅在训练后加速糖原、赛前避免高GI单糖和训练前选低中GI三个情境有参考价值", "C. GI适用于所有饮食决策场景", "D. 低GI食物对训练表现没有任何影响"], "answer": "B", "explanation": "GI在运动场景下仅在三个情境有参考价值。日常过分追求低GI反而可能降低食物多样性。"}, {"id": "M3_Q8", "type": "multiple", "question": "关于Atwater系数（4-9-4）的局限性，以下哪些说法正确？", "options": ["A. Atwater系数不区分不同蛋白来源的TEF差异", "B. 蛋白质实际代谢能约3.5-4.3 kcal/g，但TEF比碳水高2-3倍", "C. 膳食纤维对所有人统一按4 kcal/g计算", "D. 实际代谢能受到加工方式、个体消化吸收效率等因素影响"], "answer": "ABD", "explanation": "膳食纤维的代谢能取决于发酵程度，不能统一按4 kcal/g计算。Atwater系数的局限性包括不区分蛋白TEF差异、不考虑个体吸收效率差异等。"}]}, {"id": "M4", "name": "营养评估DAB", "questions": [{"id": "M4_Q1", "type": "single", "question": "Capling等（2017）系统综述报告运动员膳食能量摄入经DLW验证后的平均低估幅度为：", "options": ["A. 约5%", "B. 约19%，Cohen's d = -1.006", "C. 约47%", "D. 约50%"], "answer": "B", "explanation": "Capling等2017系统综述报告平均低估19%。47%来自Lichtman等特定研究中特定'自述节食抵抗'肥胖亚组，不能外推为所有减脂者的平均低报幅度。"}, {"id": "M4_Q2", "type": "truefalse", "question": "BIA体脂率受水合状态影响可波动2%-5%，不同品牌设备的数据不可直接对比，只能用于同一设备、同一条件下的纵向趋势监测。", "options": ["A. 正确", "B. 错误"], "answer": "A", "explanation": "BIA通过阻抗和内置方程推算体成分，饮水、训练、糖原、月经周期等均可改变结果。不同品牌/型号/电极配置使用不同方程，绝对值不可直接对比。"}, {"id": "M4_Q3", "type": "single", "question": "关于FFMI（无脂肪质量指数），以下哪项判断最准确？", "options": ["A. FFMI > 25即可判定该训练者使用了合成代谢类固醇", "B. FFMI是群体统计指标，Kouri 1995原始研究中非使用者样本仅74人，不足以定义人类肌肉量的绝对上限", "C. FFMI可直接用于反兴奋剂诊断", "D. 女性FFMI应在男性基础上加5个点"], "answer": "B", "explanation": "Kouri 1995的'约25'来自特定男性样本和自报用药状态，不能转化为'>'25即使用PED'或'≤25即自然'的个体诊断规则。FFMI用于描述体型与纵向趋势。"}, {"id": "M4_Q4", "type": "multiple", "question": "关于DXA体成分评估，以下哪些说法正确？", "options": ["A. DXA是三组分模型，直接测量脂肪质量、去脂软组织质量和骨矿物含量", "B. DXA精度高于皮褶法和BIA，可作为体成分评估的参考标准", "C. DXA的瘦软组织估计不受糖原及其结合水的影响", "D. 不同品牌DXA设备的算法差异可导致结果不可直接对比"], "answer": "ABD", "explanation": "DXA的LST估计受糖原及结合水、饮水/脱水、近期训练等影响。运动/热脱水后DXA总LST可出现约1-2 kg急性下降。"}, {"id": "M4_Q5", "type": "single", "question": "关于饮食依从性低的原因，以下哪项最符合教材判断？", "options": ["A. 训练者不够自律", "B. 方案与生活场景不匹配、目标设定过高、或缺乏有效自我监测反馈", "C. 训练者缺乏营养知识", "D. 教练讲解不够详细"], "answer": "B", "explanation": "饮食依从性低的原因几乎从来不是'不够自律'，更多时候是方案与生活场景不匹配、目标设定过高、或缺乏有效的自我监测反馈。"}, {"id": "M4_Q6", "type": "truefalse", "question": "教练分析饮食记录的目标是识别模式、发现系统性偏差，不是做出营养诊断。", "options": ["A. 正确", "B. 错误"], "answer": "A", "explanation": "教练可以做模式识别和营养教育（如'蛋白集中晚餐'），但不能做临床营养诊断（如'你缺铁需要吃补铁剂'）。发现疑似问题时需转介。"}, {"id": "M4_Q7", "type": "single", "question": "关于Basiotis等（1987）的经典研究，准确估计个体能量摄入均值大约需要多少天记录？", "options": ["A. 3天", "B. 7天", "C. 31天", "D. 433天"], "answer": "C", "explanation": "Basiotis等365天连续记录研究显示，能量平均需要31天，蛋白质4天，维生素A高达433天。3-4天可为习惯性蛋白摄入提供合理均值估计。"}, {"id": "M4_Q8", "type": "multiple", "question": "关于Goldberg截断值的正确应用，以下哪些说法正确？", "options": ["A. Goldberg法基于EI/RMR比值与BMR变异系数比较", "B. 该截断值需要运动水平修正系数（PAL）", "C. 适用于群体层面的低报率估计", "D. 可直接用于个体层面的精确诊断"], "answer": "ABC", "explanation": "Goldberg法适用于群体层面低报率估计，但不能替代个体诊断。需要运动水平修正系数（PAL），基于EI/RMR比值与BMR变异系数比较。"}]}, {"id": "M5", "name": "维生素、矿物质与水", "questions": [{"id": "M5_Q1", "type": "single", "question": "Ristow等（2009）在PNAS发表的研究证明，高剂量抗氧化补剂（维生素C 1000mg/d + 维生素E 400IU/d）对训练适应的影响是：", "options": ["A. 增强运动诱导的胰岛素敏感性改善", "B. 完全阻断运动诱导的PGC-1α表达和胰岛素敏感性改善", "C. 仅影响有氧耐力，不影响代谢适应", "D. 对所有训练适应无影响"], "answer": "B", "explanation": "Ristow等2009年研究显示，抗氧化剂补充完全阻断了运动诱导的胰岛素敏感性增加、PGC-1α/PGC-1β/PPARγ表达上调以及内源性抗氧化防御酶的运动诱导上调。"}, {"id": "M5_Q2", "type": "truefalse", "question": "铁缺乏的第一、二阶段（储存铁耗竭和早期功能性铁缺乏）在血红蛋白通常正常的情况下即可影响训练质量。", "options": ["A. 正确", "B. 错误"], "answer": "A", "explanation": "即使Hb水平正常，组织铁不足也会使线粒体产能效率下降，表现为运动经济性恶化和亚极量强度下主观疲劳感增加。损害先于贫血出现。"}, {"id": "M5_Q3", "type": "single", "question": "关于运动后hepcidin（铁调素）升高对铁吸收的影响，以下哪项最准确？", "options": ["A. 运动后hepcidin降低，促进铁吸收", "B. 运动后3-6小时hepcidin可升高至安静时的4-27倍，抑制肠道铁吸收", "C. hepcidin升高仅影响非血红素铁的吸收", "D. hepcidin的变化对训练者铁状态无实际影响"], "answer": "B", "explanation": "运动后hepcidin升高3-6小时抑制肠道铁吸收，约24小时回归基线。一日两练或每日训练者的铁吸收效率系统性偏低。"}, {"id": "M5_Q4", "type": "multiple", "question": "关于维生素D的当前循证立场，以下哪些说法符合2024 Endocrine Society指南？", "options": ["A. 对没有既定检测或治疗指征的总体健康人群，不建议常规筛查25(OH)D", "B. 现有临床试验已建立75 nmol/L为所有人群的疾病预防统一目标", "C. 现有临床试验没有建立可用于疾病预防的统一血液目标阈值", "D. 室内训练、日照有限、肤色较深等因素可提高低25(OH)D的先验概率"], "answer": "ACD", "explanation": "2024 Endocrine Society指南不推荐对一般健康人群常规筛查，也指出没有统一目标阈值。不再把75 nmol/L作为普适'充足'目标。"}, {"id": "M5_Q5", "type": "single", "question": "关于ZMA（锌镁天冬氨酸）补剂，以下哪项判断最符合循证证据？", "options": ["A. ZMA对锌水平正常的训练者能显著提高睾酮和力量", "B. Wilborn等2004年独立双盲RCT显示ZMA在血清锌正常的受试者中对睾酮、力量和体成分无显著差异", "C. ZMA的效果已被所有独立研究证实", "D. 锌补充对任何人都没有风险"], "answer": "B", "explanation": "Brilla 2000年的阳性结果存在严重利益冲突（Victor Conte是ZMA专利持有者）。Wilborn 2004独立RCT显示无显著差异。高剂量锌补充（>25mg/d）可抑制铜吸收。"}, {"id": "M5_Q6", "type": "truefalse", "question": "食物优先原则是2016年ACSM/AND/DC联合立场声明的核心立场之一，现有DRI适用于训练者，通过均衡膳食通常能够满足微量营养素需求。", "options": ["A. 正确", "B. 错误"], "answer": "A", "explanation": "食物优先原则不否认训练者需求可能增加，而是判断增加的幅度通常可以通过膳食调整覆盖。高风险场景下的筛查和纠正优先于面向全体的普遍性补充。"}, {"id": "M5_Q7", "type": "single", "question": "关于镁补剂形式的选择，以下哪项正确？", "options": ["A. 氧化镁生物利用度最高，是最优选择", "B. 甘氨酸镁吸收率高且胃肠耐受性好，综合较优", "C. 所有镁盐的生物利用度相同", "D. 柠檬酸镁不适合任何人群"], "answer": "B", "explanation": "氧化镁生物利用度仅约4%，其'高含量'是营销陷阱。甘氨酸镁综合较优。柠檬酸镁适用于存在便秘问题的个体。"}]}, {"id": "M6", "name": "补剂决策框架", "questions": [{"id": "M6_Q1", "type": "single", "question": "AIS ABCD分类体系中，Group A的核心定义标准是：", "options": ["A. 所有训练者都应常规使用的补剂", "B. 在特定运动场景下有强科学证据支持使用循证方案的有效性和安全性", "C. 完全没有副作用的补剂", "D. 价格最低的补剂"], "answer": "B", "explanation": "Group A不等于无条件推荐。运动食品需存在便利营养需求，医用补剂须实验室确认缺乏，性能补剂需匹配场景且在基础营养优化后考虑。"}, {"id": "M6_Q2", "type": "multiple", "question": "关于一水肌酸的剂量方案，以下哪些说法正确？", "options": ["A. 加载期20g/天分4次持续5-7天，维持期3-5g/天", "B. 可跳过加载期直接3-5g/天，约28天达到相当饱和水平", "C. 其他剂型（盐酸肌酸、乙酯肌酸）已被证实优于一水肌酸", "D. 加载期超过7天无额外收益且增加肌酸排泄"], "answer": "ABD", "explanation": "一水肌酸是研究最充分、成本最低的剂型，其他剂型无证据显示更优。加载期超过7天无额外收益。"}, {"id": "M6_Q3", "type": "truefalse", "question": "ISSN立场声明确认一水肌酸对健康人群长期使用安全且耐受性良好，超过20年随访未发现严重不良反应。", "options": ["A. 正确", "B. 错误"], "answer": "A", "explanation": "一水肌酸的安全性数据是补剂领域最充分的。主要副作用为轻度胃肠不适和体重增加（水分潴留）。肾功能不全者慎用。"}, {"id": "M6_Q4", "type": "single", "question": "关于咖啡因的增效作用，以下哪项最准确？", "options": ["A. 仅凭CYP1A2基因型即可精确预测咖啡因对每个个体的效果", "B. 3-6 mg/kg在运动前30-60分钟摄入可在多种运动模式中产生表现增益，但个体差异很大", "C. 咖啡因≥9 mg/kg可进一步显著提升运动表现", "D. 咖啡因对纯力量目标（1RM）的增益证据非常一致"], "answer": "B", "explanation": "≥9mg/kg不增加效益且副作用风险升高。对1RM的增益证据不一致。CYP1A2基因多态性是潜在调节因素，但不建议仅凭基因型决定是否使用。"}, {"id": "M6_Q5", "type": "single", "question": "关于β-丙氨酸的补充方案，以下哪项正确？", "options": ["A. 单次大剂量即可获得最大效果", "B. 需4-6g/天分次摄入，持续10-12周使肌肽浓度达到平台", "C. β-丙氨酸的增效机制是直接刺激MPS", "D. β-丙氨酸对60秒以内的纯爆发力运动效果最佳"], "answer": "B", "explanation": "β-丙氨酸通过提升肌内肌肽浓度发挥pH缓冲作用。需持续补充10-12周。适用场景为30秒至10分钟高强度运动。感觉异常是主要副作用，分次小剂量可缓解。"}, {"id": "M6_Q6", "type": "truefalse", "question": "肉碱在AIS ABCD分类中属于Group C（证据不支持），不应推荐。", "options": ["A. 正确", "B. 错误"], "answer": "B", "explanation": "肉碱在AIS分类中属于Group B（新兴科学支持，需进一步研究），而非Group C。Group B不是常规推荐，但也不等同于'无效'。"}, {"id": "M6_Q7", "type": "multiple", "question": "关于补剂污染风险，以下哪些说法正确？", "options": ["A. 多成分补剂（预锻炼粉、减脂胶囊等）是高风险品项", "B. 专有配方（Proprietary Blend）规避剂量核查，增加风险", "C. 第三方批次检测（如Informed Sport）可完全消除污染风险", "D. 竞技运动员应按反兴奋剂规则进行产品核查"], "answer": "ABD", "explanation": "第三方检测可降低但不能消除风险。专有配方标签产品应拒绝接受，鼓励用单成分产品替代。"}, {"id": "M6_Q8", "type": "multiple", "question": "关于硝酸盐/甜菜根汁的增效机制，以下哪些说法正确？", "options": ["A. 硝酸盐在体内可转化为一氧化氮（NO），促进血管舒张", "B. 主要增效表现在降低亚极量运动的氧气消耗", "C. 对最大摄氧量（VO₂max）有显著提升作用", "D. 口腔微生物在硝酸盐还原过程中起重要作用"], "answer": "ABD", "explanation": "硝酸盐/甜菜根汁的主要增效是降低亚极量运动的氧气消耗，对VO₂max的提升作用不一致。口腔细菌参与硝酸盐向亚硝酸盐的还原。"}]}, {"id": "M7", "name": "首次咨询SOP与行为改变干预框架", "questions": [{"id": "M7_Q1", "type": "single", "question": "首次咨询60分钟流程中，红线筛查应在什么阶段完成？", "options": ["A. 在详细问诊之后", "B. 在方案输出之后", "C. 在详细问诊之前，目标设定过程中同步完成", "D. 在签约之后"], "answer": "C", "explanation": "红线筛查必须在详细问诊之前完成，以避免在已采集大量个人健康信息后才发现需要转介。这顺序也符合个人信息保护法对敏感信息的'必要性'原则。"}, {"id": "M7_Q2", "type": "truefalse", "question": "COM-B模型将行为发生条件分解为能力（Capability）、机会（Opportunity）、动机（Motivation）三个必要条件，三者同时具备行为才可能持续。", "options": ["A. 正确", "B. 错误"], "answer": "A", "explanation": "COM-B模型是行为诊断的核心框架。对机会短板追加营养教育无法改变行为，需要的是环境重构。"}, {"id": "M7_Q3", "type": "single", "question": "关于跨理论模型（TTM）的关键警示，以下哪项最准确？", "options": ["A. 行为改变阶段是单向递进的，不会后退", "B. 阶段不是单向递进的，来访者可能在Action与Contemplation之间反复摆动", "C. 对前意向阶段来访者应直接派发行动计划", "D. TTM在营养咨询中不适用"], "answer": "B", "explanation": "阶段不是单向递进，来访者可在阶段间反复。对前意向阶段派发行动计划属于阶段错配。"}, {"id": "M7_Q4", "type": "multiple", "question": "关于运动营养咨询师（SNC）的执业边界，以下哪些行为超出范围？", "options": ["A. 面向健康人群制定个体化膳食方案", "B. 提供医学营养治疗（MNT）", "C. 调整在用药物", "D. 做出医学诊断"], "answer": "BCD", "explanation": "SNC可面向健康人群和慢病稳定期人群制定膳食方案，但不可提供MNT、不处理疾病状态的临床营养管理、不调整在用药物、不做医学诊断。"}, {"id": "M7_Q5", "type": "single", "question": "BCTTv1（行为改变技术分类学）将干预拆解为多少项最小可识别技术单元？", "options": ["A. 50项", "B. 73项", "C. 93项", "D. 124项"], "answer": "C", "explanation": "Michie等通过Delphi专家共识法从124项候选技术中确定93项BCT，按相似性聚类为16组。健身咨询场景高频使用约20项。"}, {"id": "M7_Q6", "type": "truefalse", "question": "首次咨询不输出完整的个体化饮食方案，方案制定需等待3日饮食记录收齐后在第二次咨询进行。", "options": ["A. 正确", "B. 错误"], "answer": "A", "explanation": "首诊任务是讲解方案框架与干预逻辑，让来访者理解'接下来会做什么'。完整方案需等待定量数据。"}, {"id": "M7_Q7", "type": "single", "question": "关于EPE框架（问-说-问），以下哪项描述最准确？", "options": ["A. 先提供信息，再引出来访者已有认知", "B. 先引出（elicitation）来访者已有认知，再提供（provide）循证信息，最后引出对新信息的理解", "C. 是单向灌输式的信息传递方式", "D. 只用于签约阶段"], "answer": "B", "explanation": "EPE框架确保信息交付是协作式而非灌输式，符合动机访谈（MI）的Evocation精神。"}, {"id": "M7_Q8", "type": "multiple", "question": "关于BCTTv1在营养咨询中的应用，以下哪些行为改变技术属于高频使用的类别？", "options": ["A. 目标设定（行为）", "B. 自我监测（行为）", "C. 反馈与监控", "D. 药物处方"], "answer": "ABC", "explanation": "BCTTv1中93项技术聚类为16组。健身咨询场景高频使用约20项，包括目标设定、自我监测、反馈与监控、社会支持等。药物处方不属于BCT技术范畴。"}]}, {"id": "M8", "name": "减脂方案专题", "questions": [{"id": "M8_Q1", "type": "single", "question": "关于减脂热量缺口的设定，以下哪项最符合教材立场？", "options": ["A. 所有减脂者统一使用500 kcal/d的缺口", "B. 起始缺口应作为可校准的连续变量，约10%-20% TEE缺口或250-500 kcal/d可作为实践起点", "C. 缺口越大减脂效果越好，无需考虑瘦体重损失", "D. 应按体脂率硬切成保守/标准/激进三档"], "answer": "B", "explanation": "起始缺口应结合体重/腰围趋势、训练表现、饥饿与恢复、健康风险和目标时限校准。同一绝对kcal缺口对不同TEE个体意义不同。"}, {"id": "M8_Q2", "type": "truefalse", "question": "Poon等meta分析的更正数据显示，间歇休整组代偿性RMR下降平均少约47.31 kcal/d，这是组间RMR变化差而非'直接代谢收益47 kcal/d'。", "options": ["A. 正确", "B. 错误"], "answer": "A", "explanation": "47.31 kcal/d是组间RMR变化差值，不等于'直接增加47 kcal/d代谢'。Diet Break更适合作为可选的依从性/恢复管理工具。"}, {"id": "M8_Q3", "type": "multiple", "question": "关于代谢适应（metabolic adaptation），以下哪些说法正确？", "options": ["A. 长期能量限制后RMR下降幅度超过由体重和FFM减少所预测的值，即为适应性产热", "B. 瘦素在能量缺口48-72小时内即开始下降，幅度可达30%-50%", "C. NEAT在能量限制期间不会发生变化", "D. '代谢损伤'不是独立医学诊断"], "answer": "ABD", "explanation": "NEAT是代谢适应中贡献最大的行为变量之一，可能在能量限制期间下降。代谢适应是循证生理现象，但'代谢损伤'是商业营销概念。"}, {"id": "M8_Q4", "type": "single", "question": "关于Diet Break与Refeed的区别，以下哪项最准确？", "options": ["A. Diet Break是计划性暴食", "B. Refeed需要断水断钠", "C. Diet Break将热量提高至维持水平持续1天至2周，Refeed通常以短期提高碳水可用性为特征", "D. 两者完全相同，只是名称不同"], "answer": "C", "explanation": "Diet Break回到接近维持能量，Refeed以短期提高碳水为特征。两者都是间歇性能量管理工具，不是'修复代谢'的标准治疗。"}, {"id": "M8_Q5", "type": "truefalse", "question": "Hall等2012年动态能量平衡模型证明，减重过程中TEE随体重下降和代谢适应而降低，赤字是动态收窄的。", "options": ["A. 正确", "B. 错误"], "answer": "A", "explanation": "Wishnofsky 1958年的'3500kcal/磅'静态规则系统性高估长期减重。FFM损失导致RMR下调，NEAT代偿进一步收窄有效TEE。"}, {"id": "M8_Q6", "type": "single", "question": "关于TEE校准方法，以下哪项正确？已知某来访者稳定摄入2200 kcal/d，4周减重2kg。", "options": ["A. 真实TEE约为2200 kcal/d", "B. 实测日均赤字 = 2 × 7700 ÷ 28 ≈ 550 kcal/d，真实TEE ≈ 2750 kcal/d", "C. 可直接线性外推至12周以上", "D. 校准方法不适用于减脂方案"], "answer": "B", "explanation": "使用组织能量密度7700 kcal/kg。真实TEE = 实际摄入 + 实测日均赤字 = 2200 + 550 = 2750 kcal/d。仅用于4周尺度粗略校准。"}, {"id": "M8_Q7", "type": "single", "question": "关于减脂期训练，以下哪项判断最准确？", "options": ["A. 减脂期应完全停止抗阻训练以减少能量消耗", "B. 抗阻训练是减脂期保留瘦体重的重要干预之一，训练刺激需要足够且可恢复", "C. 减脂期训练量必须比增肌期增加50%", "D. 所有人在减脂期必须固定RIR 2-3"], "answer": "B", "explanation": "减脂期优先维持足够且可恢复的机械刺激。接近力竭程度应与负荷、动作安全和疲劳成本共同管理，不存在统一RIR阈值。"}]}, {"id": "M9", "name": "增肌方案专题", "questions": [{"id": "M9_Q1", "type": "single", "question": "关于增肌期能量盈余，Garthe等运动员研究的核心发现是：", "options": ["A. 更大盈余能保证更多肌肉增长", "B. 更积极的体重增长带来更多脂肪增长，而LBM增益未显示相应组间差异", "C. 200-300 kcal/d是所有人的精确最佳盈余", "D. 盈余幅度对体成分无影响"], "answer": "B", "explanation": "更积极的能量盈余通常伴随更多脂肪增长，但肌肉增长不与额外热量按固定比例线性增加。应从保守盈余起步，用趋势校准。"}, {"id": "M9_Q2", "type": "truefalse", "question": "Schoenfeld等2013年的荟萃回归分析显示，将训练前后蛋白与总蛋白量同时纳入分析后，总蛋白量解释了几乎全部效应，时序变量本身不再显著。", "options": ["A. 正确", "B. 错误"], "answer": "A", "explanation": "所谓'窗口期效应'实质上是'训练前后摄入推高了全天总蛋白'的副产品。日总量优先于时机。"}, {"id": "M9_Q3", "type": "multiple", "question": "关于增肌期碳水周期化，以下哪些说法正确？", "options": ["A. 碳水的主要价值是支持训练输出、糖原恢复、总能量和执行性", "B. 更高碳水已被证实能独立提高肌肥大", "C. 训练日浮动时，周期化可能变成执行负担", "D. 休息日仍存在基础代谢、日常活动、糖原恢复和组织重塑"], "answer": "ACD", "explanation": "2026年系统综述显示，在蛋白条件可比的研究中，更高碳水未显示独立提高肌肥大的显著效应。碳水不是独立的'增肌信号'。"}, {"id": "M9_Q4", "type": "single", "question": "关于增肌期体脂监控，以下哪项最符合教材立场？", "options": ["A. 男性体脂超过18%必须立即停止增肌", "B. 不使用统一体脂硬阈值，应综合体脂与腰围趋势、增重速度、训练表现、健康风险和客户偏好", "C. 增肌期体脂上升不需要监控", "D. 女性体脂超过28%自动转减脂"], "answer": "B", "explanation": "现有证据不支持用男性18%/女性28%作为自动停止增肌的生理阈值。当脂肪增长明显快于预期或健康/依从性恶化时可讨论调整。"}, {"id": "M9_Q5", "type": "truefalse", "question": "渐进超负荷（progressive overload）等于杠铃重量必须持续增加。", "options": ["A. 正确", "B. 错误"], "answer": "B", "explanation": "渐进超负荷更准确地理解为使目标肌群继续获得足够挑战，可通过负荷、重复次数、训练量、ROM/技术稳定性、接近力竭程度等多种方式实现，不等于杠铃重量必须持续增加。"}, {"id": "M9_Q6", "type": "single", "question": "关于0.55 g/kg/餐这个数值，以下哪项描述最准确？", "options": ["A. 是经实验验证的单餐MPS上限", "B. 不是已验证的单餐MPS上限，约0.4 g/kg/餐可作为分配参考", "C. 超过此值蛋白质全部被浪费", "D. 仅适用于女性"], "answer": "B", "explanation": "0.55 g/kg/餐主要来自把较高日总量分配到多餐的推导，不是经实验验证的单餐MPS上限。较大单餐仍会被消化吸收进入全身氨基酸池。"}, {"id": "M9_Q7", "type": "single", "question": "关于增肌期蛋白分配的餐次安排，以下哪项最符合教材立场？", "options": ["A. 所有训练者必须固定4-5餐、每3小时一次", "B. 餐次和间隔应服从日总量、作息、训练时点、年龄、蛋白质量和胃肠耐受，无统一硬门槛", "C. 每天只能吃2餐才能保证MPS最大化", "D. 蛋白质分配对增肌没有任何影响"], "answer": "B", "explanation": "Areta等2013的急性实验支持适度分散，但不能外推为所有人必须4-5餐、固定3-5小时间隔。不存在所有人必须达到4餐或不得超过6餐的已验证门槛。"}, {"id": "M9_Q8", "type": "multiple", "question": "关于增肌期脂肪摄入的考量，以下哪些说法正确？", "options": ["A. 脂肪是激素合成的底物，设定了摄入下限", "B. 极低脂肪饮食可能影响睾酮水平", "C. 脂肪摄入量应占增肌期总热量的50%以上", "D. 碳水填充剩余能量空间，其分配取决于训练量和总能量目标"], "answer": "ABD", "explanation": "脂肪是激素合成底物，极低脂肪可能影响睾酮。但增肌期脂肪通常占总能量的20-30%（非50%以上），碳水填充剩余能量空间。"}]}, {"id": "M10", "name": "平台期诊断决策树", "questions": [{"id": "M10_Q1", "type": "single", "question": "平台期诊断的第一步应该是什么？", "options": ["A. 立即减少热量摄入", "B. 启动Diet Break", "C. 排除假平台：测量标准化核查、水钠波动排除、饮食记录可信度评估", "D. 增加有氧训练量"], "answer": "C", "explanation": "平台首先排除数据与短期波动问题。测量条件、水钠/糖原、饮食记录和生理周期都可能制造短期停滞。"}, {"id": "M10_Q2", "type": "truefalse", "question": "NEAT是代谢适应中贡献最大的行为变量之一，但其下降幅度具有高度个体差异，不能假设每个人都会下降200-800 kcal/d。", "options": ["A. 正确", "B. 错误"], "answer": "A", "explanation": "Levine等1999年Science研究显示NEAT的个体差异很大。实践上应比较个人基线的步数、久坐时间等趋势。"}, {"id": "M10_Q3", "type": "multiple", "question": "以下哪些属于假平台的常见来源？", "options": ["A. 测量条件不标准化导致的读数波动", "B. 钠、碳水、糖原、月经周期等导致的短期体重变化", "C. 饮食记录中的漏记和选择性报告", "D. 真实的代谢适应"], "answer": "ABC", "explanation": "假平台来自测量误差、水钠/糖原波动和饮食记录不确定性。排除假平台后，真平台成因归入代谢/行为适应、执行漂移和训练变量不匹配。"}, {"id": "M10_Q4", "type": "single", "question": "关于平台期饮食低估的证据，Lichtman等经典研究中特定'自述节食抵抗'肥胖亚组的低报幅度约为：", "options": ["A. 约10%", "B. 约19%", "C. 约47%", "D. 约70%"], "answer": "C", "explanation": "Lichtman等的特定研究中特定亚组平均低报47%，但这一结果不能外推为所有减脂者的平均低报幅度。"}, {"id": "M10_Q5", "type": "truefalse", "question": "平台期处理应遵循'先验证数据，再调整方案'的顺序，不应由固定依从率阈值自动触发方案调整。", "options": ["A. 正确", "B. 错误"], "answer": "A", "explanation": "任何调整都不应由80%依从率、固定步数阈值或力量下降百分比等自动触发。先核查称重条件、摄入记录、活动变化和训练恢复。"}, {"id": "M10_Q6", "type": "single", "question": "关于NEAT提升策略，以下哪项排列符合教材建议的可操作性从高到低？", "options": ["A. 低强度有氧 > 结构化步行 > 站立替代久坐", "B. 结构化步行（嵌入日常模式）> 站立替代久坐 > 低强度有氧的合理嵌入", "C. 站立替代久坐 > 低强度有氧 > 结构化步行", "D. 三者可操作性相同"], "answer": "B", "explanation": "将步行嵌入日常行为模式（通勤步行、午间散步、电话步行）的依从性最高。每60分钟久坐起身活动3-5分钟次之。"}, {"id": "M10_Q7", "type": "single", "question": "关于减脂平台期何时结束或暂停减脂，以下哪项最准确？", "options": ["A. 减脂超过20-24周自动终止", "B. 应综合目标完成度、健康风险、训练表现、饮食行为、心理负担和个体偏好进行复评", "C. 力量下降5%即必须终止", "D. 体脂低于15%自动终止"], "answer": "B", "explanation": "不应由固定周期、力量百分比或体脂阈值自动决定。应综合多维度判断。"}]}, {"id": "M11", "name": "REDs识别与转介", "questions": [{"id": "M11_Q1", "type": "single", "question": "能量可用性（EA）的计算公式为：", "options": ["A. EA = EI / 体重(kg)", "B. EA = (EI − ExEE) / FFM(kg)", "C. EA = TDEE / FFM(kg)", "D. EA = EI − ExEE"], "answer": "B", "explanation": "EA = (EI − ExEE) / FFM(kg)。关键在于将运动消耗从总摄入中先行扣除，剩余能量才是可供HPG轴、骨重塑等生理过程使用的部分。"}, {"id": "M11_Q2", "type": "truefalse", "question": "IOC 2023共识区分adaptable LEA与problematic LEA，判断依赖暴露时间、严重度、个体背景以及健康和表现后果，而非单一EA切点。", "options": ["A. 正确", "B. 错误"], "answer": "A", "explanation": "IOC 2023不把30-45或<30直接贴上诊断标签。EA估算应视为带不确定性的背景变量，风险评估需结合CAT2框架。"}, {"id": "M11_Q3", "type": "multiple", "question": "LEA状态下的神经内分泌变化包括以下哪些？", "options": ["A. GnRH脉冲频率下降，LH脉冲减少", "B. T4向T3转化受阻，T3可下降15%-25%", "C. 晨起皮质醇升高", "D. 瘦素水平升高"], "answer": "ABC", "explanation": "LEA状态下瘦素下降（非升高），通过下丘脑弓状核抑制TRH。三轴（HPG/HPT/HPA）的同向应答构成REDs神经内分泌核心。"}, {"id": "M11_Q4", "type": "single", "question": "关于男性REDs，以下哪项判断最准确？", "options": ["A. REDs只影响女性训练者", "B. 男性没有月经这一显性生物标志，识别更依赖饮食/训练暴露、性欲与晨勃、骨应力损伤等", "C. 男性REDs的发生率远低于女性", "D. 男性REDs不需要筛查"], "answer": "B", "explanation": "IOC 2014首版即明确将男性纳入REDs框架。男性REDs在自行车、健美、长跑等项目中尤为突出，且认知程度显著低于女性Triad。"}, {"id": "M11_Q5", "type": "truefalse", "question": "教练在REDs管理中的职责是识别信号、记录数据、停止自行干预并转介；诊断、生化判读或能量恢复方案设计均构成越权执业。", "options": ["A. 正确", "B. 错误"], "answer": "A", "explanation": "教练的四个核心动作：识别、记录、停止自行干预、转介。不可做REDs诊断、判读生化报告、制定能量恢复方案或替代心理师进行ED干预。"}, {"id": "M11_Q6", "type": "single", "question": "关于LEA对骨骼的损害，以下哪项最准确？", "options": ["A. LEA仅通过性激素下降影响骨骼", "B. LEA通过性激素下降抑制成骨和IGF-1/T3下降协同抑制骨形成两条通路发生", "C. 骨量损失在能量恢复后可以完全逆转", "D. LEA对骨骼的影响仅限于女性"], "answer": "B", "explanation": "LEA对骨骼的损害通过两条通路：性激素下降抑制成骨/加速破骨；IGF-1和T3下降协同抑制骨形成。部分骨量丢失可能不可逆，骨累积期（11-25岁）的损失对终身骨折风险影响是终身性的。"}, {"id": "M11_Q7", "type": "single", "question": "从三联征到REDs的范式扩展，核心差异不包括以下哪项？", "options": ["A. 覆盖人群从仅限女性扩展至所有性别", "B. 受影响系统从三个维度扩展至十余个系统", "C. 临床工具从CRA评分卡变为CAT2", "D. REDs完全取代了三联征，两者不能并行使用"], "answer": "D", "explanation": "两套框架在临床实践中互补并行。对女性训练者可先以REDs CAT2完成多系统筛查，再以Triad CRA做骨与生殖细化分级。结论冲突时以更保守一侧为准。"}, {"id": "M11_Q8", "type": "multiple", "question": "IOC 2023 REDs CAT2框架中，以下哪些因素会影响训练者的运动参与资格决策？", "options": ["A. 当前EA水平和暴露时间", "B. 是否存在骨应力损伤", "C. 是否存在进食障碍行为", "D. 训练者的竞技排名"], "answer": "ABC", "explanation": "CAT2框架综合评估EA、骨健康、ED行为、心理状态等因素决定运动参与安全性。竞技排名不属于医学/健康决策因素。"}]}, {"id": "M12", "name": "Body Recomposition专题", "questions": [{"id": "M12_Q1", "type": "single", "question": "关于Body Recomposition（BR）的生理基础，以下哪项最准确？", "options": ["A. BR违反了能量守恒定律", "B. BR依赖脂肪氧化供能与新训练刺激触发MPS上调的双重机制协同", "C. BR只需要高蛋白饮食即可实现，不需要训练刺激", "D. BR只发生在完全能量盈余条件下"], "answer": "B", "explanation": "BR不违反热力学：脂肪组织可提供内源能量弥补膳食不足，同时抗阻训练和充足蛋白支持MPS。两个条件缺一不可。"}, {"id": "M12_Q2", "type": "truefalse", "question": "BR并非只发生于新手、回归者或高体脂人群；训练有素者也可能发生，但幅度通常更小。", "options": ["A. 正确", "B. 错误"], "answer": "A", "explanation": "训练龄、体脂率和停训时长可用于形成先验判断，不能作为排除中阶/高阶训练者的硬cut-off。"}, {"id": "M12_Q3", "type": "multiple", "question": "Murphy与Koehler 2022荟萃分析的核心发现包括以下哪些？", "options": ["A. 持续能量缺口总体会削弱抗阻训练带来的瘦体重增长", "B. 较大的能量缺口更不利于瘦体重增长", "C. 力量增益未显示与瘦体重同等程度的受损", "D. 微赤字下所有人保证显著增肌"], "answer": "ABC", "explanation": "该分析大多数样本并非训练有素的BR人群，不能据此声称'微赤字下新手/回归者仍保证显著增肌'。"}, {"id": "M12_Q4", "type": "single", "question": "关于BR的能量策略，以下哪项最符合教材立场？", "options": ["A. 必须使用精确的等热量方案", "B. 等热量附近、轻度缺口或日间波动都可作为计划工具，选择取决于目标优先级和个体情况", "C. BR必须使用TEE×0.90的热量", "D. BR只能在高体脂人群中执行"], "answer": "B", "explanation": "BR没有经过验证的'标准热量公式'。减脂优先级越高向轻度缺口移动，增肌优先级越高越接近维持。"}, {"id": "M12_Q5", "type": "truefalse", "question": "BR期间没有独立于增肌/减脂证据之外验证出的专属蛋白'上限'或靶值。", "options": ["A. 正确", "B. 错误"], "answer": "A", "explanation": "BR蛋白策略应回到通用证据链：日总蛋白剂量-反应研究、能量限制下较高蛋白对瘦体重的证据。没有BR专属的固定2.3-3.1 g/kg/d处方。"}, {"id": "M12_Q6", "type": "single", "question": "关于BR中的训练配合，以下哪项最准确？", "options": ["A. BR不需要抗阻训练", "B. 有效且可恢复的抗阻训练是BR的重要支持因素，没有足够训练刺激即使蛋白达3.0 g/kg/d也无法实现LBM增长", "C. ≥10 sets/周是BR成立的最低门槛", "D. BR期间应完全禁止有氧训练"], "answer": "B", "explanation": "BR是'训练驱动、营养辅助'的路径。≥10 sets/周不宜作为不可妥协的必要条件。有氧可在保证抗阻质量前提下配置。"}, {"id": "M12_Q7", "type": "single", "question": "关于BR适用人群筛选，Barakat等2020综述提到的三类更常观察到BR的人群不包括：", "options": ["A. 训练新手", "B. 回归训练者", "C. 较高体脂人群", "D. 训练5年以上且体脂8%的竞技健美运动员"], "answer": "D", "explanation": "Barakat 2020提到的三类是训练新手、回归训练者和较高体脂人群。训练有素且极低体脂者BR幅度通常更小。但训练龄和体脂率不能作为排除的硬cut-off。"}]}, {"id": "M13", "name": "循证判断方法论与案例考核演练", "questions": [{"id": "M13_Q1", "type": "single", "question": "关于可证伪性（falsifiability）在循证判断中的作用，以下哪项最准确？", "options": ["A. 可证伪性只适用于基础科学研究，与实践无关", "B. 一个好的科学假说必须是可证伪的，即存在能够证明其错误的观察或实验", "C. 所有营养学观点都是可证伪的", "D. 可证伪性意味着该假说一定是错误的"], "answer": "B", "explanation": "可证伪性是科学方法的核心特征。一个不可证伪的假说不属于科学范畴。教练需要能够识别哪些说法是可检验的，哪些是不可证伪的。"}, {"id": "M13_Q2", "type": "truefalse", "question": "GRADE证据分级系统将证据质量分为高、中、低、极低四个等级，RCT起始为高质量但可因多种因素降级。", "options": ["A. 正确", "B. 错误"], "answer": "A", "explanation": "RCT起始为高质量，可因偏倚风险、不一致性、间接性、不精确性和发表偏倚降级。观察性研究起始为低质量，可因大效应量等升级。"}, {"id": "M13_Q3", "type": "multiple", "question": "以下哪些是评估RCT研究设计质量的关键要素？", "options": ["A. 随机化方法是否适当", "B. 是否实施了分配隐藏", "C. 是否进行了意向性分析（ITT）", "D. 样本量越大研究质量一定越高"], "answer": "ABC", "explanation": "样本量大不自动等于质量高。研究设计质量取决于随机化、分配隐藏、盲法、ITT分析、失访率等多个方法学要素。"}, {"id": "M13_Q4", "type": "single", "question": "关于时间限制喂养（TRF）的循证判断，以下哪项最符合教材立场？", "options": ["A. TRF已被充分证明优于传统饮食模式", "B. TRF的现有研究存在样本量小、周期短、依从性难以盲法等局限，长期效果仍需更多高质量证据", "C. TRF对所有人群都不安全", "D. TRF的机制已经完全明确"], "answer": "B", "explanation": "TRF是活跃研究领域，现有证据存在方法学局限。教练应能识别研究边界，不过度推广单一研究结论。"}, {"id": "M13_Q5", "type": "truefalse", "question": "急性MPS测量（稳定同位素示踪法）的结果并不总能预测长期（8-12周）FFM或肌纤维横截面积的变化。", "options": ["A. 正确", "B. 错误"], "answer": "A", "explanation": "急性MPS增幅并不总能预测长期FFM变化。'肌肉充盈效应'显示MPS达峰较早而mTORC1下游信号磷酸化可持续更久。实践应以长期训练刺激、日总蛋白和能量状态为主。"}, {"id": "M13_Q6", "type": "single", "question": "在评估补剂效果时，'机制合理'与'人体RCT证据充分'之间的关系是：", "options": ["A. 机制合理即可直接推导人体有效", "B. 机制合理是必要条件但非充分条件，不能替代人体RCT的有效性证据", "C. 人体RCT证据不需要考虑机制", "D. 两者完全无关"], "answer": "B", "explanation": "IOC共识强调，机制合理或市场流行不能替代有效性与安全性的人体证据。对证据稀疏的产品应保持不确定性。"}, {"id": "M13_Q7", "type": "single", "question": "关于利益冲突（Conflict of Interest, COI）的识别，以下哪项是教材中引用的典型案例？", "options": ["A. Morton 2018的meta分析", "B. Brilla与Conte 2000年ZMA研究中，Victor Conte既是研究者又是ZMA专利持有者", "C. Areta等2013的蛋白分配研究", "D. Hall等的能量平衡模型"], "answer": "B", "explanation": "Brilla 2000的ZMA研究存在教科书级别的利益冲突。Wilborn 2004独立RCT未能复制其阳性结果。"}]}, {"id": "M14", "name": "特殊人群营养干预", "questions": [{"id": "M14_Q1", "type": "single", "question": "关于三高（高血压、高血糖、高血脂）人群的运动营养干预，以下哪项原则最重要？", "options": ["A. 直接使用高蛋白补剂方案", "B. 确认医学状态已由医师管理，营养方案不影响在用药物的效果或安全性", "C. 三高人群不能进行任何运动", "D. 所有三高人群使用完全相同的营养方案"], "answer": "B", "explanation": "灰色地带三问决策SOP：Q1医学状态是否已由医师确认→Q2拟实施方案是否影响用药→Q3目标在当前状态下是否安全。任一不满足即转介。"}, {"id": "M14_Q2", "type": "truefalse", "question": "50岁以上训练者因合成代谢抵抗，日总蛋白、单餐蛋白质量和抗阻训练的重要性上升。", "options": ["A. 正确", "B. 错误"], "answer": "A", "explanation": "年龄增长伴随合成代谢抵抗，每餐需要更高的亮氨酸/蛋白暴露来触发MPS。但1.0-1.2 g/kg/d不是所有≥65岁者的统一下限，需结合肾功能、疾病和训练状态。"}, {"id": "M14_Q3", "type": "multiple", "question": "关于更年期女性的营养干预，以下哪些考虑因素是正确的？", "options": ["A. 雌激素下降与骨量加速流失相关，需关注钙和维生素D状态", "B. 体脂分布可能向中心性转移", "C. 抗阻训练对维持骨密度和肌肉量有重要价值", "D. 更年期女性不能进行高强度训练"], "answer": "ABC", "explanation": "更年期女性的营养干预需关注骨健康、体脂变化和心血管风险。抗阻训练是维持骨密度和肌肉量的重要手段。不存在不能进行高强度训练的绝对禁忌。"}, {"id": "M14_Q4", "type": "single", "question": "关于青少年训练者的营养干预，以下哪项最重要？", "options": ["A. 青少年应使用成人的减脂方案", "B. 需确保足够的能量和营养支持生长发育，避免过度能量限制", "C. 青少年不需要蛋白质", "D. 青少年的营养方案与成人完全相同"], "answer": "B", "explanation": "青少年处于生长发育期，能量和营养需求需覆盖生长和训练双重需要。过度能量限制可能影响生长发育、骨健康和生殖功能。"}, {"id": "M14_Q5", "type": "truefalse", "question": "GLP-1受体激动剂（如司美格鲁肽）使用者在执行极低热量饮食时，LEA的神经内分泌抑制症状可能被误归因为'药物正常反应'。", "options": ["A. 正确", "B. 错误"], "answer": "A", "explanation": "GLP-1RA在减重市场的爆发式增长正在制造新的REDs风险层。大量使用者在无医学监测条件下执行极低热量饮食，LEA症状被忽视。"}, {"id": "M14_Q6", "type": "single", "question": "关于慢病稳定期人群的营养咨询，灰色地带三问决策SOP中，如果三问中任一不满足，应如何处理？", "options": ["A. 继续执行原方案", "B. 转介或调整方案", "C. 增加补剂", "D. 忽略该问题"], "answer": "B", "explanation": "三问决策SOP：Q1医学状态确认→Q2方案是否影响用药→Q3目标是否安全可行。任一不满足即转介或调整方案。"}, {"id": "M14_Q7", "type": "multiple", "question": "以下哪些人群在减脂时需要特别谨慎，应优先评估REDs风险？", "options": ["A. 有进食障碍史的来访者", "B. 竞技健美备赛的轻量级运动员", "C. 青春期女性训练者", "D. BMI 35且无并发症的成年人"], "answer": "ABC", "explanation": "进食障碍史、竞技备赛和青春期女性都是REDs高风险人群。BMI 35的成人需在医师管理下减脂，但REDs风险相对上述人群较低。"}]}]};
+
+const MODULE_COLORS = {
+  M1:'#4A90D9',M2:'#4A90D9',M3:'#5CB85C',M5:'#5CB85C',M14:'#5CB85C',
+  M4:'#9B59B6',M6:'#9B59B6',M7:'#F0AD4E',M8:'#F0AD4E',M9:'#F0AD4E',
+  M10:'#F0AD4E',M12:'#F0AD4E',M11:'#D9534F',M13:'#D9534F'
+};
+const MODULE_SHORT = {
+  M1:'生化基础',M2:'训练营养',M3:'宏量营养素',M4:'营养评估',
+  M5:'微量与水',M6:'补剂框架',M7:'咨询SOP',M8:'减脂专题',
+  M9:'增肌专题',M10:'平台期',M11:'REDs',M12:'Body Recomp',
+  M13:'循证方法',M14:'特殊人群'
+};
+const NODE_POS = {
+  M1:{x:600,y:700},M2:{x:340,y:650},M3:{x:240,y:530},M5:{x:190,y:400},
+  M6:{x:160,y:280},M8:{x:240,y:170},M10:{x:370,y:90},M12:{x:500,y:45},
+  M4:{x:860,y:650},M7:{x:960,y:530},M9:{x:1010,y:400},M11:{x:1040,y:280},
+  M13:{x:960,y:170},M14:{x:830,y:90}
+};
+
+let state = loadState();
+function loadState(){
+  try{const s=localStorage.getItem('snc_exam_progress');if(s)return JSON.parse(s)}catch(e){}
+  return {answers:{},completedModules:{}};
+}
+function saveState(){localStorage.setItem('snc_exam_progress',JSON.stringify(state))}
+
+function init(){createStars();renderTree();updateStats()}
+
+function createStars(){
+  const c=document.getElementById('stars');
+  for(let i=0;i<60;i++){
+    const s=document.createElement('div');s.className='star';
+    s.style.left=Math.random()*100+'%';s.style.top=Math.random()*50+'%';
+    s.style.animationDelay=Math.random()*3+'s';
+    s.style.width=s.style.height=(1+Math.random()*2)+'px';
+    c.appendChild(s);
+  }
+}
+
+function renderTree(){
+  const svg=document.getElementById('treeSvg');
+  let h='';
+  h+=`<defs>
+    <linearGradient id="tG" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#7a5a3a"/><stop offset="100%" stop-color="#3a2510"/></linearGradient>
+    <radialGradient id="cG" cx="50%" cy="30%" r="60%"><stop offset="0%" stop-color="rgba(40,120,40,0.12)"/><stop offset="100%" stop-color="rgba(20,60,20,0)"/></radialGradient>
+    <filter id="nG"><feGaussianBlur stdDeviation="4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+  </defs>`;
+  h+=`<ellipse cx="600" cy="250" rx="500" ry="280" fill="url(#cG)"/>`;
+  // Leaves
+  [[150,200],[250,100],[350,50],[480,30],[600,20],[720,30],[850,50],[950,100],[1050,200],[180,350],[280,250],[400,150],[500,120],[700,120],[800,150],[920,250],[1020,350],[300,400],[450,300],[750,300],[900,400]].forEach(([lx,ly])=>{
+    const sz=8+Math.random()*14,op=0.06+Math.random()*0.1;
+    h+=`<ellipse cx="${lx}" cy="${ly}" rx="${sz}" ry="${sz*.6}" fill="rgba(92,184,92,${op})" transform="rotate(${Math.random()*60-30},${lx},${ly})"/>`;
+  });
+  h+=`<ellipse cx="600" cy="780" rx="580" ry="40" fill="rgba(30,60,20,0.4)"/>`;
+  // Trunk
+  h+=`<path d="M555,785 C550,740 548,715 553,695 C557,682 565,676 578,672 L622,672 C635,676 643,682 647,695 C652,715 650,740 645,785Z" fill="url(#tG)" stroke="#4a2a0a" stroke-width="1"/>`;
+  h+=`<path d="M575,775 C577,740 579,715 581,695" fill="none" stroke="rgba(90,50,20,0.4)" stroke-width="1.5"/>`;
+  h+=`<path d="M625,775 C623,740 621,715 619,695" fill="none" stroke="rgba(90,50,20,0.4)" stroke-width="1.5"/>`;
+
+  // Branches
+  const T={x:600,y:672};
+  const branches=[
+    {f:T,t:NODE_POS.M2,c1:{x:490,y:690},c2:{x:400,y:670}},
+    {f:NODE_POS.M2,t:NODE_POS.M3,c1:{x:295,y:615},c2:{x:265,y:570}},
+    {f:NODE_POS.M3,t:NODE_POS.M5,c1:{x:220,y:490},c2:{x:200,y:440}},
+    {f:NODE_POS.M5,t:NODE_POS.M6,c1:{x:170,y:355},c2:{x:162,y:320}},
+    {f:NODE_POS.M6,t:NODE_POS.M8,c1:{x:165,y:225},c2:{x:200,y:190}},
+    {f:NODE_POS.M8,t:NODE_POS.M10,c1:{x:280,y:130},c2:{x:330,y:105}},
+    {f:NODE_POS.M10,t:NODE_POS.M12,c1:{x:420,y:65},c2:{x:465,y:50}},
+    {f:T,t:NODE_POS.M4,c1:{x:710,y:690},c2:{x:800,y:670}},
+    {f:NODE_POS.M4,t:NODE_POS.M7,c1:{x:905,y:615},c2:{x:935,y:570}},
+    {f:NODE_POS.M7,t:NODE_POS.M9,c1:{x:980,y:490},c2:{x:1000,y:440}},
+    {f:NODE_POS.M9,t:NODE_POS.M11,c1:{x:1030,y:355},c2:{x:1038,y:320}},
+    {f:NODE_POS.M11,t:NODE_POS.M13,c1:{x:1035,y:225},c2:{x:1000,y:190}},
+    {f:NODE_POS.M13,t:NODE_POS.M14,c1:{x:920,y:130},c2:{x:870,y:105}},
+    // sub-branches
+    {f:NODE_POS.M3,t:{x:140,y:470},c1:{x:195,y:510},c2:{x:160,y:485}},
+    {f:NODE_POS.M9,t:{x:1100,y:470},c1:{x:1055,y:510},c2:{x:1085,y:485}},
+    {f:NODE_POS.M6,t:{x:90,y:230},c1:{x:120,y:260},c2:{x:100,y:240}},
+    {f:NODE_POS.M11,t:{x:1110,y:230},c1:{x:1080,y:260},c2:{x:1100,y:240}},
+  ];
+  branches.forEach(b=>{
+    h+=`<path d="M${b.f.x},${b.f.y} C${b.c1.x},${b.c1.y} ${b.c2.x},${b.c2.y} ${b.t.x},${b.t.y}" fill="none" stroke="#4a2a10" stroke-width="7" stroke-linecap="round" opacity=".7"/>`;
+    h+=`<path d="M${b.f.x},${b.f.y} C${b.c1.x},${b.c1.y} ${b.c2.x},${b.c2.y} ${b.t.x},${b.t.y}" fill="none" stroke="#7a5a3a" stroke-width="3" stroke-linecap="round" opacity=".5"/>`;
+  });
+
+  // Nodes
+  EXAM_DATA.modules.forEach(mod=>{
+    const p=NODE_POS[mod.id],col=MODULE_COLORS[mod.id];
+    const qC=mod.questions.length;
+    const ans=getModAnswered(mod.id),cor=getModCorrect(mod.id);
+    const done=state.completedModules[mod.id]||false;
+    const prog=ans/qC;
+    let cls='node-inactive',fOp=.3;
+    if(done){cls='node-complete';fOp=1}
+    else if(ans>0){cls='node-partial';fOp=.6}
+    const r=34,circ=2*Math.PI*r,doff=circ*(1-prog);
+
+    h+=`<g class="module-node ${cls}" onclick="openModule('${mod.id}')" style="color:${col}">`;
+    h+=`<circle cx="${p.x}" cy="${p.y}" r="${r+5}" fill="none" stroke="rgba(255,255,255,.08)" stroke-width="3"/>`;
+    h+=`<circle cx="${p.x}" cy="${p.y}" r="${r+5}" fill="none" stroke="${col}" stroke-width="3" stroke-dasharray="${circ}" stroke-dashoffset="${doff}" transform="rotate(-90,${p.x},${p.y})" class="progress-ring" opacity=".7"/>`;
+    h+=`<circle cx="${p.x}" cy="${p.y}" r="${r}" fill="${col}" fill-opacity="${fOp}" stroke="${col}" stroke-width="2" class="node-circle" filter="${done?'url(#nG)':'none'}"/>`;
+    if(done) h+=`<circle cx="${p.x}" cy="${p.y}" r="${r-6}" fill="none" stroke="rgba(255,255,255,.25)" stroke-width="1"/>`;
+    h+=`<text x="${p.x}" y="${p.y+5}" class="node-id">${mod.id}</text>`;
+    h+=`<text x="${p.x}" y="${p.y+r+16}" class="node-name">${MODULE_SHORT[mod.id]}</text>`;
+    if(done) h+=`<text x="${p.x}" y="${p.y+r+28}" class="node-name" fill="${col}" font-size="9">${cor}/${qC}</text>`;
+    h+=`</g>`;
+  });
+  svg.innerHTML=h;
+}
+
+function getModAnswered(id){const m=EXAM_DATA.modules.find(x=>x.id===id);return m?m.questions.filter(q=>state.answers[q.id]!==undefined).length:0}
+function getModCorrect(id){const m=EXAM_DATA.modules.find(x=>x.id===id);return m?m.questions.filter(q=>{const a=state.answers[q.id];return a!==undefined&&checkAns(q,a)}).length:0}
+function checkAns(q,u){return q.answer.split(',').sort().join(',')===u.split(',').sort().join(',')}
+
+function updateStats(){
+  let cor=0,cnt=0;
+  EXAM_DATA.modules.forEach(m=>{if(state.completedModules[m.id]){cnt++;cor+=getModCorrect(m.id)}});
+  document.getElementById('stat-modules').textContent=cnt+'/14';
+  document.getElementById('stat-score').textContent=cor+'/106';
+  document.getElementById('btn-submit-all').disabled=cnt<14;
+}
+
+let curMod=null,curQI=0,selAns=[],submitted=false;
+
+function openModule(id){
+  curMod=EXAM_DATA.modules.find(m=>m.id===id);if(!curMod)return;
+  curQI=0;
+  for(let i=0;i<curMod.questions.length;i++){
+    if(state.answers[curMod.questions[i].id]===undefined){curQI=i;break}
+    if(i===curMod.questions.length-1&&state.completedModules[id]){showModComplete();return}
+  }
+  submitted=false;selAns=[];
+  document.getElementById('panelTitle').textContent=curMod.id+' '+curMod.name;
+  document.getElementById('panelOverlay').classList.add('active');
+  document.getElementById('quizPanel').classList.add('active');
+  renderQ();
+}
+function closePanel(){
+  document.getElementById('panelOverlay').classList.remove('active');
+  document.getElementById('quizPanel').classList.remove('active');
+  renderTree();updateStats();
+}
+
+function renderQ(){
+  const q=curMod.questions[curQI],tot=curMod.questions.length;
+  const area=document.getElementById('questionArea'),foot=document.getElementById('panelFooter');
+  document.getElementById('panelProgressFill').style.width=((curQI+1)/tot*100)+'%';
+  document.getElementById('panelProgressText').textContent='第'+(curQI+1)+'题 / 共'+tot+'题';
+  const ex=state.answers[q.id];submitted=ex!==undefined;
+
+  let badge='';
+  if(q.type==='single')badge='<span class="question-type-badge badge-single">单选</span>';
+  else if(q.type==='multiple')badge='<span class="question-type-badge badge-multiple">多选</span>';
+  else badge='<span class="question-type-badge badge-truefalse">判断</span>';
+
+  let html=badge+'<div class="question-text">'+q.question+'</div>';
+
+  if(q.type==='truefalse'){
+    const av=ex||'';
+    html+='<div class="tf-buttons">';
+    ['A','B'].forEach(o=>{
+      let c='tf-btn';
+      if(submitted){if(o===q.answer)c+=' correct';else if(o===av&&o!==q.answer)c+=' wrong'}
+      else if(selAns.includes(o))c+=' selected';
+      const lb=o==='A'?'正确':'错误';
+      html+=submitted?'<div class="'+c+'">'+lb+'</div>':'<div class="'+c+'" onclick="selTF(\''+o+'\')">'+lb+'</div>';
+    });
+    html+='</div>';
+  } else {
+    html+='<div class="options-list">';
+    const isCB=q.type==='multiple';
+    q.options.forEach(opt=>{
+      const ol=opt.charAt(0);
+      let c='option-item';
+      if(submitted){
+        const ca=q.answer.split(','),ua=(ex||'').split(',');
+        if(ca.includes(ol))c+=' correct';
+        if(ua.includes(ol)&&!ca.includes(ol))c+=' wrong';
+      } else if(selAns.includes(ol))c+=' selected';
+      const ind=isCB?'option-checkbox':'option-radio';
+      const ck=submitted?'':'onclick="selOpt(\''+ol+'\',\''+q.type+'\')"';
+      html+='<div class="'+c+'" '+ck+'><div class="'+ind+'"></div><span>'+opt+'</span></div>';
+    });
+    html+='</div>';
+  }
+
+  if(submitted){
+    const ok=checkAns(q,ex);
+    html+='<div class="feedback '+(ok?'correct':'wrong')+'"><span class="feedback-icon">'+(ok?'\\u2713':'\\u2717')+'</span>'+(ok?'回答正确':'回答错误')+(ok?'':'<br>正确答案：'+q.answer)+'</div>';
+    html+='<div class="explanation"><strong>解析：</strong>'+q.explanation+'</div>';
+  }
+  area.innerHTML=html;
+
+  if(submitted){
+    const allDone=curMod.questions.every(qq=>state.answers[qq.id]!==undefined);
+    if(allDone&&!state.completedModules[curMod.id]){state.completedModules[curMod.id]=true;saveState()}
+    if(allDone) foot.innerHTML='<button class="btn-submit next" onclick="showModComplete()">查看模块结果</button>';
+    else foot.innerHTML='<button class="btn-submit next" onclick="nextQ()">下一题 \\u2192</button>';
+  } else {
+    foot.innerHTML='<button class="btn-submit answering" '+(selAns.length>0?'':'disabled')+' onclick="submitAns()">提交答案</button>';
+  }
+}
+
+function selOpt(l,t){
+  if(submitted)return;
+  if(t==='multiple'){const i=selAns.indexOf(l);if(i>=0)selAns.splice(i,1);else selAns.push(l);selAns.sort()}
+  else selAns=[l];
+  renderQ();
+}
+function selTF(l){if(submitted)return;selAns=[l];renderQ()}
+
+function submitAns(){
+  if(selAns.length===0)return;
+  const q=curMod.questions[curQI];
+  state.answers[q.id]=selAns.join(',');saveState();
+  submitted=true;renderQ();
+}
+function nextQ(){
+  curQI++;if(curQI>=curMod.questions.length){showModComplete();return}
+  selAns=[];submitted=false;renderQ();
+}
+
+function showModComplete(){
+  const m=curMod,tot=m.questions.length,cor=getModCorrect(m.id),pct=Math.round(cor/tot*100);
+  const area=document.getElementById('questionArea'),foot=document.getElementById('panelFooter');
+  document.getElementById('panelProgressFill').style.width='100%';
+  document.getElementById('panelProgressText').textContent='模块完成';
+  let html='<div class="module-complete"><div style="font-size:1.1em;font-weight:600;margin-bottom:4px">'+m.id+' '+m.name+'</div>';
+  html+='<div class="module-score">'+cor+'/'+tot+'</div><div class="module-score-label">正确率 '+pct+'%</div>';
+  const wqs=m.questions.filter(q=>{const a=state.answers[q.id];return a!==undefined&&!checkAns(q,a)});
+  if(wqs.length>0){
+    html+='<div class="wrong-list"><div style="font-weight:600;margin-bottom:10px;color:var(--glow-wrong)">错题回顾（'+wqs.length+'题）</div>';
+    wqs.forEach(q=>{
+      const ua=state.answers[q.id]||'-';
+      html+='<div class="wrong-item"><div class="wrong-item-q">'+q.question.substring(0,80)+'</div>';
+      html+='<div class="wrong-item-detail">你的答案：'+ua+' | 正确答案：'+q.answer+'</div>';
+      html+='<div class="wrong-item-detail" style="margin-top:4px;font-style:italic">'+q.explanation.substring(0,120)+(q.explanation.length>120?'...':'')+'</div></div>';
+    });
+    html+='</div>';
+  } else {
+    html+='<div style="color:var(--glow-correct);font-size:1.1em;margin-top:16px">全部正确</div>';
+  }
+  html+='</div>';area.innerHTML=html;
+  foot.innerHTML='<button class="btn-submit next" onclick="closePanel()">返回知识树</button>';
+  renderTree();updateStats();
+}
+
+function resetProgress(){
+  if(!confirm('确定要重置所有答题进度吗？此操作不可撤销。'))return;
+  state={answers:{},completedModules:{}};saveState();renderTree();updateStats();closePanel();
+}
+
+function showFinalReport(){
+  if(Object.keys(state.completedModules).length<14)return;
+  let tc=0;const mr={};
+  EXAM_DATA.modules.forEach(m=>{const c=getModCorrect(m.id);tc+=c;mr[m.id]={correct:c,total:m.questions.length}});
+  const acc=(tc/106*100).toFixed(1);
+  mkParticles();
+  const card=document.getElementById('completeCard');
+  let html='<div class="complete-title">考试完成</div><div class="complete-subtitle">加伍磅 · 三天营养课 — 知识树考试</div>';
+  html+='<div class="complete-score">'+tc+'/106</div><div class="complete-accuracy">正确率 '+acc+'%</div>';
+  html+='<div class="student-input"><label style="font-size:.9em;color:var(--text-dim)">学生姓名（可选）</label><input type="text" id="studentName" placeholder="输入姓名"></div>';
+  html+='<div class="module-scores-grid">';
+  EXAM_DATA.modules.forEach(m=>{
+    const r=mr[m.id],col=MODULE_COLORS[m.id];
+    html+='<div class="module-score-row"><span style="color:'+col+'">'+m.id+' '+MODULE_SHORT[m.id]+'</span><span>'+r.correct+'/'+r.total+'</span></div>';
+  });
+  html+='</div><div class="btn-group"><button class="btn btn-primary" onclick="genReport()">生成成绩报告</button><button class="btn btn-secondary" onclick="closeFinal()">关闭</button></div><div id="reportArea"></div>';
+  card.innerHTML=html;
+  document.getElementById('completeOverlay').classList.add('active');
+}
+
+function genReport(){
+  const st=document.getElementById('studentName').value||'匿名';
+  let tc=0;const mr={};
+  EXAM_DATA.modules.forEach(m=>{const c=getModCorrect(m.id);tc+=c;mr[m.id]={correct:c,total:m.questions.length}});
+  const rpt={version:'SNC_EXAM_V1',date:new Date().toISOString(),student:st,modules:mr,total_correct:tc,total_questions:106,accuracy:(tc/106*100).toFixed(1)+'%'};
+  const enc=btoa(unescape(encodeURIComponent(JSON.stringify(rpt))));
+  document.getElementById('reportArea').innerHTML='<div style="margin-top:20px;text-align:left"><div style="font-size:.85em;color:var(--text-dim);margin-bottom:8px">成绩报告编码：</div><div class="report-code" id="reportCode">'+enc+'</div><button class="btn btn-secondary" onclick="copyRpt()" style="margin-top:8px;font-size:.8em;padding:6px 14px">复制编码</button></div>';
+}
+function copyRpt(){
+  const c=document.getElementById('reportCode').textContent;
+  navigator.clipboard.writeText(c).then(()=>{event.target.textContent='已复制';setTimeout(()=>event.target.textContent='复制编码',2000)});
+}
+function closeFinal(){document.getElementById('completeOverlay').classList.remove('active')}
+
+function mkParticles(){
+  const ct=document.getElementById('particles');ct.innerHTML='';
+  const cols=['#FFD700','#FF6B6B','#4ECDC4','#45B7D1','#96CEB4','#FFEAA7','#DDA0DD','#98D8C8'];
+  for(let i=0;i<80;i++){
+    const p=document.createElement('div');p.className='particle';
+    p.style.left=Math.random()*100+'%';p.style.top='-10px';
+    p.style.background=cols[Math.floor(Math.random()*cols.length)];
+    p.style.animationDelay=Math.random()*2+'s';
+    p.style.animationDuration=(2+Math.random()*3)+'s';
+    p.style.width=p.style.height=(4+Math.random()*6)+'px';
+    ct.appendChild(p);
+  }
+  setTimeout(()=>ct.innerHTML='',5000);
+}
+
+init();
+</script>
+</body>
+</html>
